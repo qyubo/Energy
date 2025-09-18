@@ -79,16 +79,30 @@ static void f_Integral_Limit(PID *pid)
 //                 pid->Last_Dout * pid->Derivative_LPF_RC / (pid->Derivative_LPF_RC + pid->dt);
 // }
 
-PID::PID() : mode(PID_POSITION),
-             kp(0.0f),
-             ki(0.0f),
-             kd(0.0f),
-             maxOut(0.0f),
-             maxIOut(0.0f)
+// PID::PID() : mode(PID_POSITION),
+//              kp(0.0f),
+//              ki(0.0f),
+//              kd(0.0f),
+//              maxOut(0.0f),
+//              maxIOut(0.0f)
+// {
+//     fdb = last_fbd = 0.0f;
+//     err[0] = err[1] = err[2] = 0.0f;
+// }
+
+PID::PID(float kp, float ki, float kd, float maxOut, float maxIOut, int mode = PID_POSITION)
+    : mode(mode), kp(kp), ki(ki), kd(kd), maxOut(maxOut), maxIOut(maxIOut)
 {
     fdb = last_fbd = 0.0f;
     err[0] = err[1] = err[2] = 0.0f;
 }
+
+void PID::Tuning(float tuning_kp, float tuning_ki, float tuning_kd) {
+    kp = tuning_kp;
+    ki = tuning_ki;
+    kd = tuning_kd;
+}
+
 
 void PID::UpdateResult(void)
 {

@@ -65,7 +65,8 @@ public:
     bool Motorblocked;
     bool Motornormal;
 
-    PID();
+    PID(float kp, float ki, float kd, float maxOut, float maxIOut, int mode = PID_POSITION);
+    void Tuning(float tuning_kp, float tuning_ki, float tuning_kd);
     void UpdateResult();
     void Clear();
 };

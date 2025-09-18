@@ -27,8 +27,8 @@ public:
     // LK8016 LD;
     // LK8016 LU;
 
-    GM6020 LWheel;
-    M2006 RWheel;
+    GM6020 YawMotor;
+    GM6020 PitchMotor;
 
     void MotorRegister();
     void AllMotorSetOutput();

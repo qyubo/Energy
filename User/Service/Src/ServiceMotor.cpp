@@ -1,6 +1,8 @@
-#include "ServiceMotor.hpp"
-#include "bsp_can.hpp"
 #include "main.h"
+
+#include "ServiceMotor.hpp"
+#include "om.h"
+#include "magicmsgs.hpp"
 
 
 extern CAN_HandleTypeDef hcan1;
@@ -17,52 +19,48 @@ int16_t test_cur = 0;
 
 void ServiceMotors::MotorRegister() {
     // //注册电机
-    LWheel.controlMode = GM6020::RELAX_MODE;
-    LWheel.setOutput();
-    DJIMotorhandler->registerMotor(&LWheel, &hcan1, 0x205);
+    YawMotor.currentSet = 0;
+    DJIMotorhandler->registerMotor(&YawMotor, &hcan1, 0x205);
 
-    RWheel.controlMode = M2006::RELAX_MODE;
-    RWheel.setOutput();
-    DJIMotorhandler->registerMotor(&RWheel, &hcan1, 0x202);
+    PitchMotor.currentSet = 0;
+    DJIMotorhandler->registerMotor(&PitchMotor, &hcan1, 0x206);
 
 
 }
 
 void ServiceMotors::AllMotorSetOutput()
 {
-    LWheel.setOutput();
-    RWheel.setOutput();
+    // LWheel.setOutput();
+    // RWheel.setOutput();
 }
 
 void ServiceMotors::SetModeAndPidParam()
 {
-    LWheel.controlMode = GM6020::SPD_MODE;
-    RWheel.controlMode = M2006::SPD_MODE;
-
-    // LWheel.speedPid.mode = PID_POSITION | PID_Integral_Limit | PID_Trapezoid_Intergral;
-    // LWheel.speedPid.kp = 200.0f;
-    // LWheel.speedPid.ki = 0.0f;
-    // LWheel.speedPid.kd = 4000.0f;
-    // LWheel.speedPid.ScalarA = 6.0f;
-    // LWheel.speedPid.ScalarB = 0.01f;
-    // LWheel.speedPid.maxIOut = 10.0f;
-    // LWheel.speedPid.maxOut = 10000.0f;
-
-    RWheel.speedPid.mode = PID_POSITION | PID_Integral_Limit | PID_Trapezoid_Intergral;
-    RWheel.speedPid.kp = 200.0f;
-    RWheel.speedPid.ki = 0.0f;
-    RWheel.speedPid.kd = 4000.0f;
-    RWheel.speedPid.ScalarA = 6.0f;
-    RWheel.speedPid.ScalarB = 0.01f;
-    RWheel.speedPid.maxIOut = 10.0f;
-    RWheel.speedPid.maxOut = 10000.0f;
+    // LWheel.controlMode = GM6020::SPD_MODE;
+    // RWheel.controlMode = M2006::SPD_MODE;
+    //
+    // // LWheel.speedPid.mode = PID_POSITION | PID_Integral_Limit | PID_Trapezoid_Intergral;
+    // // LWheel.speedPid.kp = 200.0f;
+    // // LWheel.speedPid.ki = 0.0f;
+    // // LWheel.speedPid.kd = 4000.0f;
+    // // LWheel.speedPid.ScalarA = 6.0f;
+    // // LWheel.speedPid.ScalarB = 0.01f;
+    // // LWheel.speedPid.maxIOut = 10.0f;
+    // // LWheel.speedPid.maxOut = 10000.0f;
+    //
+    // RWheel.speedPid.mode = PID_POSITION | PID_Integral_Limit | PID_Trapezoid_Intergral;
+    // RWheel.speedPid.kp = 200.0f;
+    // RWheel.speedPid.ki = 0.0f;
+    // RWheel.speedPid.kd = 4000.0f;
+    // RWheel.speedPid.ScalarA = 6.0f;
+    // RWheel.speedPid.ScalarB = 0.01f;
+    // RWheel.speedPid.maxIOut = 10.0f;
+    // RWheel.speedPid.maxOut = 10000.0f;
 }
 
 
 
 [[noreturn]] void MotorThreadFun(ULONG initial_input) {
-    //TODO:接收onemessage控制信息
-
     UNUSED(initial_input);
     ULONG time;
 
@@ -70,86 +68,15 @@ void ServiceMotors::SetModeAndPidParam()
     ServiceMotors serviceMotors;
     serviceMotors.MotorRegister();
 
-    //TODO： 从control_task来的om topic发送控制信息
-    //TODO: param may be om_published outcome
+    om_suber_t *gimbal_suber = om_subscribe(om_find_topic("gimbalctrl", UINT32_MAX));
+    msg_gimbal_ctrl_t gimbal_ctrl{};
     serviceMotors.SetModeAndPidParam();
-
 
     for (;;) {
         time = tx_time_get();
-
-        //TODO:电机接收控制信号、保护与使能失能
-        // bool update_flag[6] = {0, 0, 0, 0, 0,0};
-        // if (om_suber_export(motor_recv_suber, &motor_ctr, false) == OM_OK) {
-        //     last_topic_time = tx_time_get();
-        //     if (motor_ctr.enable) {
-        //         for (uint8_t i = 0; i < 6; i++) {
-        //             MotorUnit[i].SetTorque(motor_ctr.torque[i]);
-        //         }
-        //     } else {
-        //         for (auto &motor: MotorUnit) {
-        //             motor.SetTorque(0);
-        //         }
-        //     }
-        // } else if (tx_time_get() - last_topic_time > 500) {
-        //     for (auto &motor: MotorUnit) {
-        //         motor.SetTorque(0);
-        //     }
-        // }
-
-        // /*Motor disable or enable*/
-        // if (last_enable != motor_ctr.enable) {
-        //     if (motor_ctr.enable) {
-        //         for (auto &motor: MotorUnit) {
-        //             motor.EnableMotor();
-        //             tx_thread_sleep(1);
-        //         }
-        //     } else {
-        //         for (auto &motor: MotorUnit) {
-        //             motor.DisableMotor();
-        //             tx_thread_sleep(1);
-        //         }
-        //     }
-        // }
-        // last_enable = motor_ctr.enable;
-
-        //for test
-        // serviceMotors.LWheel.speedSet = 0.5;
-        serviceMotors.RWheel.speedSet = 1.0;
-
-        // RxData1.cnt = 0;
-        // RxData2.cnt = 0;
-        // CAN_cnt = 0;
-
-        //计算电流值
-        serviceMotors.AllMotorSetOutput();
-        serviceMotors.LWheel.currentSet = test_cur;
-        // serviceMotors.RWheel.currentSet = 10;
-
-        //TODO: 补全电机掉线处理或输出
-        // if (tx_semaphore_get(&MotorCANRecvSem, 1)) {
-        //
-        // }
-
-        //TODO: 解析电机数据
-            //在can回调中断中执行
-//         uint8_t id;
-//         for (int i = 0; i < 3; ++i) {
-//             id = static_cast<uint8_t>(RxData1.data[i][0] & 0x0F) - 1;
-//             MotorUnit[id].MessageDecode(RxData1.data[i]);
-// //            update_flag[id] = true;
-//         }
-//         for (int i = 0; i < 3; ++i) {
-//             id = static_cast<uint8_t>(RxData2.data[i][0] & 0x0F) - 1;
-//             MotorUnit[id].MessageDecode(RxData2.data[i]);
-// //            update_flag[id] = true;
-//         }
-
-        //TODO： 获得电机回调数据并publish出去
-
-
-
-        // om_publish(link_topic, &link_msg, sizeof(link_msg), true, false);
+        om_suber_export(gimbal_suber, &gimbal_ctrl, false);
+        serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_torque*100);
+        serviceMotors.PitchMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.pitch_torque*100);
 
         //发送控制指令给电机
         DJIMotorhandler->sendControlData();

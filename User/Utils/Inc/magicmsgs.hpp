@@ -21,6 +21,12 @@ typedef enum {
     Fire = 1
 }SHOOT_STATE;
 
+typedef enum {
+    SPD,
+    POS,
+    TORQUE
+}CTRL_MODE;
+
 /**
  * @brief 遥控器消息结构
  */
@@ -96,15 +102,22 @@ struct msg_ins_t {
 /**
  * @brief 电机控制消息结构
  */
-struct msg_motor_ctrl_t {
-
+struct msg_gimbal_ctrl_t {
+    float yaw_speed;
+    float pitch_speed;
+    float yaw_torque;
+    float pitch_torque;
+    CTRL_MODE yaw_mode;
+    CTRL_MODE pitch_mode;
 };
 
 /**
  * @brief 云台反馈消息结构
  */
-struct msg_gimbal_fdb_t {
-
+struct pid_tuning_t {
+    float kp;
+    float ki;
+    float kd;
 };
 
 #endif //RM26_H7_MAGICMSG_HPP
