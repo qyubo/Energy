@@ -1,6 +1,6 @@
 /******************************************************************************
  * @file     none.h
- * @brief    Intrinsincs when no DSP extension available
+ * @brief    Intrinsics when no DSP extension available
  * @version  V1.9.0
  * @date     20. July 2020
  ******************************************************************************/
@@ -34,8 +34,8 @@ of intrinsics.
 
 */
  
-#ifndef _NONE_H_
-#define _NONE_H_
+#ifndef NONE_H_
+#define NONE_H_
 
 #include "arm_math_types.h"
 

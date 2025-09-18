@@ -23,12 +23,33 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_MATH_MEMORY_H_
+#ifndef ARM_MATH_MEMORY_H_
 
-#define _ARM_MATH_MEMORY_H_
+#define ARM_MATH_MEMORY_H_
 
 #include "arm_math_types.h"
 
+/* Size are in bytes */
+#if !defined(ARM_MATH_L1_CACHE_SIZE)
+#define ARM_MATH_L1_CACHE_SIZE (16*1024)
+#endif 
+
+#if !defined(ARM_MATH_L2_CACHE_SIZE)
+#define ARM_MATH_L2_CACHE_SIZE (128*1024)
+#endif 
+
+#if !defined(ARM_MATH_L3_CACHE_SIZE)
+#define ARM_MATH_L3_CACHE_SIZE (512*1024)
+#endif
+
+#if defined(ARM_MATH_NEON)
+
+
+extern char ARM_CACHE_PACKEDB[];
+extern char ARM_CACHE_PACKEDA[];
+// PACKEDC contains the accumulators
+extern char ARM_CACHE_PACKEDC[];
+#endif
 
 #ifdef   __cplusplus
 extern "C"
@@ -105,7 +126,6 @@ __STATIC_FORCEINLINE q31_t read_q15x2 (
   @brief         Write 2 Q15 to Q15 pointer and increment pointer afterwards.
   @param[in]     pQ15      points to input value
   @param[in]     value     Q31 value
-  @return        none
  */
 __STATIC_FORCEINLINE void write_q15x2_ia (
   q15_t ** pQ15,
@@ -126,7 +146,6 @@ __STATIC_FORCEINLINE void write_q15x2_ia (
   @brief         Write 2 Q15 to Q15 pointer.
   @param[in]     pQ15      points to input value
   @param[in]     value     Q31 value
-  @return        none
  */
 __STATIC_FORCEINLINE void write_q15x2 (
   q15_t * pQ15,
@@ -179,7 +198,6 @@ __STATIC_FORCEINLINE q31_t read_q7x4 (
   @brief         Write 4 Q7 to Q7 pointer and increment pointer afterwards.
   @param[in]     pQ7       points to input value
   @param[in]     value     Q31 value
-  @return        none
  */
 __STATIC_FORCEINLINE void write_q7x4_ia (
   q7_t ** pQ7,

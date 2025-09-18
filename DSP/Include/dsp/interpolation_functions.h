@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _INTERPOLATION_FUNCTIONS_H_
-#define _INTERPOLATION_FUNCTIONS_H_
+#ifndef INTERPOLATION_FUNCTIONS_H_
+#define INTERPOLATION_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -124,7 +124,7 @@ extern "C"
   /**
    * @brief Processing function for the floating-point cubic spline interpolation.
    * @param[in]  S          points to an instance of the floating-point spline structure.
-   * @param[in]  xq         points to the x values ot the interpolated data points.
+   * @param[in]  xq         points to the x values of the interpolated data points.
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples of output data.
    */
@@ -162,7 +162,7 @@ extern "C"
    *
    */
   float32_t arm_linear_interp_f32(
-  arm_linear_interp_instance_f32 * S,
+  const arm_linear_interp_instance_f32 * S,
   float32_t x);
 
    /**

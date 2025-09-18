@@ -6,19 +6,19 @@
 #define RM26_H7_MAGICMSG_HPP
 
 typedef enum {
-    Relax = 1,
-    Spin,
-    Normal,
-    R2N,
-    N2R,
-    N2S,
-    S2N
+    Relax = 2,
+    Spin = 1,
+    Normal = 3,
+    R2N = 4,
+    N2R = 5,
+    N2S = 6,
+    S2N = 7
 }CTRL_STATE;
 
 typedef enum {
-    Closed = 1,
-    Warm,
-    Fire
+    Closed = 2,
+    Warm = 3,
+    Fire = 1
 }SHOOT_STATE;
 
 /**

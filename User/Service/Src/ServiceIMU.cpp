@@ -76,7 +76,7 @@ static void InitQuaternion(float *init_q4)
     DWT_GetDeltaT(&INS_Count);
 
     for (;;) {
-		IMU_time = tx_time_get();
+        IMU_time = tx_time_get();
         if (!imu_handler->self_test.INIT_ERR) {
             imu_handler->ReadAccData(&imu_handler->acc_data);
             imu_handler->ReadGyroData(&imu_handler->gyro_data);
@@ -138,7 +138,6 @@ ULONG temp_time;
 
     for (;;) {
         temp_time = tx_time_get();
-        // tx_semaphore_get(&IMUTempThreadSem, TX_WAIT_FOREVER);
         imu_handler->ReadAccTemperature(&imu_handler->acc_data.temperature);
         imu_handler->TemperatureControl(imu_handler->TargetTemp);
 

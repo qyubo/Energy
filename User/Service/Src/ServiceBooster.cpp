@@ -15,6 +15,7 @@ TX_THREAD my_thread2;
 uint8_t my_thread_stack2[1024];
 
 extern TX_THREAD RemoterThread;
+extern TX_SEMAPHORE RemoterThreadSem;
 extern uint8_t RemoterThreadStack[2048];
 extern void RemoterThreadFun(ULONG initial_input);
 
@@ -48,7 +49,7 @@ UCHAR Msg_PoolBuf[4096] = {0};
         /* Increment thread counter. */
         tx_semaphore_put(&my_semaphore1);
         /* Sleep for 1 tick. */
-        tx_thread_sleep(500);
+        tx_thread_sleep(1000);
     }
 }
 
@@ -73,17 +74,18 @@ void ServiceBooster()
     /*Math pool in ccram*/
     tx_byte_pool_create(
             &MathPool,
-            (CHAR *) "Math_Pool",
+            TX_NAME("Math_Pool"),
             Math_PoolBuf,
             sizeof(Math_PoolBuf));
 
     tx_byte_pool_create(
             &MsgPool,
-            (CHAR *) "Msg_Pool",
+            TX_NAME("Msg_Pool"),
             Msg_PoolBuf,
             sizeof(Msg_PoolBuf));
 
     tx_semaphore_create(&my_semaphore1, TX_NAME("my_semaphore1"), 0);
+    tx_semaphore_create(&RemoterThreadSem, TX_NAME("RemoterThreadSem"), 0);
 
     /* Create my_thread! */
     tx_thread_create(&my_thread1, TX_NAME("my_thread1"),
@@ -94,9 +96,9 @@ void ServiceBooster()
         my_thread_entry2, 0x1234, my_thread_stack2, sizeof(my_thread_stack2),
         10, 10, TX_NO_TIME_SLICE, TX_AUTO_START);
 
-    // tx_thread_create(&RemoterThread, TX_NAME("RemoterThread"),
-    //     RemoterThreadFun, 0x1234, RemoterThreadStack, sizeof(RemoterThreadStack),
-    //     4, 4, TX_NO_TIME_SLICE, TX_AUTO_START);
+    tx_thread_create(&RemoterThread, TX_NAME("RemoterThread"),
+        RemoterThreadFun, 0x1234, RemoterThreadStack, sizeof(RemoterThreadStack),
+        4, 4, TX_NO_TIME_SLICE, TX_AUTO_START);
 
     tx_thread_create(&IMUThread, TX_NAME("IMUThread"),
         IMUThreadFun, 0x1234, IMUThreadStack, sizeof(IMUThreadStack),
