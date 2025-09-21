@@ -1,0 +1,28 @@
+
+
+Breakpoint=/home/cosmosmount/Desktop/robomaster/RM26_F4/User/Service/Src/ServiceRemoter.cpp:38, State=BP_STATE_ON
+OpenDocument="TaskGimbal.cpp", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/User/Task/Src/TaskGimbal.cpp", Line=0
+OpenDocument="txe_semaphore_put.c", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/Middlewares/ST/threadx/common/src/txe_semaphore_put.c", Line=41
+OpenDocument="startup_stm32f407ighx.s", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/Core/Startup/startup_stm32f407ighx.s", Line=97
+OpenDocument="tx_thread_schedule.S", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/Middlewares/ST/threadx/ports/cortex_m4/gnu/src/tx_thread_schedule.S", Line=221
+OpenDocument="bsp_usart.cpp", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/User/BSP/Src/bsp_usart.cpp", Line=129
+OpenDocument="ServiceRemoter.cpp", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/User/Service/Src/ServiceRemoter.cpp", Line=22
+OpenDocument="main.c", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/Core/Src/main.c", Line=57
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=2, w=434, h=398, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=723, h=507, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=1, w=434, h=311, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=0, y=0, w=1673, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x2880
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=723, h=350, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=2, w=723, h=140, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Find Results", DockArea=RIGHT, x=0, y=0, w=434, h=288, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Console", DockArea=BOTTOM, x=1, y=0, w=811, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Class";"Source"], ColWidths=[1554;100;100;100;27;875]
+TableHeader="Source Files", SortCol="Path", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[344;100;100;100;1015]
+TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;105;259]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh";"Access"], ColWidths=[187;212;100;224;101]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;374]
+WatchedExpression="data_rx", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="debug_dr16", RefreshRate=5, Window=Watched Data 1
