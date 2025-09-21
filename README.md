@@ -1,4 +1,4 @@
-# RM26_H7
+# RM26_F4
 PnX26赛季电控F407IGHx开发板通用仓库。
 ## ToolChain
 使用的工具链为CubeMX+CLion+Ozone，可以实现全平台开发、调试，在合适的系统支持下可以实现快速编译。
