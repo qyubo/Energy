@@ -88,8 +88,8 @@ public:
     uint16_t canId;                   ///< 电机的CAN通信ID
     CAN_HandleTypeDef *hcan;          ///< 指向电机使用的CAN接口的指针
 
-    PID speedPid;    ///< 速度环PID控制器
-    PID positionPid; ///< 位置环PID控制器
+    PID speedPid = PID(0.1f, 0.0f, 0.0f, 25000.0f, 3.0f, PID_POSITION);    ///< 速度环PID控制器
+    PID positionPid = PID(0.1f, 0.0f, 0.0f, 25000.0f, 3.0f, PID_POSITION); ///< 位置环PID控制器
 
 
     float speedSet;    ///< 设定的目标速度
@@ -129,21 +129,6 @@ public:
         motorFeedback.positionFdb = 0;
         motorFeedback.lastPositionFdb = 0;
         motorFeedback.temperatureFdb = 0;
-
-        // pid初始化
-        speedPid.mode = PID_POSITION;
-        speedPid.kp = 0.1;
-        speedPid.ki = 0.0;
-        speedPid.kd = 0.0;
-        speedPid.maxOut = 25000;
-        speedPid.maxIOut = 3;
-
-        positionPid.mode = PID_POSITION;
-        positionPid.kp = 0.1;
-        positionPid.ki = 0.0;
-        positionPid.kd = 0.0;
-        positionPid.maxOut = 25000;
-        positionPid.maxIOut = 3;
 
     }
 };

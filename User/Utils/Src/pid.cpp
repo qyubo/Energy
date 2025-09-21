@@ -90,11 +90,22 @@ static void f_Integral_Limit(PID *pid)
 //     err[0] = err[1] = err[2] = 0.0f;
 // }
 
-PID::PID(float kp, float ki, float kd, float maxOut, float maxIOut, int mode = PID_POSITION)
+PID::PID(float kp, float ki, float kd, float maxOut, float maxIOut, int mode)
     : mode(mode), kp(kp), ki(ki), kd(kd), maxOut(maxOut), maxIOut(maxIOut)
 {
     fdb = last_fbd = 0.0f;
+    ref = last_ref = 0.0f;
     err[0] = err[1] = err[2] = 0.0f;
+    ScalarA = ScalarB = 0.0f;
+    fdf = 0.0f;
+    pResult = iResult = dResult = 0.0f;
+    iTerm = 0.0f;
+    tau = 0.0f;
+    result = 0.0f;
+    Motorblocked = false;
+    Motornormal = true;
+    errorcount = rightcount = 0;
+    deadband = 0.0f;
 }
 
 void PID::Tuning(float tuning_kp, float tuning_ki, float tuning_kd) {

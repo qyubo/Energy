@@ -44,7 +44,7 @@ public:
     float fdb;
     float last_fbd;
     float last_ref;
-    float err[3];
+    float err[3]{};
 
     float pResult;
     float iResult;

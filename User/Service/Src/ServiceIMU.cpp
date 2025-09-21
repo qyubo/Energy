@@ -113,12 +113,7 @@ ULONG temp_time;
 [[noreturn]] void IMUTempThreadFun(ULONG initial_input) {
     UNUSED(initial_input);
 
-    imu_handler->TempPid.mode = PID_POSITION | PID_Integral_Limit | PID_Changing_Integral_Rate | PID_Derivative_On_Measurement; // 位置式PID，积分限幅
-    imu_handler->TempPid.kp = 650.0f;
-    imu_handler->TempPid.ki = 0.06f;
-    imu_handler->TempPid.kd = 10.0f;
-    imu_handler->TempPid.maxOut = 900.0f;
-    imu_handler->TempPid.maxIOut = 300.0f;
+    imu_handler->TempPid = PID(650.0f, 0.06f, 10.0f, 900.0f, 300.0f,  PID_POSITION | PID_Integral_Limit | PID_Changing_Integral_Rate | PID_Derivative_On_Measurement);
     imu_handler->TempPid.ScalarA = 3.5f;
     imu_handler->TempPid.ScalarB = 0.08f;
 
