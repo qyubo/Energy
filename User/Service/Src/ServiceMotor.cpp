@@ -3,7 +3,12 @@
 #include "ServiceMotor.hpp"
 #include "om.h"
 #include "magicmsgs.hpp"
+#include "filter.hpp"
+#include "math.hpp"
+#include "bsp_dwt.hpp"
 
+using namespace Filter;
+using namespace Math;
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
@@ -15,17 +20,23 @@ TX_THREAD MotorThread;
 uint8_t MotorThreadStack[4096] = {0};
 DJIMotorHandler* DJIMotorhandler = DJIMotorHandler::Instance();
 
-int16_t test_cur = 0;
+motor_debug_t motor_debug;
+msg_ins_t debug_ins;
+pid_tuning_t motor_pos_pid;
+pid_tuning_t motor_spd_pid;
+float debug_cur = 0.0f;
+float vel_ratio = 0;
+float test_r = 0;
+float debug_set = 0.0f;
 
 void ServiceMotors::MotorRegister() {
     // //注册电机
+    DJIMotorhandler->registerMotor(&YawMotor, &hcan1, 0x206);
     YawMotor.currentSet = 0;
-    DJIMotorhandler->registerMotor(&YawMotor, &hcan1, 0x205);
+    YawMotor.gearBox = GearBox_None;
 
+    DJIMotorhandler->registerMotor(&PitchMotor, &hcan1, 0x205);
     PitchMotor.currentSet = 0;
-    DJIMotorhandler->registerMotor(&PitchMotor, &hcan1, 0x206);
-
-
 }
 
 void ServiceMotors::AllMotorSetOutput()
@@ -36,29 +47,47 @@ void ServiceMotors::AllMotorSetOutput()
 
 void ServiceMotors::SetModeAndPidParam()
 {
-    // LWheel.controlMode = GM6020::SPD_MODE;
-    // RWheel.controlMode = M2006::SPD_MODE;
-    //
-    // // LWheel.speedPid.mode = PID_POSITION | PID_Integral_Limit | PID_Trapezoid_Intergral;
-    // // LWheel.speedPid.kp = 200.0f;
-    // // LWheel.speedPid.ki = 0.0f;
-    // // LWheel.speedPid.kd = 4000.0f;
-    // // LWheel.speedPid.ScalarA = 6.0f;
-    // // LWheel.speedPid.ScalarB = 0.01f;
-    // // LWheel.speedPid.maxIOut = 10.0f;
-    // // LWheel.speedPid.maxOut = 10000.0f;
-    //
-    // RWheel.speedPid.mode = PID_POSITION | PID_Integral_Limit | PID_Trapezoid_Intergral;
-    // RWheel.speedPid.kp = 200.0f;
-    // RWheel.speedPid.ki = 0.0f;
-    // RWheel.speedPid.kd = 4000.0f;
-    // RWheel.speedPid.ScalarA = 6.0f;
-    // RWheel.speedPid.ScalarB = 0.01f;
-    // RWheel.speedPid.maxIOut = 10.0f;
-    // RWheel.speedPid.maxOut = 10000.0f;
+    YawMotor.speedPid.kp = 300.0f;
+    YawMotor.speedPid.ki = 0.01f;
+    YawMotor.speedPid.kd = 1.0f;
+
+    PitchMotor.speedPid.kp = 100.0f;
 }
 
+double signal(double t)
+{
+    const double T = 0.9;           // 周期
+    const double step_value = 0.19; // 最大幅值
 
+    const double buffer_ratio = 1.0 / 5.0;
+    const double rise_ratio = 4.0 / 5.0;
+
+    double t_mod = std::fmod(t, T);
+
+    double buffer_time = buffer_ratio * T;
+    double rise_time = rise_ratio * T;
+
+    if (t_mod < buffer_time)
+    {
+        // 前1/5缓冲段
+        return 0.0;
+    }
+    else if (t_mod < T)
+    {
+        // 后4/5平滑上升段
+        double rise_t = t_mod - buffer_time;
+        double progress = rise_t / rise_time; // 0 ~ 1
+
+        // 平滑函数：cosine ease-in
+        double smooth = (1 - std::cos(Math::Pi * progress)) / 2.0;
+
+        return step_value * smooth;
+    }
+    else
+    {
+        return 0.0;
+    }
+}
 
 [[noreturn]] void MotorThreadFun(ULONG initial_input) {
     UNUSED(initial_input);
@@ -72,20 +101,91 @@ void ServiceMotors::SetModeAndPidParam()
     msg_gimbal_ctrl_t gimbal_ctrl{};
     serviceMotors.SetModeAndPidParam();
 
+    om_suber_t *ins_suber = om_subscribe(om_find_topic("ins", UINT32_MAX));
+    msg_ins_t ins{};
+
+    KalmanFilter test_spd_filer;
+    test_spd_filer.SetQ(0.030f);
+    test_spd_filer.SetR(1.200f);
+
+    motor_pos_pid.kp = 10.0f;
+    motor_pos_pid.ki = 0.0f;
+    motor_pos_pid.kd = 0.0f;
+
+    motor_spd_pid.kp = 300.0f;
+    motor_spd_pid.ki = 0.01f;
+    motor_spd_pid.kd = 1.0f;
+    float yaw_init = 0.0f;
+
     for (;;) {
-        time = tx_time_get();
         om_suber_export(gimbal_suber, &gimbal_ctrl, false);
-        serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_torque*100);
-        serviceMotors.PitchMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.pitch_torque*100);
+        om_suber_export(ins_suber, &ins, false);
+        memcpy (&debug_ins, &ins, sizeof(msg_ins_t));
+        if (gimbal_ctrl.pitch_mode == SPD)
+        {
+            serviceMotors.PitchMotor.speedPid.ref = gimbal_ctrl.pitch_speed;
+            serviceMotors.PitchMotor.speedPid.fdb = serviceMotors.PitchMotor.motorFeedback.speedFdb;
+            serviceMotors.PitchMotor.speedPid.UpdateResult();
+            serviceMotors.PitchMotor.currentSet = static_cast<int16_t>(serviceMotors.PitchMotor.speedPid.result);
+        }
+        else
+        {
+            serviceMotors.PitchMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.pitch_torque*100);
+        }
+        if (gimbal_ctrl.yaw_mode == SPD)
+        {
+            if (yaw_init == 0.0f)
+            {
+                yaw_init = serviceMotors.YawMotor.motorFeedback.positionFdb;
+                // yaw_init = ins.yaw;
+            }
+            serviceMotors.YawMotor.positionPid.ref = yaw_init + signal(DWT_GetTimeline_s());
+            serviceMotors.YawMotor.positionPid.fdb = serviceMotors.YawMotor.motorFeedback.positionFdb;
+            // serviceMotors.YawMotor.positionPid.fdb = ins.yaw;
+            serviceMotors.YawMotor.positionPid.UpdateResult();
+            // debug_cur = test_spd_filer.Update(serviceMotors.YawMotor.motorFeedback.currentFdb);
+            // serviceMotors.YawMotor.currentSet = static_cast<int16_t>(serviceMotors.YawMotor.positionPid.result*700);
+            // serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_speed*3.0f*2000);
+
+            serviceMotors.YawMotor.speedPid.ref = serviceMotors.YawMotor.positionPid.result;
+            serviceMotors.YawMotor.speedPid.fdb = test_spd_filer.Update(serviceMotors.YawMotor.motorFeedback.speedFdb);
+            serviceMotors.YawMotor.speedPid.UpdateResult();
+            serviceMotors.YawMotor.currentSet = static_cast<int16_t>(serviceMotors.YawMotor.speedPid.result);
+            // debug_cur += 1;
+            // if (debug_cur > 5000)
+            //     debug_cur = 5000;
+            // serviceMotors.YawMotor.currentSet = debug_cur;
+            // debug_set = debug_cur - 1.80f*serviceMotors.YawMotor.motorFeedback.currentFdb;
+            // if (serviceMotors.YawMotor.motorFeedback.speedFdb != 0.0f)
+            //     vel_ratio = debug_set / serviceMotors.YawMotor.motorFeedback.speedFdb;
+            // if (serviceMotors.YawMotor.motorFeedback.currentFdb != 0)
+            //     test_r = (debug_cur - 900*serviceMotors.YawMotor.motorFeedback.speedFdb) / serviceMotors.YawMotor.motorFeedback.currentFdb;
+        }
+        else
+        {
+            serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_torque*100);
+        }
+
+        motor_debug.pos_set = serviceMotors.YawMotor.positionPid.ref;
+        motor_debug.pos_fdb = serviceMotors.YawMotor.positionPid.fdb;
+        motor_debug.spd_set = serviceMotors.YawMotor.speedPid.ref;
+        // motor_debug.spd_fdb = serviceMotors.YawMotor.speedPid.fdb;
+        motor_debug.spd_fdb = serviceMotors.YawMotor.motorFeedback.speedFdb;
+        motor_debug.cur_set = serviceMotors.YawMotor.currentSet;
+        motor_debug.cur_fdb = serviceMotors.YawMotor.motorFeedback.currentFdb;
+
+        serviceMotors.YawMotor.speedPid.kp = motor_spd_pid.kp;
+        serviceMotors.YawMotor.speedPid.ki = motor_spd_pid.ki;
+        serviceMotors.YawMotor.speedPid.kd = motor_spd_pid.kd;
+
+        serviceMotors.YawMotor.positionPid.kp = motor_pos_pid.kp;
+        serviceMotors.YawMotor.positionPid.ki = motor_pos_pid.ki;
+        serviceMotors.YawMotor.positionPid.kd = motor_pos_pid.kd;
 
         //发送控制指令给电机
         DJIMotorhandler->sendControlData();
 
-        //比较准确的执行时间为1ms，可能不需要
-        uint8_t time_to_delay = tx_time_get() - time;
-        if (time_to_delay < 1) {
-            tx_thread_sleep(1 - time_to_delay);
-        }
+        tx_thread_sleep(1);
     }
 }
 
@@ -115,6 +215,5 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     }
     else // 未知的ID，需要进行错误处理
     {
-        // Monitor::Instance()->Log_Messages(Monitor::ERROR, (uint8_t *)"CAN Unknown ID\r\n", USART_MODE_DMA);
     }
 }

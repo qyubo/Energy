@@ -55,15 +55,3 @@ void CAN_Transmit(CAN_HandleTypeDef *hcan, uint32_t Id, uint8_t *msg, uint16_t l
     HAL_CAN_AddTxMessage(hcan, &tx_header, msg, &send_mail_box);
 }
 
-/**
- * @todo 待完成整个函数
- * @brief 更新从CAN接收的电机数据。
- * @param index 电机的索引，用于识别特定的电机。
- * @param rx_header 指向接收到的数据的指针。
- * @param can_receive_data 指向电机测量数据结构的指针，用于存储更新的数据。
- */
-void CAN_Receive()
-{
-}
-
-
