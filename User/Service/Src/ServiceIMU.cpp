@@ -16,6 +16,12 @@ uint8_t IMUThreadStack[4096] = {0};
 TX_SEMAPHORE IMUThreadSem;
 ULONG IMU_time;
 
+static float last_yaw = 0.0f;
+static float yaw_corr = 0.0f;
+const float alpha = 1.0f;
+static bool corr_start = false;
+static bool yaw_static = false;
+
 static void InitQuaternion(float *init_q4)
 {
     float acc_init[3] = {0};
@@ -62,9 +68,9 @@ static void InitQuaternion(float *init_q4)
     imu_handler->VerifyGyroChipID(); //< 验证陀螺仪ID
 
     while (imu_handler->acc_data.temperature < 45.0f) {
-        tx_thread_sleep(100);
+        tx_thread_sleep(50);
     }
-    tx_thread_sleep(2000);
+    tx_thread_sleep(1000);
 
     imu_handler->Calibrate(); //< 标定IMU
     imu_handler->self_test.INIT_ERR = false;
@@ -80,8 +86,44 @@ static void InitQuaternion(float *init_q4)
         if (!imu_handler->self_test.INIT_ERR) {
             imu_handler->ReadAccData(&imu_handler->acc_data);
             imu_handler->ReadGyroData(&imu_handler->gyro_data);
-            IMU_QuaternionEKF_Update(imu_handler->acc_data.x, imu_handler->acc_data.y, imu_handler->acc_data.z,
-                imu_handler->gyro_data.roll, imu_handler->gyro_data.pitch, imu_handler->gyro_data.yaw,
+            imu_handler->gyro_data.roll -= BMI088_PRE_CALI_ACC_X_OFFSET;
+            imu_handler->gyro_data.pitch -= BMI088_PRE_CALI_ACC_Y_OFFSET;
+            imu_handler->gyro_data.yaw -= BMI088_PRE_CALI_ACC_Z_OFFSET;
+            // if ((int)DWT_GetTimeline_ms() % 5 == 0)
+            // {
+            //     if (fabs(imu_handler->acc_data.x) <= 0.3f && fabs(imu_handler->acc_data.y) <= 0.3f &&
+            //     fabs(imu_handler->gyro_data.roll) <= 0.03f && fabs(imu_handler->gyro_data.pitch) <= 0.03f && fabs(imu_handler->gyro_data.yaw) <= 0.04f)
+            //     {
+            //         if (!corr_start)
+            //         {
+            //             yaw_corr = QEKF_INS.Yaw;
+            //             corr_start = true;
+            //         }
+            //         yaw_static = true;
+            //
+            //     }
+            //     else
+            //     {
+            //         corr_start = false;
+            //         yaw_static = false;
+            //     }
+            // }
+            // if (yaw_static)
+            // {
+            //     imu_handler->gyro_data.yaw -= (QEKF_INS.Yaw-yaw_corr);
+            // }
+            // if (fabs(imu_handler->acc_data.x) <= 0.3f && fabs(imu_handler->acc_data.y) <= 0.3f &&
+            //     fabs(imu_handler->gyro_data.roll) <= 0.03f && fabs(imu_handler->gyro_data.pitch) <= 0.03f && fabs(imu_handler->gyro_data.yaw) <= 0.04f)
+            // {
+            //     imu_handler->gyro_data.yaw = 0.0f;
+            // }
+            if (fabs(imu_handler->acc_data.x) <= 0.15f && fabs(imu_handler->acc_data.y) <= 0.15f &&
+                fabs(imu_handler->gyro_data.roll) <= 0.015f && fabs(imu_handler->gyro_data.pitch) <= 0.015f && fabs(imu_handler->gyro_data.yaw) <= 0.015f)
+            {
+                imu_handler->gyro_data.yaw = 0;
+            }
+            IMU_QuaternionEKF_Update(imu_handler->gyro_data.roll, imu_handler->gyro_data.pitch, imu_handler->gyro_data.yaw,
+                imu_handler->acc_data.x, imu_handler->acc_data.y, imu_handler->acc_data.z,
                 DWT_GetDeltaT(&INS_Count));
         }
 
