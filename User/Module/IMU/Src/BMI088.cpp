@@ -39,7 +39,7 @@ namespace BMI088
         // 循环继续的条件为标定环境不满足
         do // 用do while至少执行一次,省得对上面的参数进行初始化
         {  // 标定超时,直接使用预标定参数(如果有)
-            if (DWT_GetTimeline_s() - startTime > 2.01)
+            if (DWT_GetTimeline_s() - startTime > 0.01)
             { // 两次都没有成功就切换标定模式,丢给下一个if处理,使用预标定参数
                 self_test.CALIBRATE_ERR = true;
                 break;
