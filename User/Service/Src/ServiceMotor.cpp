@@ -53,6 +53,41 @@ void ServiceMotors::SetModeAndPidParam()
     PitchMotor.speedPid.kp = 100.0f;
 }
 
+// double signal(double t)
+// {
+//     const double T = 0.9;           // 周期
+//     const double step_value = 0.19; // 最大幅值
+//
+//     const double buffer_ratio = 1.0 / 5.0;
+//     const double rise_ratio = 4.0 / 5.0;
+//
+//     double t_mod = std::fmod(t, T);
+//
+//     double buffer_time = buffer_ratio * T;
+//     double rise_time = rise_ratio * T;
+//
+//     if (t_mod < buffer_time)
+//     {
+//         // 前1/5缓冲段
+//         return 0.0;
+//     }
+//     else if (t_mod < T)
+//     {
+//         // 后4/5平滑上升段
+//         double rise_t = t_mod - buffer_time;
+//         double progress = rise_t / rise_time; // 0 ~ 1
+//
+//         // 平滑函数：cosine ease-in
+//         double smooth = (1 - std::cos(Math::Pi * progress)) / 2.0;
+//
+//         return step_value * smooth;
+//     }
+//     else
+//     {
+//         return 0.0;
+//     }
+// }
+
 [[noreturn]] void MotorThreadFun(ULONG initial_input) {
     UNUSED(initial_input);
     ULONG time;
@@ -70,7 +105,7 @@ void ServiceMotors::SetModeAndPidParam()
     // test_spd_filer.SetR(1.200f);
 
     FirstOrderFilter test_spd_filter;
-    test_spd_filter.SetTau(0.4);
+    test_spd_filter.SetTau(0.0);
     float test_spd;
 
     motor_pos_pid.kp = 10.0f;
@@ -103,9 +138,9 @@ void ServiceMotors::SetModeAndPidParam()
             //     // yaw_init = ins.yaw;
             // }
             // serviceMotors.YawMotor.positionPid.ref = yaw_init + signal(DWT_GetTimeline_s());
-            // serviceMotors.YawMotor.positionPid.fdb = serviceMotors.YawMotor.motorFeedback.positionFdb;
+            serviceMotors.YawMotor.positionPid.fdb = serviceMotors.YawMotor.motorFeedback.positionFdb;
             // serviceMotors.YawMotor.positionPid.fdb = ins.yaw;
-            // serviceMotors.YawMotor.positionPid.UpdateResult();
+            serviceMotors.YawMotor.positionPid.UpdateResult();
             // debug_cur = test_spd_filer.Update(serviceMotors.YawMotor.motorFeedback.currentFdb);
             // serviceMotors.YawMotor.currentSet = static_cast<int16_t>(serviceMotors.YawMotor.positionPid.result*700);
             // serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_speed*3.0f*2000);
@@ -113,11 +148,10 @@ void ServiceMotors::SetModeAndPidParam()
             // serviceMotors.YawMotor.speedPid.ref = serviceMotors.YawMotor.positionPid.result;
             // serviceMotors.YawMotor.speedPid.fdb = test_spd_filer.Update(serviceMotors.YawMotor.motorFeedback.speedFdb);
             // serviceMotors.YawMotor.speedPid.UpdateResult();
-            // test_spd_filter.SetInput(serviceMotors.YawMotor.motorFeedback.speedFdb);
-            // test_spd_filter.Update();
-            // test_spd = test_spd_filter.GetResult();
-            // serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_speed*800+test_spd*500);
-            // debug_cur += 1;
+            test_spd_filter.SetInput(serviceMotors.YawMotor.motorFeedback.speedFdb);
+            test_spd_filter.Update();
+            test_spd = test_spd_filter.GetResult();
+            serviceMotors.YawMotor.currentSet = static_cast<int16_t>(serviceMotors.YawMotor.positionPid.result*950+test_spd*400);            // debug_cur += 1;
             // if (debug_cur > 5000)
             //     debug_cur = 5000;
             // serviceMotors.YawMotor.currentSet = debug_cur;
@@ -129,15 +163,15 @@ void ServiceMotors::SetModeAndPidParam()
         }
         else
         {
-            serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_torque*100);
+            serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_torque*50);
         }
 
         motor_debug.pos_set = serviceMotors.YawMotor.positionPid.ref;
         motor_debug.pos_fdb = serviceMotors.YawMotor.positionPid.fdb;
         motor_debug.spd_set = gimbal_ctrl.yaw_speed;
         // motor_debug.spd_fdb = serviceMotors.YawMotor.speedPid.fdb;
-        // motor_debug.spd_fdb = serviceMotors.YawMotor.motorFeedback.speedFdb;
-        motor_debug.spd_fdb = test_spd;
+        motor_debug.spd_fdb = serviceMotors.YawMotor.motorFeedback.speedFdb;
+        // motor_debug.spd_fdb = test_spd;
         motor_debug.cur_set = serviceMotors.YawMotor.currentSet;
         motor_debug.cur_fdb = serviceMotors.YawMotor.motorFeedback.currentFdb;
 
