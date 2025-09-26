@@ -32,7 +32,7 @@ pid_tuning_t pitch_pos_tuning;
 pid_tuning_t pitch_spd_tuning;
 #endif
 
-double signal(double t)
+static double signal(double t)
 {
     const double T = 0.6;           // 周期
     const double step_value = 0.52; // 最大幅值
@@ -67,8 +67,11 @@ double signal(double t)
     }
 }
 
-PID yaw_pos_pid(120.0f, 0.0f, 500.0f, 500.0f, 10.0f, PID_POSITION | PID_Derivative_On_Measurement);
-PID yaw_spd_pid(100.0f, 0.0f, 2000.0f, 500.0f, 100.0f, PID_POSITION);
+// PID yaw_pos_pid(120.0f, 0.0f, 500.0f, 500.0f, 10.0f, PID_POSITION | PID_Derivative_On_Measurement);
+// PID yaw_spd_pid(100.0f, 0.0f, 2000.0f, 500.0f, 100.0f, PID_POSITION);
+PID yaw_pos_pid(200.0f, 0.0f, 0.0f, 500.0f, 10.0f, PID_POSITION | PID_Derivative_On_Measurement);
+PID yaw_spd_pid(50.0f, 0.0f, 1500.0f, 500.0f, 100.0f, PID_POSITION);
+
 PID pitch_pos_pid(50.0f, 0.0f, 0.0f, 500.0f, 0.0f, PID_POSITION);
 PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
 
@@ -87,6 +90,7 @@ PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
 
     KalmanFilter YawAngleFilter;
     KalmanFilter YawGyroFilter;
+    // LowPassFilter_333Hz GyroFilter;
 
     YawAngleFilter.SetQ(0.05f);
     YawAngleFilter.SetR(0.80f);
@@ -97,6 +101,7 @@ PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
     // PID yaw_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
     // PID pitch_pos_pid(50.0f, 0.0f, 0.0f, 500.0f, 0.0f, PID_POSITION);
     // PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
+    float yaw_init = 0.0f;
 
 
     for (;;) {
@@ -107,7 +112,7 @@ PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
 
         if (tx_semaphore_get(&IMUThreadSem, TX_WAIT_FOREVER) == TX_SUCCESS)
         {
-            if (remoter.ctrl_sw == Relax) {
+            if (remoter.ctrl_sw == Relax || remoter.offline) {
                 gimbal_ctrl.pitch_torque = 0.0f;
                 gimbal_ctrl.yaw_torque = 0.0f;
                 gimbal_ctrl.yaw_mode = TORQUE;
@@ -124,13 +129,21 @@ PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
                     gimbal_ctrl.yaw_mode = TORQUE;
                     gimbal_ctrl.pitch_mode = TORQUE;
 
-                    // yaw_pos_pid.ref += remoter.right_x*0.003f;
-                    yaw_pos_pid.ref = signal(DWT_GetTimeline_s());
+                    if (yaw_init == 0.0f)
+                    {
+                        // yaw_init = serviceMotors.YawMotor.motorFeedback.positionFdb;
+                        yaw_init = ins.total_yaw*DegreeToRad;
+                    }
+
+                    yaw_pos_pid.ref += remoter.right_x*0.003f;
+                    // yaw_pos_pid.ref = signal(DWT_GetTimeline_s())+yaw_init;
                     // yaw_pos_pid.fdb = YawAngleFilter.Update(ins.total_yaw*DegreeToRad);
                     yaw_pos_pid.fdb = ins.total_yaw*DegreeToRad;
                     yaw_pos_pid.UpdateResult();
                     yaw_spd_pid.ref = yaw_pos_pid.result;
-                    yaw_spd_pid.fdb = YawGyroFilter.Update(ins.gyro_y);
+                    // yaw_spd_pid.fdb = YawGyroFilter.Update(ins.gyro_y);
+                    // yaw_spd_pid.fdb = GyroFilter.calculate(ins.gyro_y);
+                    yaw_spd_pid.fdb = ins.gyro_y;
                     yaw_spd_pid.UpdateResult();
                     gimbal_ctrl.yaw_torque = yaw_spd_pid.result;
                     //
@@ -149,7 +162,7 @@ PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
                     yaw_debug.pos_set = yaw_pos_pid.ref;
                     yaw_debug.pos_fdb = yaw_pos_pid.fdb;
                     yaw_debug.spd_set = yaw_spd_pid.ref;
-                    yaw_debug.spd_fdb = yaw_spd_pid.fdb;
+                    yaw_debug.spd_fdb = ins.gyro_y;
     #endif
                 }
             }
