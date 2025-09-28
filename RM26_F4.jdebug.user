@@ -1,48 +1,37 @@
 
 
-Breakpoint=D:/RM26/RM26_F4/User/Service/Src/ServiceRemoter.cpp:19:5, State=BP_STATE_DISABLED
+Breakpoint=/home/cosmosmount/Desktop/robomaster/RM26_F4/User/Service/Src/ServiceRemoter.cpp:19:5, State=BP_STATE_DISABLED
 GraphedExpression="(yaw_debug).pos_set", Color=#a00909
 GraphedExpression="(yaw_debug).pos_fdb", Color=#09a01b
-GraphedExpression="(yaw_debug).spd_set", Color=#09a087
-GraphedExpression="(yaw_debug).spd_fdb", Color=#0984a0
-OpenDocument="main.c", FilePath="D:/RM26/RM26_F4/Core/Src/main.c", Line=62
-OpenDocument="TaskGimbal.cpp", FilePath="D:/RM26/RM26_F4/User/Task/Src/TaskGimbal.cpp", Line=0
-OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/RM26/RM26_F4/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1295
-OpenDocument="tx_port.h", FilePath="D:/RM26/RM26_F4/Middlewares/ST/threadx/ports/cortex_m4/gnu/inc/tx_port.h", Line=563
-OpenDocument="BMI088.cpp", FilePath="D:/RM26/RM26_F4/User/Module/IMU/Src/BMI088.cpp", Line=111
-OpenDocument="ServiceMotor.cpp", FilePath="D:/RM26/RM26_F4/User/Service/Src/ServiceMotor.cpp", Line=76
-OpenDocument="tx_thread_system_resume.c", FilePath="D:/RM26/RM26_F4/Middlewares/ST/threadx/common/src/tx_thread_system_resume.c", Line=155
-OpenDocument="ServiceIMU.cpp", FilePath="D:/RM26/RM26_F4/User/Service/Src/ServiceIMU.cpp", Line=0
-OpenDocument="stm32f4xx_hal_can.c", FilePath="D:/RM26/RM26_F4/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c", Line=1723
-OpenDocument="tx_thread_system_suspend.c", FilePath="D:/RM26/RM26_F4/Middlewares/ST/threadx/common/src/tx_thread_system_suspend.c", Line=525
-OpenDocument="QuaternionEKF.c", FilePath="D:/RM26/RM26_F4/User/Module/AHRS/Src/QuaternionEKF.c", Line=440
+OpenDocument="tx_thread_schedule.S", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/Middlewares/ST/threadx/ports/cortex_m4/gnu/src/tx_thread_schedule.S", Line=219
+OpenDocument="TaskGimbal.cpp", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/User/Task/Src/TaskGimbal.cpp", Line=0
+OpenDocument="startup_stm32f407ighx.s", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/Core/Startup/startup_stm32f407ighx.s", Line=45
+OpenDocument="main.c", FilePath="/home/cosmosmount/Desktop/robomaster/RM26_F4/Core/Src/main.c", Line=58
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=3, w=1027, h=226, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Source Files", DockArea=LEFT, x=0, y=1, w=723, h=372, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=2, w=1027, h=193, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Memory 1", DockArea=BOTTOM, x=1, y=0, w=1207, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x2880
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=2, w=723, h=280, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Functions", DockArea=LEFT, x=0, y=3, w=723, h=171, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Call Graph", DockArea=LEFT, x=0, y=0, w=723, h=269, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Data Sampling", DockArea=BOTTOM, x=0, y=0, w=766, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=1027, h=489, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="49;0", PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="788;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="797;0"
-OpenWindow="Find Results", DockArea=RIGHT, x=0, y=1, w=1027, h=184, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Console", DockArea=BOTTOM, x=2, y=0, w=585, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[1554;100;100;100;347]
-TableHeader="Source Files", SortCol="Path", SortOrder="DESCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[344;100;100;100;1049]
-TableHeader="Call Graph", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Stack Total";"Stack Local";"Code Total";"Code Local";"Depth";"Called From"], ColWidths=[636;137;137;128;128;113;137]
-TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (yaw_debug).pos_set";" (yaw_debug).pos_fdb";" (yaw_debug).spd_set";" (yaw_debug).spd_fdb"], ColWidths=[100;100;100;100;100;266]
-TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[203;100;113;131;113;140;119;137;137]
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=3, w=992, h=212, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=1, w=688, h=325, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=2, w=992, h=186, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=0, y=0, w=216, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x2880
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=2, w=688, h=253, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=3, w=688, h=169, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Call Graph", DockArea=LEFT, x=0, y=0, w=688, h=244, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=1696, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=992, h=415, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="10 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="49;0", PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="647;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="663;0"
+OpenWindow="Find Results", DockArea=RIGHT, x=0, y=1, w=992, h=178, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Console", DockArea=BOTTOM, x=2, y=0, w=566, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Class";"Source"], ColWidths=[1554;100;100;100;27;875]
+TableHeader="Source Files", SortCol="Path", SortOrder="DESCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[344;100;100;100;1015]
+TableHeader="Call Graph", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Stack Total";"Stack Local";"Code Total";"Code Local";"Depth";"Called From"], ColWidths=[636;137;137;128;128;113;100]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (yaw_debug).pos_set";" (yaw_debug).pos_fdb"], ColWidths=[100;100;100;100]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[212;100;100;100;100;100;100;100;784]
 TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
-TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;105;796]
-TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[187;212;100;198]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;105;772]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh";"Access"], ColWidths=[187;212;100;224;100]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
-TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;340]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;374]
 WatchedExpression="motor_pos_pid", RefreshRate=1, Window=Watched Data 1
 WatchedExpression="motor_debug", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="motor_spd_pid", RefreshRate=1, Window=Watched Data 1
 WatchedExpression="debug_ins", RefreshRate=2, Window=Watched Data 1
-WatchedExpression="imu_handler", Window=Watched Data 1
-WatchedExpression="yaw_debug", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="yaw_pos_tuning", RefreshRate=1, Window=Watched Data 1
-WatchedExpression="yaw_spd_tuning", RefreshRate=1, Window=Watched Data 1
+WatchedExpression="imu_handler", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="yaw_debug", Window=Watched Data 1

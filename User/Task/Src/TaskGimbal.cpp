@@ -35,7 +35,7 @@ pid_tuning_t pitch_spd_tuning;
 static double signal(double t)
 {
     const double T = 0.6;           // 周期
-    const double step_value = 0.52; // 最大幅值
+    const double step_value = 0.82; // 最大幅值
 
     const double buffer_ratio = 1.0 / 5.0;
     const double rise_ratio = 4.0 / 5.0;
