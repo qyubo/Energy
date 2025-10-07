@@ -86,37 +86,34 @@ static void InitQuaternion(float *init_q4)
         if (!imu_handler->self_test.INIT_ERR) {
             imu_handler->ReadAccData(&imu_handler->acc_data);
             imu_handler->ReadGyroData(&imu_handler->gyro_data);
-            imu_handler->gyro_data.roll -= BMI088_PRE_CALI_ACC_X_OFFSET;
-            imu_handler->gyro_data.pitch -= BMI088_PRE_CALI_ACC_Y_OFFSET;
-            imu_handler->gyro_data.yaw -= BMI088_PRE_CALI_ACC_Z_OFFSET;
-            // if ((int)DWT_GetTimeline_ms() % 5 == 0)
-            // {
-            //     if (fabs(imu_handler->gyro_data.roll) <= 0.03f && fabs(imu_handler->gyro_data.pitch) <= 0.03f && fabs(imu_handler->gyro_data.yaw) <= 0.04f)
-            //     {
-            //         if (!corr_start)
-            //         {
-            //             yaw_corr = QEKF_INS.Yaw;
-            //             corr_start = true;
-            //         }
-            //         yaw_static = true;
-            //
-            //     }
-            //     else
-            //     {
-            //         corr_start = false;
-            //         yaw_static = false;
-            //     }
-            // }
-            // if (yaw_static)
-            // {
-            //     imu_handler->gyro_data.yaw -= (QEKF_INS.Yaw-yaw_corr);
-            // }
+            if ((int)DWT_GetTimeline_ms() % 5 == 0)
+            {
+                if (fabs(imu_handler->gyro_data.x) <= 0.03f && fabs(imu_handler->gyro_data.y) <= 0.03f && fabs(imu_handler->gyro_data.z) <= 0.04f)
+                {
+                    if (!corr_start)
+                    {
+                        yaw_corr = QEKF_INS.Yaw;
+                        corr_start = true;
+                    }
+                    yaw_static = true;
+
+                }
+                else
+                {
+                    corr_start = false;
+                    yaw_static = false;
+                }
+            }
+            if (yaw_static)
+            {
+                imu_handler->gyro_data.z -= (QEKF_INS.Yaw-yaw_corr);
+            }
             // if (fabs(imu_handler->acc_data.x) <= 0.15f && fabs(imu_handler->acc_data.y) <= 0.15f &&
             //     fabs(imu_handler->gyro_data.roll) <= 0.015f && fabs(imu_handler->gyro_data.pitch) <= 0.015f && fabs(imu_handler->gyro_data.yaw) <= 0.015f)
             // {
             //     imu_handler->gyro_data.yaw = 0;
             // }
-            IMU_QuaternionEKF_Update(imu_handler->gyro_data.roll, imu_handler->gyro_data.pitch, imu_handler->gyro_data.yaw,
+            IMU_QuaternionEKF_Update(imu_handler->gyro_data.x, imu_handler->gyro_data.y, imu_handler->gyro_data.z,
                 imu_handler->acc_data.x, imu_handler->acc_data.y, imu_handler->acc_data.z,
                 DWT_GetDeltaT(&INS_Count));
         }
@@ -125,12 +122,14 @@ static void InitQuaternion(float *init_q4)
 
         memcpy(msg_ins.quaternion, QEKF_INS.q, sizeof(QEKF_INS.q));
         msg_ins.yaw = QEKF_INS.Yaw;
-        msg_ins.pitch = QEKF_INS.Pitch;
-        msg_ins.roll = QEKF_INS.Roll;
+        msg_ins.gyro_y = imu_handler->gyro_data.z;
         msg_ins.total_yaw = QEKF_INS.YawTotalAngle;
-        msg_ins.gyro_r = imu_handler->gyro_data.roll;
-        msg_ins.gyro_p = imu_handler->gyro_data.pitch;
-        msg_ins.gyro_y = imu_handler->gyro_data.yaw;
+
+        msg_ins.pitch = QEKF_INS.Roll;
+        msg_ins.roll = QEKF_INS.Pitch;
+        msg_ins.gyro_r = imu_handler->gyro_data.y;
+        msg_ins.gyro_p = imu_handler->gyro_data.x;
+
 
         om_publish(ins_topic, &msg_ins, sizeof(msg_ins), true, false);
 

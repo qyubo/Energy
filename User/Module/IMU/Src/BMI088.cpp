@@ -62,9 +62,9 @@ namespace BMI088
 
                 gNorm += gNormTemp; // 计算范数并累加,最后除以calib times获取单次值
 
-                Gyro_offset[0] += gyro_data.roll; // 因为标定时传感器静止,所以采集到的值就是漂移,累加当前值,最后除以calib times获得零飘
-                Gyro_offset[1] += gyro_data.pitch;
-                Gyro_offset[2] += gyro_data.yaw;
+                Gyro_offset[0] += gyro_data.x; // 因为标定时传感器静止,所以采集到的值就是漂移,累加当前值,最后除以calib times获得零飘
+                Gyro_offset[1] += gyro_data.y;
+                Gyro_offset[2] += gyro_data.z;
 
                 if (i == 0) // 避免未定义的行为(else中)
                 {
@@ -72,27 +72,27 @@ namespace BMI088
                     gNormMax = gNormMin = gNormTemp;
 
                     // 初始化成当前的陀螺仪数据
-                    gyroMax[0] = gyro_data.roll;
-                    gyroMax[1] = gyro_data.pitch;
-                    gyroMax[2] = gyro_data.yaw;
+                    gyroMax[0] = gyro_data.x;
+                    gyroMax[1] = gyro_data.y;
+                    gyroMax[2] = gyro_data.z;
 
-                    gyroMin[0] = gyro_data.roll;
-                    gyroMin[1] = gyro_data.pitch;
-                    gyroMin[2] = gyro_data.yaw;
+                    gyroMin[0] = gyro_data.x;
+                    gyroMin[1] = gyro_data.y;
+                    gyroMin[2] = gyro_data.z;
                 }
                 else // 更新gNorm的Min Max和gyro的minmax
                 {
                     gNormMax = gNormMax > gNormTemp ? gNormMax : gNormTemp;
                     gNormMin = gNormMin < gNormTemp ? gNormMin : gNormTemp;
 
-                    gyroMax[0] = gyroMax[0] > gyro_data.roll ? gyroMax[0] : gyro_data.roll;
-                    gyroMin[0] = gyroMin[0] < gyro_data.roll ? gyroMin[0] : gyro_data.roll;
+                    gyroMax[0] = gyroMax[0] > gyro_data.x ? gyroMax[0] : gyro_data.x;
+                    gyroMin[0] = gyroMin[0] < gyro_data.x ? gyroMin[0] : gyro_data.x;
 
-                    gyroMax[1] = gyroMax[1] > gyro_data.pitch ? gyroMax[1] : gyro_data.pitch;
-                    gyroMin[1] = gyroMin[1] < gyro_data.pitch ? gyroMin[1] : gyro_data.pitch;
+                    gyroMax[1] = gyroMax[1] > gyro_data.y ? gyroMax[1] : gyro_data.y;
+                    gyroMin[1] = gyroMin[1] < gyro_data.y ? gyroMin[1] : gyro_data.y;
 
-                    gyroMax[2] = gyroMax[2] > gyro_data.yaw ? gyroMax[2] : gyro_data.yaw;
-                    gyroMin[2] = gyroMin[2] < gyro_data.yaw ? gyroMin[2] : gyro_data.yaw;
+                    gyroMax[2] = gyroMax[2] > gyro_data.z ? gyroMax[2] : gyro_data.z;
+                    gyroMin[2] = gyroMin[2] < gyro_data.z ? gyroMin[2] : gyro_data.z;
                 }
 
                 gNormDiff = gNormMax - gNormMin; // 最大值和最小值的差
@@ -327,9 +327,9 @@ namespace BMI088
         gyro[1] = ((int16_t)buf[3] << 8) + (int16_t)buf[2];
         gyro[2] = ((int16_t)buf[5] << 8) + (int16_t)buf[4];
         // 注意这里就不要又除法又乘法的了，直接乘以一个常数，根据配置，单位是16.384，所以直接乘以1/16.384 * DEG2SEC即可
-        data->roll = (float)gyro[0] * IMU_GYRO_2000_SEN;
-        data->pitch = (float)gyro[1] * IMU_GYRO_2000_SEN;
-        data->yaw = (float)gyro[2] * IMU_GYRO_2000_SEN;
+        data->x = (float)gyro[0] * IMU_GYRO_2000_SEN - BMI088_PRE_CALI_ACC_X_OFFSET;
+        data->y = (float)gyro[1] * IMU_GYRO_2000_SEN - BMI088_PRE_CALI_ACC_Y_OFFSET;
+        data->z = (float)gyro[2] * IMU_GYRO_2000_SEN - BMI088_PRE_CALI_ACC_Z_OFFSET;
     }
 
 
