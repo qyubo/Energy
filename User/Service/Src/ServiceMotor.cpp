@@ -58,12 +58,11 @@ void ServiceMotors::SetModeAndPidParam()
     ULONG time;
 
     //注册电机
-    ServiceMotors serviceMotors;
-    serviceMotors.MotorRegister();
+    ServiceMotors::Instance()->MotorRegister();
 
     om_suber_t *gimbal_suber = om_subscribe(om_find_topic("gimbalctrl", UINT32_MAX));
     msg_gimbal_ctrl_t gimbal_ctrl{};
-    serviceMotors.SetModeAndPidParam();
+    ServiceMotors::Instance()->SetModeAndPidParam();
 
     // KalmanFilter test_spd_filer;
     // test_spd_filer.SetQ(0.030f);
@@ -86,68 +85,40 @@ void ServiceMotors::SetModeAndPidParam()
         om_suber_export(gimbal_suber, &gimbal_ctrl, false);
         if (gimbal_ctrl.pitch_mode == SPD)
         {
-            serviceMotors.PitchMotor.speedPid.ref = gimbal_ctrl.pitch_speed;
-            serviceMotors.PitchMotor.speedPid.fdb = serviceMotors.PitchMotor.motorFeedback.speedFdb;
-            serviceMotors.PitchMotor.speedPid.UpdateResult();
-            serviceMotors.PitchMotor.currentSet = static_cast<int16_t>(serviceMotors.PitchMotor.speedPid.result);
+            ServiceMotors::Instance()->PitchMotor.speedPid.ref = gimbal_ctrl.pitch_speed;
+            ServiceMotors::Instance()->PitchMotor.speedPid.fdb = ServiceMotors::Instance()->PitchMotor.motorFeedback.speedFdb;
+            ServiceMotors::Instance()->PitchMotor.speedPid.UpdateResult();
+            ServiceMotors::Instance()->PitchMotor.currentSet = static_cast<int16_t>(ServiceMotors::Instance()->PitchMotor.speedPid.result);
         }
         else
         {
-            serviceMotors.PitchMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.pitch_torque*100);
+            ServiceMotors::Instance()->PitchMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.pitch_torque*50);
         }
         if (gimbal_ctrl.yaw_mode == SPD)
         {
-            // if (yaw_init == 0.0f)
-            // {
-            //     yaw_init = serviceMotors.YawMotor.motorFeedback.positionFdb;
-            //     // yaw_init = ins.yaw;
-            // }
-            // serviceMotors.YawMotor.positionPid.ref = yaw_init + signal(DWT_GetTimeline_s());
-            // serviceMotors.YawMotor.positionPid.fdb = serviceMotors.YawMotor.motorFeedback.positionFdb;
-            // serviceMotors.YawMotor.positionPid.fdb = ins.yaw;
-            // serviceMotors.YawMotor.positionPid.UpdateResult();
-            // debug_cur = test_spd_filer.Update(serviceMotors.YawMotor.motorFeedback.currentFdb);
-            // serviceMotors.YawMotor.currentSet = static_cast<int16_t>(serviceMotors.YawMotor.positionPid.result*700);
-            // serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_speed*3.0f*2000);
-
-            // serviceMotors.YawMotor.speedPid.ref = serviceMotors.YawMotor.positionPid.result;
-            // serviceMotors.YawMotor.speedPid.fdb = test_spd_filer.Update(serviceMotors.YawMotor.motorFeedback.speedFdb);
-            // serviceMotors.YawMotor.speedPid.UpdateResult();
-            // test_spd_filter.SetInput(serviceMotors.YawMotor.motorFeedback.speedFdb);
-            // test_spd_filter.Update();
-            // test_spd = test_spd_filter.GetResult();
-            // serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_speed*800+test_spd*500);
-            // debug_cur += 1;
-            // if (debug_cur > 5000)
-            //     debug_cur = 5000;
-            // serviceMotors.YawMotor.currentSet = debug_cur;
-            // debug_set = debug_cur - 1.80f*serviceMotors.YawMotor.motorFeedback.currentFdb;
-            // if (serviceMotors.YawMotor.motorFeedback.speedFdb != 0.0f)
-            //     vel_ratio = debug_set / serviceMotors.YawMotor.motorFeedback.speedFdb;
-            // if (serviceMotors.YawMotor.motorFeedback.currentFdb != 0)
-            //     test_r = (debug_cur - 900*serviceMotors.YawMotor.motorFeedback.speedFdb) / serviceMotors.YawMotor.motorFeedback.currentFdb;
+            ServiceMotors::Instance()->YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_speed*50);
         }
         else
         {
-            serviceMotors.YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_torque*100);
+            ServiceMotors::Instance()->YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_torque*50);
         }
 
-        motor_debug.pos_set = serviceMotors.YawMotor.positionPid.ref;
-        motor_debug.pos_fdb = serviceMotors.YawMotor.positionPid.fdb;
+        motor_debug.pos_set = ServiceMotors::Instance()->YawMotor.positionPid.ref;
+        motor_debug.pos_fdb = ServiceMotors::Instance()->YawMotor.positionPid.fdb;
         motor_debug.spd_set = gimbal_ctrl.yaw_speed;
-        // motor_debug.spd_fdb = serviceMotors.YawMotor.speedPid.fdb;
-        // motor_debug.spd_fdb = serviceMotors.YawMotor.motorFeedback.speedFdb;
+        // motor_debug.spd_fdb = ServiceMotors::Instance()->YawMotor.speedPid.fdb;
+        // motor_debug.spd_fdb = ServiceMotors::Instance()->YawMotor.motorFeedback.speedFdb;
         motor_debug.spd_fdb = test_spd;
-        motor_debug.cur_set = serviceMotors.YawMotor.currentSet;
-        motor_debug.cur_fdb = serviceMotors.YawMotor.motorFeedback.currentFdb;
+        motor_debug.cur_set = ServiceMotors::Instance()->YawMotor.currentSet;
+        motor_debug.cur_fdb = ServiceMotors::Instance()->YawMotor.motorFeedback.currentFdb;
 
-        serviceMotors.YawMotor.speedPid.kp = motor_spd_pid.kp;
-        serviceMotors.YawMotor.speedPid.ki = motor_spd_pid.ki;
-        serviceMotors.YawMotor.speedPid.kd = motor_spd_pid.kd;
+        ServiceMotors::Instance()->YawMotor.speedPid.kp = motor_spd_pid.kp;
+        ServiceMotors::Instance()->YawMotor.speedPid.ki = motor_spd_pid.ki;
+        ServiceMotors::Instance()->YawMotor.speedPid.kd = motor_spd_pid.kd;
 
-        serviceMotors.YawMotor.positionPid.kp = motor_pos_pid.kp;
-        serviceMotors.YawMotor.positionPid.ki = motor_pos_pid.ki;
-        serviceMotors.YawMotor.positionPid.kd = motor_pos_pid.kd;
+        ServiceMotors::Instance()->YawMotor.positionPid.kp = motor_pos_pid.kp;
+        ServiceMotors::Instance()->YawMotor.positionPid.ki = motor_pos_pid.ki;
+        ServiceMotors::Instance()->YawMotor.positionPid.kd = motor_pos_pid.kd;
 
         //发送控制指令给电机
         DJIMotorhandler->sendControlData();

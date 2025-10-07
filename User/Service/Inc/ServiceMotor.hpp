@@ -33,6 +33,12 @@ public:
     void MotorRegister();
     void AllMotorSetOutput();
     void SetModeAndPidParam();
+
+    static ServiceMotors *Instance()
+    {
+        static ServiceMotors instance;
+        return &instance;
+    }
 };
 
 

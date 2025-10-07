@@ -69,11 +69,11 @@ static double signal(double t)
 
 // PID yaw_pos_pid(120.0f, 0.0f, 500.0f, 500.0f, 10.0f, PID_POSITION | PID_Derivative_On_Measurement);
 // PID yaw_spd_pid(100.0f, 0.0f, 2000.0f, 500.0f, 100.0f, PID_POSITION);
-PID yaw_pos_pid(200.0f, 0.0f, 0.0f, 500.0f, 10.0f, PID_POSITION | PID_Derivative_On_Measurement);
-PID yaw_spd_pid(50.0f, 0.0f, 1500.0f, 500.0f, 100.0f, PID_POSITION);
-
-PID pitch_pos_pid(50.0f, 0.0f, 0.0f, 500.0f, 0.0f, PID_POSITION);
-PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
+// PID yaw_pos_pid(200.0f, 0.0f, 0.0f, 500.0f, 10.0f, PID_POSITION | PID_Derivative_On_Measurement);
+// PID yaw_spd_pid(50.0f, 0.0f, 1500.0f, 500.0f, 100.0f, PID_POSITION);
+//
+// PID pitch_pos_pid(50.0f, 0.0f, 0.0f, 500.0f, 0.0f, PID_POSITION);
+// PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
 
 [[noreturn]] void GimbalThreadFun(ULONG initial_input) {
     UNUSED(initial_input);
@@ -97,10 +97,11 @@ PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
     YawGyroFilter.SetQ(0.0001f);
     YawGyroFilter.SetR(0.169f);
 
-    // PID yaw_pos_pid(50.0f, 0.0f, 0.0f, 500.0f, 0.0f, PID_POSITION);
-    // PID yaw_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
-    // PID pitch_pos_pid(50.0f, 0.0f, 0.0f, 500.0f, 0.0f, PID_POSITION);
-    // PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
+    PID yaw_pos_pid(100.0f, 0.0f, 0.0f, 500.0f, 10.0f, PID_POSITION | PID_Derivative_On_Measurement);
+    PID yaw_spd_pid(50.0f, 0.0f, 500.0f, 500.0f, 100.0f, PID_POSITION);
+
+    PID pitch_pos_pid(50.0f, 0.0f, 0.0f, 500.0f, 0.0f, PID_POSITION);
+    PID pitch_spd_pid(10.0f, 0.0f, 0.0f, 500.0f, 0.0f, PID_POSITION);
     float yaw_init = 0.0f;
 
 
@@ -129,31 +130,22 @@ PID pitch_spd_pid(1000.0f, 0.0f, 0.0f, 12000.0f, 0.0f, PID_POSITION);
                     gimbal_ctrl.yaw_mode = TORQUE;
                     gimbal_ctrl.pitch_mode = TORQUE;
 
-                    if (yaw_init == 0.0f)
-                    {
-                        // yaw_init = serviceMotors.YawMotor.motorFeedback.positionFdb;
-                        yaw_init = ins.total_yaw*DegreeToRad;
-                    }
-
-                    yaw_pos_pid.ref += remoter.right_x*0.003f;
-                    // yaw_pos_pid.ref = signal(DWT_GetTimeline_s())+yaw_init;
-                    // yaw_pos_pid.fdb = YawAngleFilter.Update(ins.total_yaw*DegreeToRad);
+                    yaw_pos_pid.ref = ins.total_yaw*DegreeToRad + remoter.right_x*0.03f;
                     yaw_pos_pid.fdb = ins.total_yaw*DegreeToRad;
+                    // yaw_pos_pid.fdb = 0.0f;
                     yaw_pos_pid.UpdateResult();
                     yaw_spd_pid.ref = yaw_pos_pid.result;
-                    // yaw_spd_pid.fdb = YawGyroFilter.Update(ins.gyro_y);
-                    // yaw_spd_pid.fdb = GyroFilter.calculate(ins.gyro_y);
-                    yaw_spd_pid.fdb = ins.gyro_y;
+                    yaw_spd_pid.fdb = YawGyroFilter.Update(ins.gyro_y);
                     yaw_spd_pid.UpdateResult();
                     gimbal_ctrl.yaw_torque = yaw_spd_pid.result;
-                    //
-                    // pitch_pos_pid.ref = remoter.right_y;
-                    // pitch_pos_pid.fdb = ins.pitch;
-                    // pitch_pos_pid.UpdateResult();
-                    // pitch_spd_pid.ref = pitch_pos_pid.result;
-                    // pitch_spd_pid.fdb = ins.gyro_p;
-                    // pitch_spd_pid.UpdateResult();
-                    // gimbal_ctrl.pitch_torque = pitch_spd_pid.result;
+
+                    pitch_pos_pid.ref = ins.pitch*DegreeToRad + remoter.right_y*0.03f;
+                    pitch_pos_pid.fdb = ins.pitch*DegreeToRad;
+                    pitch_pos_pid.UpdateResult();
+                    pitch_spd_pid.ref = pitch_pos_pid.result;
+                    pitch_spd_pid.fdb = ins.gyro_p;
+                    pitch_spd_pid.UpdateResult();
+                    gimbal_ctrl.pitch_torque = pitch_spd_pid.result;
     #ifdef GimbalDebug
                     // yaw_pos_pid.Tuning(yaw_pos_tuning.kp, yaw_pos_tuning.ki, yaw_pos_tuning.kd);
                     // yaw_spd_pid.Tuning(yaw_spd_tuning.kp, yaw_spd_tuning.ki, yaw_spd_tuning.kd);
