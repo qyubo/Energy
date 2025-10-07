@@ -34,7 +34,6 @@ inline dr16_data_t& Dr16_Data()
             // 比如可以清零，或者标记掉线
             msg_remoter.offline = true;
             // HAL_UART_Abort(&huart3);
-            // 可以加上状态标记，比如 rc_raw.online = false;
             tx_thread_sleep(3);
             // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, data_rx, DR16_DATA_SIZE);
         }
@@ -78,73 +77,3 @@ inline dr16_data_t& Dr16_Data()
         tx_thread_sleep(1);
     }
 }
-
-// void USART3_IRQHandler(void)
-// {
-//     /* USER CODE BEGIN USART3_IRQn 0 */
-//
-//     /* USER CODE END USART3_IRQn 0 */
-//     HAL_UART_IRQHandler(&huart3);
-//     /* USER CODE BEGIN USART3_IRQn 1 */
-//     if (huart3.Instance->SR & UART_FLAG_RXNE)
-//     {
-//         __HAL_UART_CLEAR_PEFLAG(&huart3);
-//     }
-//     else if (USART3->SR & UART_FLAG_IDLE)
-//     {
-//         static uint16_t current_rx_len = 0;
-//
-//         __HAL_UART_CLEAR_PEFLAG(&huart3);
-//
-//         if ((hdma_usart3_rx.Instance->CR & DMA_SxCR_CT) == RESET)
-//         {
-//             /* Current memory buffer used is Memory 0 */
-//
-//             // disable DMA
-//             __HAL_DMA_DISABLE(&hdma_usart3_rx);
-//
-//             // get receive data length, length = set_data_length - remain_length
-//             current_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
-//
-//             // reset set_data_lenght
-//             hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
-//
-//             // set memory buffer 1
-//             hdma_usart3_rx.Instance->CR |= DMA_SxCR_CT;
-//
-//             // enable DMA
-//             __HAL_DMA_ENABLE(&hdma_usart3_rx);
-//
-//             if (current_rx_len == DR16_DATA_SIZE)
-//             {
-//                 memcpy(data_rx, SBUS_rx_buf[0], DR16_DATA_SIZE);
-//                 tx_semaphore_put(&RemoterThreadSem);
-//             }
-//         }
-//         else
-//         {
-//             /* Current memory buffer used is Memory 1 */
-//             // disable DMA
-//             __HAL_DMA_DISABLE(&hdma_usart3_rx);
-//
-//             // get receive data length, length = set_data_length - remain_length
-//             current_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
-//
-//             // reset set_data_lenght
-//             hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
-//
-//             // set memory buffer 0
-//             DMA1_Stream1->CR &= ~(DMA_SxCR_CT);
-//
-//             // enable DMA
-//             __HAL_DMA_ENABLE(&hdma_usart3_rx);
-//
-//             if (current_rx_len == DR16_DATA_SIZE)
-//             {
-//                 memcpy(data_rx, SBUS_rx_buf[1], DR16_DATA_SIZE);
-//                 tx_semaphore_put(&RemoterThreadSem);
-//             }
-//         }
-//     }
-//     /* USER CODE END USART3_IRQn 1 */
-// }
