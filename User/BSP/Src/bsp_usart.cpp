@@ -21,7 +21,7 @@ static uint8_t UART1RxBuffer[RXBUFFERSIZE];
 
 static uint8_t TxBuffer[TXBUFFERSIZE];
 
-extern uint8_t data_rx[DR16_DATA_SIZE];
+extern uint8_t dr16_rx[DR16_DATA_SIZE];
 extern TX_SEMAPHORE RemoterThreadSem;
 
 void USART_Init(void)
@@ -159,7 +159,7 @@ void USART3_IRQHandler(void)
 
             if (current_rx_len == DR16_DATA_SIZE)
             {
-                memcpy(data_rx, SBUS_rx_buf[0], DR16_DATA_SIZE);
+                memcpy(dr16_rx, SBUS_rx_buf[0], DR16_DATA_SIZE);
                 tx_semaphore_put(&RemoterThreadSem);
             }
         }
@@ -183,7 +183,7 @@ void USART3_IRQHandler(void)
 
             if (current_rx_len == DR16_DATA_SIZE)
             {
-                memcpy(data_rx, SBUS_rx_buf[1], DR16_DATA_SIZE);
+                memcpy(dr16_rx, SBUS_rx_buf[1], DR16_DATA_SIZE);
                 tx_semaphore_put(&RemoterThreadSem);
             }
         }
