@@ -2,6 +2,8 @@
 // Created by ASUS on 2025/10/7.
 //
 
+#include <iterator>
+
 #include "main.h"
 #include "tx_api.h"
 
@@ -17,7 +19,6 @@ using namespace Math;
 
 TX_THREAD ChassisThread;
 uint8_t ChassisThreadStack[4096] = {0};
-
 uint8_t debug_mode;
 
 extern CAN_HandleTypeDef hcan2;
@@ -61,18 +62,14 @@ __PACKED_STRUCT chassis_state_t
 
 #pragma pack(pop)
 
-// static om_suber_t *remoter_suber = om_subscribe(om_find_topic("remoter", UINT32_MAX));
-// static msg_remoter_t remoter{};
-// static float Vx = 0.0f;
-// static float Vy = 0.0f;
-// static float Vw = 0.0f;
-
 [[noreturn]] void ChassisThreadFun(ULONG initial_input)
 {
     UNUSED(initial_input);
 
+    om_topic_t* chassismsg_topic = om_config_topic(nullptr, "ca", "chassis", sizeof(msg_chassis_t));
     om_suber_t* remoter_suber = om_subscribe(om_find_topic("remoter", UINT32_MAX));
     msg_remoter_t remoter{};
+    msg_chassis_t chassis_msg{};
     float Vlen_raw = 0.0f;
     float Vy_raw = 0.0f;
 
@@ -96,8 +93,6 @@ __PACKED_STRUCT chassis_state_t
     constexpr float YawOffsetValue2 = 5.41418511 - Pi;
     ServiceMotors::Instance()->YawMotor.Offset = YawOffsetValue2;
 
-    PID vw_follow_pid(5.0f,0.0f,0.0f,15.0f,5.0f,PID_POSITION);
-
     for (;;)
     {
         om_suber_export(remoter_suber, &remoter, false);
@@ -117,16 +112,20 @@ __PACKED_STRUCT chassis_state_t
             {
                 chassisState.NormalState = NONE;
                 chassisState.RotateState = NORMAL_FOLLOW_ROTATE;
+                chassis_msg.spinning = false;
             }
             else if (remoter.ctrl_sw == Normal)
             {
                 chassisState.NormalState = NORMAL_MOVING_MODE;
                 chassisState.RotateState = NORMAL_FOLLOW_ROTATE;
+                chassis_msg.spinning = false;
             }
             else if (remoter.ctrl_sw == Spin)
             {
                 chassisState.NormalState = NORMAL_MOVING_MODE;
                 chassisState.RotateState = SPIN_ROTATE;
+                chassis_msg.spinning = true;
+                chassis_msg.vw = 8.0f;
             }
 
             uint8_t packed_mode_data =
@@ -179,10 +178,6 @@ __PACKED_STRUCT chassis_state_t
                 ServiceMotors::Instance()->YawMotor.Offset = YawOffsetValue2;
             }
 
-            // Vlen_raw = 0;
-            // Vy_raw = 0;
-            // relativeAngle = 0.0f;
-
             auto Vlen = static_cast<uint16_t>((Vlen_raw + 2.0f) * 15000.0f);
             auto Vy = static_cast<uint16_t>((Vy_raw + 2.0f) * 15000.0f);
 
@@ -195,6 +190,7 @@ __PACKED_STRUCT chassis_state_t
             CAN_Transmit(&hcan2, 0xB1, xyAndRefAngleMsg, 8);
             CAN_Transmit(&hcan2, 0xB2, chassisStateMsg, 8);
         }
+        om_publish(chassismsg_topic, &chassis_msg, sizeof(chassis_msg), true, false);
         tx_thread_sleep(1);
     }
 }

@@ -26,16 +26,6 @@ enum GearBox
  */
 class DJIMotor
 {
-private:
-    float P_MIN; ///< 位置最小值
-    float P_MAX; ///< 位置最大值
-
-    float V_MIN; ///< 速度最小值
-    float V_MAX; ///< 速度最大值
-
-    float T_MIN; ///< 扭矩最小值
-    float T_MAX; ///< 扭矩最大值
-
 public:
     /**
      * @brief 定义电机测量数据的结构体。
@@ -126,6 +116,15 @@ public:
 
     float speedSet;    ///< 设定的目标速度
     float positionSet; ///< 设定的目标位置，范围[-Π, Π]
+
+    float P_MIN; ///< 位置最小值
+    float P_MAX; ///< 位置最大值
+
+    float V_MIN; ///< 速度最小值
+    float V_MAX; ///< 速度最大值
+
+    float T_MIN; ///< 扭矩最小值
+    float T_MAX; ///< 扭矩最大值
 
     int16_t currentSet;  ///< 设定的电流输出
     uint16_t maxCurrent; ///< 最大电流限制

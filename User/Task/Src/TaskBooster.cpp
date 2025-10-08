@@ -19,8 +19,7 @@ void TaskBooster(void)
                      GimbalThreadStack, sizeof(GimbalThreadStack),
                      6, 6, TX_NO_TIME_SLICE, TX_AUTO_START);
 
-    tx_thread_create(&ChassisThread, TX_NAME("ChassisThread"), ChassisThreadFun, 0x1234,
-                     ChassisThreadStack, sizeof(ChassisThreadStack),
-                     7, 7, TX_NO_TIME_SLICE, TX_AUTO_START);
-    // tx_semaphore_create(&GimbalThreadSem, "Gimbal Semaphore", 0);
+    // tx_thread_create(&ChassisThread, TX_NAME("ChassisThread"), ChassisThreadFun, 0x1234,
+    //                  ChassisThreadStack, sizeof(ChassisThreadStack),
+    //                  7, 7, TX_NO_TIME_SLICE, TX_AUTO_START);
 }

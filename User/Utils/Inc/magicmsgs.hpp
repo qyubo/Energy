@@ -130,4 +130,10 @@ struct motor_debug_t
     float cur_fdb;
 };
 
+struct msg_chassis_t
+{
+    bool spinning;
+    float vw;
+};
+
 #endif //RM26_H7_MAGICMSG_HPP
