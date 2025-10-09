@@ -159,6 +159,8 @@ static double sin_signal(double t)
         memcpy (&debug_dr16, &remoter, sizeof(msg_remoter_t));
         memcpy (&debug_ins, &ins, sizeof(msg_ins_t));
 
+
+
         if (tx_semaphore_get(&IMUThreadSem, TX_WAIT_FOREVER) == TX_SUCCESS)
         {
             if (remoter.ctrl_sw == Relax || remoter.offline)
@@ -170,14 +172,16 @@ static double sin_signal(double t)
             }
             else
             {
-                if (!autoaim_on)
+                // if (!autoaim_on)
+                if (remoter.ctrl_sw == Normal)
                 {
                     gimbal_ctrl.yaw_speed = remoter.right_x*7.0f;
                     gimbal_ctrl.pitch_speed = remoter.right_y*7.0f;
                     gimbal_ctrl.yaw_mode = SPD;
                     gimbal_ctrl.pitch_mode = SPD;
                 }
-                else
+                // else
+                if (remoter.ctrl_sw == Spin)
                 {
                     gimbal_ctrl.yaw_mode = TORQUE;
                     gimbal_ctrl.pitch_mode = TORQUE;
@@ -199,7 +203,7 @@ static double sin_signal(double t)
                     yaw_spd_pid.ref = yaw_pos_pid.result;
                     if (chassis.spinning)
                     {
-                        yaw_spd_pid.ref+=chassis.vw;
+                        yaw_spd_pid.ref += chassis.vw * 0.5f;
                     }
                     yaw_spd_pid.fdb = YawGyroFilter.Update(ins.gyro_y);
                     yaw_spd_pid.UpdateResult();
