@@ -130,7 +130,7 @@ static double sin_signal(double t)
     msg_remoter_t remoter{};
     om_suber_t *ins_suber = om_subscribe(om_find_topic("ins", UINT32_MAX));
     msg_ins_t ins{};
-    om_suber_t *chassis_suber = om_subscribe(om_find_topic("chassis_msg", UINT32_MAX));
+    om_suber_t *chassis_suber = om_subscribe(om_find_topic("chassis", UINT32_MAX));
     msg_chassis_t chassis{};
 
     // KalmanFilter YawAngleFilter;
@@ -156,6 +156,7 @@ static double sin_signal(double t)
     for (;;) {
         om_suber_export(remoter_suber, &remoter, false);
         om_suber_export(ins_suber, &ins, false);
+        om_suber_export(chassis_suber, &chassis, false);
         memcpy (&debug_dr16, &remoter, sizeof(msg_remoter_t));
         memcpy (&debug_ins, &ins, sizeof(msg_ins_t));
 
@@ -191,10 +192,10 @@ static double sin_signal(double t)
                     // yaw_pos_pid.ref = ins.total_yaw*DegreeToRad + remoter.right_x*0.03f;
                     // yaw_pos_pid.ref = yaw_init + tri_signal(DWT_GetTimeline_s());
                     yaw_pos_pid.ref = yaw_init + signal(DWT_GetTimeline_s());
-                    // pitch_pos_pid.ref = ins.pitch*DegreeToRad + remoter.right_y*0.03f;
+                    pitch_pos_pid.ref = ins.pitch*DegreeToRad + remoter.right_y*0.03f;
                     if (pitch_init == 0.0f)
                         pitch_init = ins.pitch*DegreeToRad;
-                    pitch_pos_pid.ref = -0.1f + sin_signal(DWT_GetTimeline_s());
+                    // pitch_pos_pid.ref = -0.1f + sin_signal(DWT_GetTimeline_s());
 #endif
 
                     yaw_pos_pid.fdb = ins.total_yaw*DegreeToRad;
@@ -203,7 +204,7 @@ static double sin_signal(double t)
                     yaw_spd_pid.ref = yaw_pos_pid.result;
                     if (chassis.spinning)
                     {
-                        yaw_spd_pid.ref += chassis.vw * 0.5f;
+                        yaw_spd_pid.ref -= chassis.vw;
                     }
                     yaw_spd_pid.fdb = YawGyroFilter.Update(ins.gyro_y);
                     yaw_spd_pid.UpdateResult();
