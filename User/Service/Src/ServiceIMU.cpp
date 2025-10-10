@@ -7,6 +7,7 @@
 
 using namespace BMI088;
 using namespace AHRS;
+using namespace Matrix;
 
 cBMI088 bmi088;
 cIMU *imu_handler = &bmi088;
@@ -37,11 +38,11 @@ static void InitQuaternion(float *init_q4)
     }
     for (uint8_t i = 0; i < 3; ++i)
         acc_init[i] /= 100;
-    Math::Norm3d(acc_init);
+    Norm3d(acc_init);
     // 计算原始加速度矢量和导航系重力加速度矢量的夹角
-    float angle = acosf(Math::Dot3d(acc_init, gravity_norm));
-    Math::Cross3d(acc_init, gravity_norm, axis_rot);
-    Math::Norm3d(axis_rot);
+    float angle = acosf(Dot3d(acc_init, gravity_norm));
+    Cross3d(acc_init, gravity_norm, axis_rot);
+    Norm3d(axis_rot);
     init_q4[0] = cosf(angle / 2.0f);
     for (uint8_t i = 0; i < 2; ++i)
         init_q4[i + 1] = axis_rot[i] * sinf(angle / 2.0f); // 轴角公式,第三轴为0(没有z轴分量)

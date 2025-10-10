@@ -13,16 +13,8 @@
 #include "stdlib.h"
 #include "math.h"
 
-namespace Math
+namespace Numeric
 {
-#define MatAdd arm_mat_add_f32         // 定义矩阵加法
-#define MatSubtract arm_mat_sub_f32    // 定义矩阵减法
-#define MatMultiply arm_mat_mult_f32   // 定义矩阵乘法
-#define MatTranspose arm_mat_trans_f32 // 定义矩阵转置
-#define MatInverse arm_mat_inverse_f32 // 定义矩阵求逆
-                                       // 若运算速度不够,可以使用q31代替f32,但是精度会降低
-    typedef arm_matrix_instance_f32 mat;
-
 #define msin(x) (arm_sin_f32(x)) // 定义正弦函数
 #define mcos(x) (arm_cos_f32(x)) // 定 义余弦函数
 
@@ -152,6 +144,51 @@ namespace Math
     int FloatRounding(float raw);
 
     /**
+     * @brief 均值滤波,删除buffer中的最后一个元素,填入新的元素并求平均值
+     * @param new_data 新数据
+     * @param buf 缓冲区
+     * @param len 缓冲区长度
+     */
+    float AverageFilter(float new_data, float *buf, uint8_t len);
+
+    /**
+    ************************************************************************
+    * @brief:      	float_to_uint: Function to convert a float to an unsigned integer
+    * @param[in]:   x_float:	Float value to be converted
+    * @param[in]:   x_min:		Minimum range value
+    * @param[in]:   x_max:		Maximum range value
+    * @param[in]:   bits: 		Bit width of the target unsigned integer
+    * @retval:     	Unsigned integer result
+    * @details:    	Maps the given float x linearly within the specified range [x_min, x_max] to an unsigned integer of the specified bit width.
+    ************************************************************************
+    **/
+    int float_to_uint(float x_float, float x_min, float x_max, int bits);
+
+    /**
+    ************************************************************************
+    * @brief:      	uint_to_float: Function to convert an unsigned integer to a float
+    * @param[in]:   x_int: Unsigned integer to be converted
+    * @param[in]:   x_min: Minimum range value
+    * @param[in]:   x_max: Maximum range value
+    * @param[in]:   bits:  Bit width of the unsigned integer
+    * @retval:     	Float result
+    * @details:    	Maps the given unsigned integer x_int linearly within the specified range [x_min, x_max] to a float.
+    ************************************************************************
+    **/
+    float uint_to_float(int x_int, float x_min, float x_max, int bits);
+};
+
+namespace Matrix
+{
+#define MatAdd arm_mat_add_f32         // 定义矩阵加法
+#define MatSubtract arm_mat_sub_f32    // 定义矩阵减法
+#define MatMultiply arm_mat_mult_f32   // 定义矩阵乘法
+#define MatTranspose arm_mat_trans_f32 // 定义矩阵转置
+#define MatInverse arm_mat_inverse_f32 // 定义矩阵求逆
+    // 若运算速度不够,可以使用q31代替f32,但是精度会降低
+    typedef arm_matrix_instance_f32 mat;
+
+    /**
      * @brief 三维向量模长
      * @param v 输入向量
      * @return float* 输出向量
@@ -182,51 +219,12 @@ namespace Math
     float Dot3d(float *v1, float *v2);
 
     /**
-     * @brief 均值滤波,删除buffer中的最后一个元素,填入新的元素并求平均值
-     * @param new_data 新数据
-     * @param buf 缓冲区
-     * @param len 缓冲区长度
-     */
-    float AverageFilter(float new_data, float *buf, uint8_t len);
-
-    /**
      * @brief 矩阵初始化
      * @param m 矩阵指针
      * @param row 行数
      * @param col 列数
      */
     void MatInit(mat *m, uint8_t row, uint8_t col);
-
-    /**
-     * @brief 四元数转欧拉角
-     */
-    void QuaternionToEularAngle(float *q, float *euler);
-
-    /**
-    ************************************************************************
-    * @brief:      	float_to_uint: Function to convert a float to an unsigned integer
-    * @param[in]:   x_float:	Float value to be converted
-    * @param[in]:   x_min:		Minimum range value
-    * @param[in]:   x_max:		Maximum range value
-    * @param[in]:   bits: 		Bit width of the target unsigned integer
-    * @retval:     	Unsigned integer result
-    * @details:    	Maps the given float x linearly within the specified range [x_min, x_max] to an unsigned integer of the specified bit width.
-    ************************************************************************
-    **/
-    int float_to_uint(float x_float, float x_min, float x_max, int bits);
-
-    /**
-    ************************************************************************
-    * @brief:      	uint_to_float: Function to convert an unsigned integer to a float
-    * @param[in]:   x_int: Unsigned integer to be converted
-    * @param[in]:   x_min: Minimum range value
-    * @param[in]:   x_max: Maximum range value
-    * @param[in]:   bits:  Bit width of the unsigned integer
-    * @retval:     	Float result
-    * @details:    	Maps the given unsigned integer x_int linearly within the specified range [x_min, x_max] to a float.
-    ************************************************************************
-    **/
-    float uint_to_float(int x_int, float x_min, float x_max, int bits);
 };
 
 #endif //RM26_MATH_HPP

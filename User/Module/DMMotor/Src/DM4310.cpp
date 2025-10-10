@@ -4,7 +4,7 @@
 
 #include "DM4310.hpp"
 #include "math.hpp"
-using namespace Math;
+using namespace Numeric;
 
 DM4310::DM4310()
 {

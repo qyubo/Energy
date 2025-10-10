@@ -13,7 +13,7 @@
 #include "magicmsgs.hpp"
 
 using namespace Filter;
-using namespace Math;
+using namespace Numeric;
 
 TX_THREAD GimbalThread;
 uint8_t GimbalThreadStack[4096] = {0};
@@ -61,7 +61,7 @@ static double signal(double t)
         const double rise_t = t_mod - buffer_time;
         const double progress = rise_t / rise_time; // 0 ~ 1
 
-        const double smooth = (1 - std::cos(Math::Pi * progress)) / 2.0;
+        const double smooth = (1 - std::cos(Numeric::Pi * progress)) / 2.0;
 
         return step_value * smooth;
     }
@@ -176,10 +176,34 @@ static double sin_signal(double t)
                 // if (!autoaim_on)
                 if (remoter.ctrl_sw == Normal)
                 {
-                    gimbal_ctrl.yaw_speed = remoter.right_x*7.0f;
-                    gimbal_ctrl.pitch_speed = remoter.right_y*7.0f;
-                    gimbal_ctrl.yaw_mode = SPD;
-                    gimbal_ctrl.pitch_mode = SPD;
+                    // gimbal_ctrl.yaw_speed = remoter.right_x*7.0f;
+                    // gimbal_ctrl.pitch_speed = remoter.right_y*7.0f;
+                    // gimbal_ctrl.yaw_mode = SPD;
+                    // gimbal_ctrl.pitch_mode = SPD;
+                    gimbal_ctrl.yaw_mode = TORQUE;
+                    gimbal_ctrl.pitch_mode = TORQUE;
+                    yaw_pos_pid.ref = ins.total_yaw*DegreeToRad + remoter.right_x*0.03f;
+                    pitch_pos_pid.ref = ins.pitch*DegreeToRad + remoter.right_y*0.03f;
+
+                    yaw_pos_pid.fdb = ins.total_yaw*DegreeToRad;
+                    yaw_pos_pid.UpdateResult();
+
+                    yaw_spd_pid.ref = yaw_pos_pid.result;
+                    if (chassis.spinning)
+                    {
+                        yaw_spd_pid.ref -= chassis.vw;
+                    }
+                    yaw_spd_pid.fdb = YawGyroFilter.Update(ins.gyro_y);
+                    yaw_spd_pid.UpdateResult();
+                    gimbal_ctrl.yaw_torque = yaw_spd_pid.result;
+
+                    pitch_pos_pid.ref = FloatConstrain(pitch_pos_pid.ref, -25.0f*DegreeToRad, 15.0f*DegreeToRad);
+                    pitch_pos_pid.fdb = ins.pitch*DegreeToRad;
+                    pitch_pos_pid.UpdateResult();
+                    pitch_spd_pid.ref = pitch_pos_pid.result;
+                    pitch_spd_pid.fdb = ins.gyro_p;
+                    pitch_spd_pid.UpdateResult();
+                    gimbal_ctrl.pitch_torque = pitch_spd_pid.result;
                 }
                 // else
                 if (remoter.ctrl_sw == Spin)
@@ -192,6 +216,7 @@ static double sin_signal(double t)
                     // yaw_pos_pid.ref = ins.total_yaw*DegreeToRad + remoter.right_x*0.03f;
                     // yaw_pos_pid.ref = yaw_init + tri_signal(DWT_GetTimeline_s());
                     yaw_pos_pid.ref = yaw_init + signal(DWT_GetTimeline_s());
+                    // yaw_pos_pid.ref = yaw_init;
                     pitch_pos_pid.ref = ins.pitch*DegreeToRad + remoter.right_y*0.03f;
                     if (pitch_init == 0.0f)
                         pitch_init = ins.pitch*DegreeToRad;

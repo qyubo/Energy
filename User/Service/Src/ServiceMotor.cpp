@@ -8,7 +8,7 @@
 #include "bsp_dwt.hpp"
 
 using namespace Filter;
-using namespace Math;
+using namespace Numeric;
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;

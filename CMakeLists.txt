@@ -1,7 +1,7 @@
 #THIS FILE IS AUTO GENERATED FROM THE TEMPLATE! DO NOT CHANGE!
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 4.0)
 
 # specify cross-compilers and tools
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
@@ -51,14 +51,19 @@ endif ()
 
 include_directories(
         Core/Inc
-        AZURE_RTOS/App
-        Drivers/STM32F4xx_HAL_Driver/Inc
+        AZURE_RTOS/App Drivers/STM32F4xx_HAL_Driver/Inc
         Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
         Drivers/CMSIS/Device/ST/STM32F4xx/Include
         Drivers/CMSIS/Include
         Middlewares/ST/ARM/DSP/Inc
         Middlewares/ST/threadx/common/inc/
         Middlewares/ST/threadx/ports/cortex_m4/gnu/inc/
+        USBX/App
+        USBX/Target
+        Middlewares/ST/usbx/common/core/inc/
+        Middlewares/ST/usbx/ports/generic/inc/
+        Middlewares/ST/usbx/common/usbx_stm32_device_controllers/
+        Middlewares/ST/usbx/common/usbx_device_classes/inc/
         User/BSP/Inc
         User/Controller/Inc
         User/Module/AHRS/Inc
@@ -80,6 +85,7 @@ add_definitions(-DDEBUG -DTX_INCLUDE_USER_DEFINE_FILE -DUSE_HAL_DRIVER -DSTM32F4
 
 file(GLOB_RECURSE SOURCES
         "AZURE_RTOS/*.*"
+        "USBX/*.*"
         "Core/*.*"
         "Middlewares/*.*"
         "Drivers/*.*"

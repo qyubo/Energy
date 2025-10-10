@@ -15,7 +15,7 @@
 #include "magicmsgs.hpp"
 #include "ServiceMotor.hpp"
 
-using namespace Math;
+using namespace Numeric;
 
 TX_THREAD ChassisThread;
 uint8_t ChassisThreadStack[4096] = {0};
@@ -142,7 +142,7 @@ __PACKED_STRUCT chassis_state_t
             Vy_raw = Vy_slope.Get_Out();
             FloatConstrain(Vy_raw, -1.0f, 1.0f);
 
-            Vlen_raw = remoter.left_x*0.7f;
+            Vlen_raw = remoter.left_x*0.5f;
             Vlen_slope.Set_Target(Vlen_raw);
             Vlen_slope.Update();
             Vy_raw = Vlen_slope.Get_Out();
@@ -151,13 +151,13 @@ __PACKED_STRUCT chassis_state_t
             forward = (ServiceMotors::Instance()->YawMotor.Offset == YawOffsetValue1);
             float relativeAngle = ServiceMotors::Instance()->YawMotor.motorFeedback.positionFdb - ServiceMotors::Instance()->YawMotor.Offset;
             // 防止角度突变
-            if (relativeAngle >= Math::Pi)
+            if (relativeAngle >= Numeric::Pi)
             {
-                relativeAngle -= Math::PiX2;
+                relativeAngle -= Numeric::PiX2;
             }
-            else if (relativeAngle <= -Math::Pi)
+            else if (relativeAngle <= -Numeric::Pi)
             {
-                relativeAngle += Math::PiX2;
+                relativeAngle += Numeric::PiX2;
             }
 
             if (chassisState.RotateState == SPIN_ROTATE)
@@ -167,16 +167,19 @@ __PACKED_STRUCT chassis_state_t
                 relativeAngle = 0.0f;
             }
 
-            float distance1 = fabs(ServiceMotors::Instance()->YawMotor.motorFeedback.positionFdb - YawOffsetValue1);
-            float distance2 = fabs(ServiceMotors::Instance()->YawMotor.motorFeedback.positionFdb - YawOffsetValue2);
-            if (distance1 < distance2)
-            {
-                ServiceMotors::Instance()->YawMotor.Offset = YawOffsetValue1;
-            }
-            else
-            {
-                ServiceMotors::Instance()->YawMotor.Offset = YawOffsetValue2;
-            }
+            // float distance1 = fabs(ServiceMotors::Instance()->YawMotor.motorFeedback.positionFdb - YawOffsetValue1);
+            // float distance2 = fabs(ServiceMotors::Instance()->YawMotor.motorFeedback.positionFdb - YawOffsetValue2);
+            // if (distance1 < distance2)
+            // {
+            //     ServiceMotors::Instance()->YawMotor.Offset = YawOffsetValue1;
+            // }
+            // else
+            // {
+            //     ServiceMotors::Instance()->YawMotor.Offset = YawOffsetValue2;
+            // }
+
+            if (relativeAngle >= Numeric::Pi*0.5f || relativeAngle <= -Numeric::Pi*0.5f)
+                ServiceMotors::Instance()->YawMotor.Offset = (ServiceMotors::Instance()->YawMotor.Offset == YawOffsetValue1) ? YawOffsetValue2 : YawOffsetValue1;
 
             auto Vlen = static_cast<uint16_t>((Vlen_raw + 2.0f) * 15000.0f);
             auto Vy = static_cast<uint16_t>((Vy_raw + 2.0f) * 15000.0f);
