@@ -35,7 +35,7 @@ void SLOPE::Update()
         if (Target > Now_Planning)
         {
             // 正值加速
-            if (Math::abs(Now_Planning - Target) > Increase_Value)
+            if (Numeric::abs(Now_Planning - Target) > Increase_Value)
             {
                 Out += Increase_Value;
             }
@@ -47,7 +47,7 @@ void SLOPE::Update()
         else if (Target < Now_Planning)
         {
             // 正值减速
-            if (Math::abs(Now_Planning - Target) > Decrease_Value)
+            if (Numeric::abs(Now_Planning - Target) > Decrease_Value)
             {
                 Out -= Decrease_Value;
             }
@@ -62,7 +62,7 @@ void SLOPE::Update()
         if (Target < Now_Planning)
         {
             // 负值加速
-            if (Math::abs(Now_Planning - Target) > Increase_Value)
+            if (Numeric::abs(Now_Planning - Target) > Increase_Value)
             {
                 Out -= Increase_Value;
             }
@@ -74,7 +74,7 @@ void SLOPE::Update()
         else if (Target > Now_Planning)
         {
             // 负值减速
-            if (Math::abs(Now_Planning - Target) > Decrease_Value)
+            if (Numeric::abs(Now_Planning - Target) > Decrease_Value)
             {
                 Out += Decrease_Value;
             }
@@ -89,7 +89,7 @@ void SLOPE::Update()
         if (Target > Now_Planning)
         {
             // 0值正加速
-            if (Math::abs(Now_Planning - Target) > Increase_Value)
+            if (Numeric::abs(Now_Planning - Target) > Increase_Value)
             {
                 Out += Increase_Value;
             }
@@ -101,7 +101,7 @@ void SLOPE::Update()
         else if (Target < Now_Planning)
         {
             // 0值负加速
-            if (Math::abs(Now_Planning - Target) > Increase_Value)
+            if (Numeric::abs(Now_Planning - Target) > Increase_Value)
             {
                 Out -= Increase_Value;
             }

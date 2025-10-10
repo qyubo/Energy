@@ -68,7 +68,7 @@ void LK8016::setOutput()
     {
         // currentSet = (torqueSet * 2000) / (0.24f * 32.0f * 6.0f); 0.24：扭矩常数，6：减速比，32.0：电流范围，2000.0：电流数值范围
         this->currentSet = this->torqueSet * 43.4028f;
-				this->currentSet = Math::FloatConstrain(currentSet, -2000, 2000);
+				this->currentSet = Numeric::FloatConstrain(currentSet, -2000, 2000);
 				return;
     } 
     else if (this->controlMode == POS_MODE)
@@ -77,13 +77,13 @@ void LK8016::setOutput()
        this->positionPid.ref = this->positionSet;
        this->positionPid.fdb = this->motorFeedback.positionFdb;
 				// 检查并调整positionSet值在有效范围内
-				if (this->positionSet < -Math::Pi)
+				if (this->positionSet < -Numeric::Pi)
 				{
-						this->positionSet += 2 * Math::Pi; // 调整使其在-π到π范围内
+						this->positionSet += 2 * Numeric::Pi; // 调整使其在-π到π范围内
 				}
-				else if (this->positionSet > Math::Pi)
+				else if (this->positionSet > Numeric::Pi)
 				{
-						this->positionSet -= 2 * Math::Pi; // 调整使其在-π到π范围内
+						this->positionSet -= 2 * Numeric::Pi; // 调整使其在-π到π范围内
 				}
        this->positionPid.UpdateResult();
 
@@ -102,7 +102,7 @@ void LK8016::setOutput()
     }
 
     // 限制电流输出不超过最大值
-    this->currentSet = Math::FloatConstrain(this->currentSet, -maxCurrent, maxCurrent);
+    this->currentSet = Numeric::FloatConstrain(this->currentSet, -maxCurrent, maxCurrent);
 }
 
 void LK8016::UpdateSensorData(uint8_t *buffer_ptr)
@@ -117,7 +117,7 @@ void LK8016::UpdateSensorData(uint8_t *buffer_ptr)
     motorFeedback.lastPositionFdb = motorFeedback.positionFdb;
     motorFeedback.lastSpeedFdb = motorFeedback.speedFdb;
 
-    motorFeedback.positionFdb = Math::LoopFloatConstrain((float)(motorFeedback.ecd - offset) * LKMotor::RawPos2Rad, -Math::Pi, Math::Pi);
+    motorFeedback.positionFdb = Numeric::LoopFloatConstrain((float)(motorFeedback.ecd - offset) * LKMotor::RawPos2Rad, -Numeric::Pi, Numeric::Pi);
     motorFeedback.speedFdb = motorFeedback.speed_dps * LKMotor::RawDps2Rpsps;
 
     motorFeedback.torqueFdb = motorFeedback.currentFdb * 0.0230399882f;

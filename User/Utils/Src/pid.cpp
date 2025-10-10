@@ -158,13 +158,13 @@ void PID::UpdateResult(void)
     //     f_Derivative_Filter(this);
 
     iResult += iTerm;
-    iResult = Math::LimitABS(iResult, maxIOut);
+    iResult = Numeric::LimitABS(iResult, maxIOut);
 
     // 更新反馈值缓存
     last_fbd = fdb;
     // 计算输出
     result = pResult + iResult + dResult;
-    result = Math::LimitABS(result, maxOut);
+    result = Numeric::LimitABS(result, maxOut);
 
     // // 更新微分输出缓存
     // last_dResult = dResult;

@@ -56,7 +56,7 @@ namespace BMI088
                 ReadAccData(&acc_data);
                 ReadGyroData(&gyro_data);
 
-				gNormTemp = Math::Sqrt(acc_data.x * acc_data.x +
+				gNormTemp = Numeric::Sqrt(acc_data.x * acc_data.x +
                          acc_data.y * acc_data.y +
                          acc_data.z * acc_data.z); // 计算加速度范数
 

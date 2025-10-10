@@ -182,17 +182,17 @@ void DJIMotorHandler::UpdateSensorData(DJIMotor *motor, uint8_t *can_data)
 
     case GearBox_M2006:
         motor->motorFeedback.speedFdb = motor->motorFeedback.speed_rpm * motor->gearRatio_Rpm2Rps.M2006;
-        motor->motorFeedback.positionFdb += Math::FloatConstrain((motor->motorFeedback.ecd - motor->motorFeedback.last_ecd) * motor->gearRatio_Pos2Rad.M2006, - motor->gearRatio_PI.M2006, motor->gearRatio_PI.M2006);
+        motor->motorFeedback.positionFdb += Numeric::FloatConstrain((motor->motorFeedback.ecd - motor->motorFeedback.last_ecd) * motor->gearRatio_Pos2Rad.M2006, - motor->gearRatio_PI.M2006, motor->gearRatio_PI.M2006);
         break;
 
     case GearBox_M3508:
         motor->motorFeedback.speedFdb = motor->motorFeedback.speed_rpm * motor->gearRatio_Rpm2Rps.M3508;
-        motor->motorFeedback.positionFdb += Math::FloatConstrain((motor->motorFeedback.ecd - motor->motorFeedback.last_ecd) * motor->gearRatio_Pos2Rad.M3508, - motor->gearRatio_PI.M3508, motor->gearRatio_PI.M3508);
+        motor->motorFeedback.positionFdb += Numeric::FloatConstrain((motor->motorFeedback.ecd - motor->motorFeedback.last_ecd) * motor->gearRatio_Pos2Rad.M3508, - motor->gearRatio_PI.M3508, motor->gearRatio_PI.M3508);
         break;
 
     case GearBox_XRoll:
         motor->motorFeedback.speedFdb = motor->motorFeedback.speed_rpm * motor->gearRatio_Rpm2Rps.XRoll;
-        motor->motorFeedback.positionFdb += Math::FloatConstrain((motor->motorFeedback.ecd - motor->motorFeedback.last_ecd) * motor->gearRatio_Pos2Rad.XRoll, - motor->gearRatio_PI.XRoll, motor->gearRatio_PI.XRoll);
+        motor->motorFeedback.positionFdb += Numeric::FloatConstrain((motor->motorFeedback.ecd - motor->motorFeedback.last_ecd) * motor->gearRatio_Pos2Rad.XRoll, - motor->gearRatio_PI.XRoll, motor->gearRatio_PI.XRoll);
         break;
 
     default:

@@ -4,24 +4,8 @@
 
 #include "math.hpp"
 
-namespace Math
+namespace Numeric
 {
-    float CalculateShortestAngle(float target, float current)
-    {
-        float difference = target - current;
-
-        if (difference > Pi)
-        {
-            difference -= 2 * Pi; // 如果差值超过π，减去2π
-        }
-        else if (difference < -Pi)
-        {
-            difference += 2 * Pi; // 如果差值小于-π，加上2π
-        }
-
-        return difference;
-    }
-
     float LoopFloatConstrain(float input, float minValue, float maxValue)
     {
         if (maxValue < minValue)
@@ -181,74 +165,6 @@ namespace Math
         return integer;
     }
 
-    // 三维向量归一化
-    float *Norm3d(float *v)
-    {
-        float len = Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-        v[0] /= len;
-        v[1] /= len;
-        v[2] /= len;
-        return v;
-    }
-
-    // 计算模长
-    float NormOf3d(float *v)
-    {
-        return Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-    }
-
-    // 三维向量叉乘v1 x v2
-    void Cross3d(float *v1, float *v2, float *res)
-    {
-        res[0] = v1[1] * v2[2] - v1[2] * v2[1];
-        res[1] = v1[2] * v2[0] - v1[0] * v2[2];
-        res[2] = v1[0] * v2[1] - v1[1] * v2[0];
-    }
-
-    // 三维向量点乘
-    float Dot3d(float *v1, float *v2)
-    {
-        return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
-    }
-
-    float AverageFilter(float new_data, float *buf, uint8_t len)
-    {
-        float sum = 0;
-        for (uint8_t i = 0; i < len - 1; i++)
-        {
-            buf[i] = buf[i + 1];
-            sum += buf[i];
-        }
-        buf[len - 1] = new_data;
-        sum += new_data;
-        return sum / len;
-    }
-
-    void MatInit(mat *m, uint8_t row, uint8_t col)
-    {
-        m->numCols = col;
-        m->numRows = row;
-        m->pData = (float *)malloc(row * col * sizeof(float));
-    }
-
-    /**
-     * @brief 欧拉角转四元数
-     * @param q 四元数，格式为{w, x, y, z}
-     * @param euler 欧拉角，格式为{yaw, pitch, roll}
-     */
-    void QuaternionToEularAngle(float *q, float *euler)
-    {
-        // float Yaw, Pitch;
-        // arm_atan2_f32(2.0f * (q[0] * q[3] + q[1] * q[2]), 2.0f * (q[0] * q[0] + q[1] * q[1]) - 1.0f, &Yaw);
-        // arm_atan2_f32(2.0f * (q[0] * q[1] + q[2] * q[3]), 2.0f * (q[0] * q[0] + q[3] * q[3]) - 1.0f, &Pitch);
-        // euler[0] = Yaw * 57.295779513f;
-        // euler[1] = Pitch * 57.295779513f;
-
-        euler[0] = atan2f(2.0f * (q[0] * q[3] + q[1] * q[2]), 2.0f * (q[0] * q[0] + q[1] * q[1]) - 1.0f) * 57.295779513f;
-        euler[1] = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 2.0f * (q[0] * q[0] + q[3] * q[3]) - 1.0f) * 57.295779513f;
-        euler[2] = asinf(2.0f * (q[0] * q[2] - q[1] * q[3])) * 57.295779513f;
-    }
-
     int float_to_uint(float x_float, float x_min, float x_max, int bits)
     {
         /* Converts a float to an unsigned int, given range and number of bits */
@@ -263,5 +179,45 @@ namespace Math
         float span = x_max - x_min;
         float offset = x_min;
         return ((float)x_int) * span / ((float)((1 << bits) - 1)) + offset;
+    }
+}
+
+namespace Matrix
+{
+    void MatInit(mat *m, uint8_t row, uint8_t col)
+    {
+        m->numCols = col;
+        m->numRows = row;
+        m->pData = (float *)malloc(row * col * sizeof(float));
+    }
+
+    // 三维向量归一化
+    float *Norm3d(float *v)
+    {
+        float len = Numeric::Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        v[0] /= len;
+        v[1] /= len;
+        v[2] /= len;
+        return v;
+    }
+
+    // 计算模长
+    float NormOf3d(float *v)
+    {
+        return Numeric::Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    }
+
+    // 三维向量叉乘v1 x v2
+    void Cross3d(float *v1, float *v2, float *res)
+    {
+        res[0] = v1[1] * v2[2] - v1[2] * v2[1];
+        res[1] = v1[2] * v2[0] - v1[0] * v2[2];
+        res[2] = v1[0] * v2[1] - v1[1] * v2[0];
+    }
+
+    // 三维向量点乘
+    float Dot3d(float *v1, float *v2)
+    {
+        return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
     }
 }
