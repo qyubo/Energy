@@ -1,36 +1,36 @@
 
 GraphedExpression="(yaw_debug).pos_set", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#a00909
 GraphedExpression="(yaw_debug).pos_fdb", Color=#09a01b
-OpenDocument="ux_device_cdc_acm.c", FilePath="D:/RM26/RM26_F4/USBX/App/ux_device_cdc_acm.c", Line=210
-OpenDocument="app_usbx_device.c", FilePath="D:/RM26/RM26_F4/USBX/App/app_usbx_device.c", Line=185
+GraphedExpression="debug_length", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#09a087
+OpenDocument="ux_device_cdc_acm.c", FilePath="D:/RM26/RM26_F4/USBX/App/ux_device_cdc_acm.c", Line=187
+OpenDocument="stm32f4xx_hal.c", FilePath="D:/RM26/RM26_F4/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=313
 OpenDocument="main.c", FilePath="D:/RM26/RM26_F4/Core/Src/main.c", Line=62
-OpenDocument="stm32f4xx_hal_can.c", FilePath="D:/RM26/RM26_F4/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c", Line=1536
-OpenDocument="TaskChassis.cpp", FilePath="D:/RM26/RM26_F4/User/Task/Src/TaskChassis.cpp", Line=96
-OpenDocument="TaskGimbal.cpp", FilePath="D:/RM26/RM26_F4/User/Task/Src/TaskGimbal.cpp", Line=12
-OpenDocument="QuaternionEKF.c", FilePath="D:/RM26/RM26_F4/User/Module/AHRS/Src/QuaternionEKF.c", Line=225
+OpenDocument="TaskGimbal.cpp", FilePath="D:/RM26/RM26_F4/User/Task/Src/TaskGimbal.cpp", Line=151
+OpenDocument="app_azure_rtos.c", FilePath="D:/RM26/RM26_F4/AZURE_RTOS/App/app_azure_rtos.c", Line=93
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=2, w=992, h=311, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Source Files", DockArea=LEFT, x=0, y=2, w=688, h=198, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=2, w=992, h=296, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=2, w=688, h=275, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=1, w=992, h=226, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=688, h=244, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
+OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=688, h=235, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
 OpenWindow="Memory 1", DockArea=BOTTOM, x=0, y=0, w=223, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x2880
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=3, w=688, h=192, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Functions", DockArea=LEFT, x=0, y=4, w=688, h=181, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Call Graph", DockArea=LEFT, x=0, y=1, w=688, h=188, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=3, w=688, h=189, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=4, w=688, h=175, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Call Graph", DockArea=LEFT, x=0, y=1, w=688, h=129, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=1750, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=992, h=468, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="49;0", PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="744;-77", CodeGraphLegendShown=0, CodeGraphLegendPosition="762;0"
+OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=992, h=483, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="49;0", PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="744;-79", CodeGraphLegendShown=0, CodeGraphLegendPosition="762;0"
 OpenWindow="Console", DockArea=BOTTOM, x=2, y=0, w=585, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-TableHeader="Vector Catches", SortCol="None", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;500]
-TableHeader="Break & Tracepoints", SortCol="None", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;100;329;159]
+TableHeader="Vector Catches", SortCol="None", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;299;500]
+TableHeader="Break & Tracepoints", SortCol="None", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;100;329;941]
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[1554;100;100;100;455]
 TableHeader="Source Files", SortCol="Path", SortOrder="DESCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[344;100;100;100;1049]
 TableHeader="Call Graph", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Stack Total";"Stack Local";"Code Total";"Code Local";"Depth";"Called From"], ColWidths=[636;137;137;128;128;113;137]
-TableHeader="Data Sampling Table", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (yaw_debug).pos_set";" (yaw_debug).pos_fdb"], ColWidths=[100;100;100;100]
-TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[212;100;100;100;100;101;119;137;781]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (yaw_debug).pos_set";" (yaw_debug).pos_fdb";" debug_length"], ColWidths=[100;100;100;100;100]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[212;131;100;100;100;101;119;137;750]
 TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;105;761]
 TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[187;212;100;163]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;340]
 WatchedExpression="yaw_pos_pid", RefreshRate=1, Window=Watched Data 1
 WatchedExpression="yaw_spd_pid", RefreshRate=1, Window=Watched Data 1
 WatchedExpression="pitch_pos_pid", RefreshRate=1, Window=Watched Data 1
@@ -39,3 +39,8 @@ WatchedExpression="yaw_debug", Window=Watched Data 1
 WatchedExpression="pitch_debug", Window=Watched Data 1
 WatchedExpression="yaw_signal_step", RefreshRate=1, Window=Watched Data 1
 WatchedExpression="debug_ins", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="new_data_", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="debug_length", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="debug_vrx", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="UserRxBufferFS", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="debug_rx_vision", RefreshRate=5, Window=Watched Data 1

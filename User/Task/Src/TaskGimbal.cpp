@@ -24,6 +24,7 @@ extern TX_SEMAPHORE IMUThreadSem;
 #ifdef GimbalTest
 msg_remoter_t debug_dr16;
 msg_ins_t debug_ins;
+msg_visionrx_t debug_vrx;
 motor_debug_t yaw_debug;
 motor_debug_t pitch_debug;
 
@@ -123,15 +124,18 @@ static double sin_signal(double t)
 
     bool autoaim_on = true; // only for test, receive from operator later
 
+    om_init();
+
     om_topic_t *gimbalctrl_topic = om_config_topic(nullptr, "ca", "gimbalctrl", sizeof(msg_gimbal_ctrl_t));
     msg_gimbal_ctrl_t gimbal_ctrl{};
-
     om_suber_t *remoter_suber = om_subscribe(om_find_topic("remoter", UINT32_MAX));
     msg_remoter_t remoter{};
     om_suber_t *ins_suber = om_subscribe(om_find_topic("ins", UINT32_MAX));
     msg_ins_t ins{};
     om_suber_t *chassis_suber = om_subscribe(om_find_topic("chassis", UINT32_MAX));
     msg_chassis_t chassis{};
+    om_suber_t *vision_suber = om_subscribe(om_find_topic("visionrx", UINT32_MAX));
+    msg_visionrx_t vision_rx{};
 
     // KalmanFilter YawAngleFilter;
     KalmanFilter YawGyroFilter;
@@ -157,8 +161,10 @@ static double sin_signal(double t)
         om_suber_export(remoter_suber, &remoter, false);
         om_suber_export(ins_suber, &ins, false);
         om_suber_export(chassis_suber, &chassis, false);
+        om_suber_export(vision_suber, &vision_rx, false);
         memcpy (&debug_dr16, &remoter, sizeof(msg_remoter_t));
         memcpy (&debug_ins, &ins, sizeof(msg_ins_t));
+        memcpy (&debug_vrx, &vision_rx, sizeof(msg_visionrx_t));
 
 
 

@@ -194,7 +194,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Create the usbx_cdc_acm_thread_entry thread. */
   tx_status = tx_thread_create(&ux_cdc_read_thread, "cdc_acm_read_usbx_app_thread_entry",
                                usbx_cdc_acm_read_thread_entry, 1,
-                               pointer, USBX_APP_STACK_SIZE, 20, 20, TX_NO_TIME_SLICE,
+                               pointer, USBX_APP_STACK_SIZE, 5, 5, TX_NO_TIME_SLICE,
                                TX_AUTO_START);
 
   /* Check usbx_cdc_acm_read_thread_entry creation */

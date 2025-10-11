@@ -25,6 +25,11 @@
 /* USER CODE BEGIN Includes */
 #include "main.h"
 #include "app_usbx_device.h"
+
+// user headers
+#include "om.h"
+#include "crc.hpp"
+#include "magicmsgs.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -192,6 +197,8 @@ VOID ux_app_parameters_change(VOID *cdc_acm)
 }
 
 uint32_t new_data_ = 0;
+uint32_t debug_length = 0;
+struct msg_visionrx_t debug_rx_vision;
 /**
   * @brief  Function implementing usbx_cdc_acm_thread_entry.
   * @param arg: Not used
@@ -208,6 +215,10 @@ void usbx_cdc_acm_read_thread_entry(ULONG arg)
 
   /* Get device */
   device = &_ux_system_slave->ux_system_slave_device;
+
+  om_init();
+  struct msg_visionrx_t msg_visionrx;
+  om_topic_t *visionrx_topic = om_config_topic(NULL, "ca", "visionrx", sizeof(msg_visionrx));
 
   while (1)
   {
@@ -232,10 +243,14 @@ void usbx_cdc_acm_read_thread_entry(ULONG arg)
         cdc_acm -> ux_slave_class_cdc_acm_transmission_status = UX_FALSE;
 
         /* Read the received data in blocking mode */
-        ux_device_class_cdc_acm_read(cdc_acm, (UCHAR *)UserRxBufferFS, 64,
+        ux_device_class_cdc_acm_read(cdc_acm, (UCHAR *)UserRxBufferFS, sizeof(msg_visionrx),
                                      &actual_length);
         new_data_ = actual_length;
-        tx_thread_sleep(1);
+        if (actual_length >= sizeof(msg_visionrx)) {
+          memcpy(&msg_visionrx, UserRxBufferFS, sizeof(msg_visionrx));
+          memcpy(&debug_rx_vision, &msg_visionrx, sizeof(msg_visionrx));
+        }
+        // tx_thread_sleep(1);
         // if (actual_length != 0)
         // {
         //   /* Wait until the requested flag TX_NEW_TRANSMITTED_DATA is received */
@@ -247,10 +262,8 @@ void usbx_cdc_acm_read_thread_entry(ULONG arg)
         // }
       }
     }
-    else
-    {
-      tx_thread_sleep(1);
-    }
+    om_publish(visionrx_topic, &msg_visionrx, sizeof(msg_visionrx), true, false);
+    tx_thread_sleep(1);
   }
 }
 
@@ -270,6 +283,10 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
   ULONG buffsize;
   UINT ux_status = UX_SUCCESS;
 
+  om_suber_t *ins_suber = om_subscribe(om_find_topic("ins", UINT32_MAX));
+  struct msg_ins_t ins;
+  struct msg_visiontx_t msg_visiontx;
+
   while (1)
   {
     // /* Wait until the requested flag RX_NEW_RECEIVED_DATA is received */
@@ -285,6 +302,17 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
     /* Get the data interface */
     data_interface = device->ux_slave_device_first_interface->ux_slave_interface_next_interface;
 
+    om_suber_export(ins_suber, &ins, false);
+    msg_visiontx.header = 0xA5;
+    msg_visiontx.detect_color = 0x00;
+    msg_visiontx.reset_tracker = false;
+    msg_visiontx.set_target = 0x00;
+    msg_visiontx.q1 = ins.quaternion[0];
+    msg_visiontx.q2 = ins.quaternion[1];
+    msg_visiontx.q3 = ins.quaternion[2];
+    msg_visiontx.q4 = ins.quaternion[3];
+    Append_CRC16_Check_Sum((uint8_t *)&msg_visiontx, 20);
+
     // /* Compares two memory blocks ux_slave_class_name and _ux_system_slave_class_cdc_acm_name */
     ux_status = ux_utility_memory_compare(data_interface->ux_slave_interface_class->ux_slave_class_name,
                                           _ux_system_slave_class_cdc_acm_name,
@@ -297,12 +325,16 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
       cdc_acm -> ux_slave_class_cdc_acm_transmission_status = UX_FALSE;
       if (new_data_) {
         ux_device_class_cdc_acm_write(cdc_acm, UserRxBufferFS , new_data_ , &actual_length);
+        debug_length = new_data_;
         new_data_ = 0;
+        tx_thread_sleep(10);
       }
-      else {
-        tx_thread_sleep(1);
-        // uint8_t test_data_ = 10;
+      else
+      {
+        debug_length = 0;
+        uint8_t test_data_ = 0xA5;
         // ux_device_class_cdc_acm_write(cdc_acm, UserRxBufferFS , test_data_ , &actual_length);
+        ux_device_class_cdc_acm_write(cdc_acm, (UCHAR *)&msg_visiontx, sizeof(msg_visiontx), &actual_length);
       }
     }
 
