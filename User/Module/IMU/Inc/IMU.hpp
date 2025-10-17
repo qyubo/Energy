@@ -78,7 +78,7 @@ public:
 
     PID TempPid = PID(0.1f, 0.0f, 0.0f, 25000.0f, 3.0f, PID_POSITION);
     float TargetTemp;
-    FirstOrderFilter TempFdbFilter;
+    IIRFilter TempFdbFilter = IIRFilter(2,LOWPASS,2);
 
 
     virtual ~cIMU() = default;

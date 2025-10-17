@@ -65,8 +65,6 @@ void ServiceMotors::SetModeAndPidParam()
     // test_spd_filer.SetQ(0.030f);
     // test_spd_filer.SetR(1.200f);
 
-    FirstOrderFilter test_spd_filter;
-    test_spd_filter.SetTau(0.4);
     float test_spd;
 
     motor_pos_pid.kp = 10.0f;

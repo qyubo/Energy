@@ -199,6 +199,7 @@ VOID ux_app_parameters_change(VOID *cdc_acm)
 uint32_t new_data_ = 0;
 uint32_t debug_length = 0;
 struct msg_visionrx_t debug_rx_vision;
+struct msg_visiontx_t debug_tx_vision;
 /**
   * @brief  Function implementing usbx_cdc_acm_thread_entry.
   * @param arg: Not used
@@ -303,7 +304,7 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
     data_interface = device->ux_slave_device_first_interface->ux_slave_interface_next_interface;
 
     om_suber_export(ins_suber, &ins, false);
-    msg_visiontx.header = 0xA5;
+    msg_visiontx.header = 0x5A;
     msg_visiontx.detect_color = 0x00;
     msg_visiontx.reset_tracker = false;
     msg_visiontx.set_target = 0x00;
@@ -312,6 +313,7 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
     msg_visiontx.q3 = ins.quaternion[2];
     msg_visiontx.q4 = ins.quaternion[3];
     Append_CRC16_Check_Sum((uint8_t *)&msg_visiontx, 20);
+    memcpy(&debug_tx_vision, &msg_visiontx, sizeof(msg_visiontx));
 
     // /* Compares two memory blocks ux_slave_class_name and _ux_system_slave_class_cdc_acm_name */
     ux_status = ux_utility_memory_compare(data_interface->ux_slave_interface_class->ux_slave_class_name,
@@ -324,7 +326,7 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
       /* Set transmission_status to UX_FALSE for the first time */
       cdc_acm -> ux_slave_class_cdc_acm_transmission_status = UX_FALSE;
       if (new_data_) {
-        ux_device_class_cdc_acm_write(cdc_acm, UserRxBufferFS , new_data_ , &actual_length);
+        // ux_device_class_cdc_acm_write(cdc_acm, UserRxBufferFS , new_data_ , &actual_length);
         debug_length = new_data_;
         new_data_ = 0;
         tx_thread_sleep(10);
@@ -335,6 +337,7 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
         uint8_t test_data_ = 0xA5;
         // ux_device_class_cdc_acm_write(cdc_acm, UserRxBufferFS , test_data_ , &actual_length);
         ux_device_class_cdc_acm_write(cdc_acm, (UCHAR *)&msg_visiontx, sizeof(msg_visiontx), &actual_length);
+        debug_length = actual_length;
       }
     }
 

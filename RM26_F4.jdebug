@@ -4,8 +4,8 @@
 *                         www.segger.com                             *
 **********************************************************************
 
-File          : /home/cosmosmount/Desktop/robomaster/RM26_F4/RM26_F4.jdebug
-Created       : 18 Oct 2025 17:18
+File          : D:/RM26/RM26_F4/RM26_F4.jdebug
+Created       : 17 Oct 2025 13:17
 Ozone Version : V3.24
 */
 
@@ -22,17 +22,16 @@ void OnProjectLoad (void) {
   //
   // Dialog-generated settings
   //
-  Project.AddPathSubstitute ("/home/cosmosmount/Desktop/robomaster/RM26_F4", "$(ProjectDir)");
-  Project.AddPathSubstitute ("/home/cosmosmount/desktop/robomaster/rm26_f4", "$(ProjectDir)");
+  Project.AddPathSubstitute ("D:/RM26/RM26_F4", "$(ProjectDir)");
+  Project.AddPathSubstitute ("d:/rm26/rm26_f4", "$(ProjectDir)");
   Project.SetDevice ("STM32F407VG");
-  Project.SetHostIF ("USB", "");
+  Project.SetHostIF ("USB", "770922666");
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("4 MHz");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M4F.svd");
   //
   // User settings
   //
-  Edit.SysVar (VAR_HSS_SPEED, FREQ_100_HZ);
   File.Open ("$(ProjectDir)/build/RM26_F4.elf");
 }
 

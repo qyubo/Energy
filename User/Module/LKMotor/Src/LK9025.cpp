@@ -5,7 +5,6 @@
  * @brief GM6020类的构造函数。
  * 初始化电机的控制模式、各种设定值和PID控制器。
  */
- Filter::FirstOrderFilter lk9025spdfilter;
  
 LK9025::LK9025() : LKMotor(LK9025_TYPE)
 {
@@ -39,9 +38,6 @@ LK9025::LK9025() : LKMotor(LK9025_TYPE)
     positionPid.kd = 0.0;
     positionPid.maxOut = 25000;
     positionPid.maxIOut = 3;
-		
-		lk9025spdfilter.SetTau(0.1f);
-		lk9025spdfilter.SetUpdatePeriod(1.0f);
 }
 
 /**

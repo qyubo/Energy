@@ -166,8 +166,6 @@ static double sin_signal(double t)
         memcpy (&debug_ins, &ins, sizeof(msg_ins_t));
         memcpy (&debug_vrx, &vision_rx, sizeof(msg_visionrx_t));
 
-
-
         if (tx_semaphore_get(&IMUThreadSem, TX_WAIT_FOREVER) == TX_SUCCESS)
         {
             if (remoter.ctrl_sw == Relax || remoter.offline)

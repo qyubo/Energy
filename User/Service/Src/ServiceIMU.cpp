@@ -48,6 +48,8 @@ static void InitQuaternion(float *init_q4)
         init_q4[i + 1] = axis_rot[i] * sinf(angle / 2.0f); // 轴角公式,第三轴为0(没有z轴分量)
 }
 
+
+float debug_yaw_int = 0.0f;
 [[noreturn]] void IMUThreadFun(ULONG initial_input) {
     UNUSED(initial_input);
 
@@ -69,9 +71,9 @@ static void InitQuaternion(float *init_q4)
     imu_handler->VerifyGyroChipID(); //< 验证陀螺仪ID
 
     while (imu_handler->acc_data.temperature < 45.0f) {
-        tx_thread_sleep(50);
+        tx_thread_sleep(10);
     }
-    tx_thread_sleep(1000);
+    tx_thread_sleep(500);
 
     imu_handler->Calibrate(); //< 标定IMU
     imu_handler->self_test.INIT_ERR = false;
@@ -82,12 +84,15 @@ static void InitQuaternion(float *init_q4)
     IMU_QuaternionEKF_Init(init_quaternion, 10, 0.001, 1000000, 1, 0);
     DWT_GetDeltaT(&INS_Count);
 
-    for (;;) {
+    for (;;)
+    {
         IMU_time = tx_time_get();
-        if (!imu_handler->self_test.INIT_ERR) {
+        if (!imu_handler->self_test.INIT_ERR)
+        {
             imu_handler->ReadAccData(&imu_handler->acc_data);
             imu_handler->ReadGyroData(&imu_handler->gyro_data);
-            if ((int)DWT_GetTimeline_ms() % 5 == 0)
+
+            if ((int)DWT_GetTimeline_ms() % 10 == 0)
             {
                 if (fabs(imu_handler->gyro_data.x) <= 0.03f && fabs(imu_handler->gyro_data.y) <= 0.03f && fabs(imu_handler->gyro_data.z) <= 0.04f)
                 {
@@ -105,32 +110,38 @@ static void InitQuaternion(float *init_q4)
                     yaw_static = false;
                 }
             }
+
             if (yaw_static)
             {
                 imu_handler->gyro_data.z -= (QEKF_INS.Yaw-yaw_corr);
             }
-            // if (fabs(imu_handler->acc_data.x) <= 0.15f && fabs(imu_handler->acc_data.y) <= 0.15f &&
-            //     fabs(imu_handler->gyro_data.roll) <= 0.015f && fabs(imu_handler->gyro_data.pitch) <= 0.015f && fabs(imu_handler->gyro_data.yaw) <= 0.015f)
-            // {
-            //     imu_handler->gyro_data.yaw = 0;
-            // }
+
+            if (fabs(imu_handler->acc_data.x) <= 0.15f && fabs(imu_handler->acc_data.y) <= 0.15f &&
+                fabs(imu_handler->gyro_data.x) <= 0.015f && fabs(imu_handler->gyro_data.y) <= 0.015f && fabs(imu_handler->gyro_data.z) <= 0.015f)
+            {
+                imu_handler->gyro_data.z = 0;
+            }
+
             IMU_QuaternionEKF_Update(imu_handler->gyro_data.x, imu_handler->gyro_data.y, imu_handler->gyro_data.z,
                 imu_handler->acc_data.x, imu_handler->acc_data.y, imu_handler->acc_data.z,
                 DWT_GetDeltaT(&INS_Count));
+
         }
 
         tx_semaphore_put(&IMUThreadSem);
 
-        memcpy(msg_ins.quaternion, QEKF_INS.q, sizeof(QEKF_INS.q));
         msg_ins.yaw = QEKF_INS.Yaw;
         msg_ins.gyro_y = imu_handler->gyro_data.z;
         msg_ins.total_yaw = QEKF_INS.YawTotalAngle;
 
         msg_ins.pitch = QEKF_INS.Roll;
-        msg_ins.roll = QEKF_INS.Pitch;
+        msg_ins.roll = -QEKF_INS.Pitch;
         msg_ins.gyro_r = imu_handler->gyro_data.y;
         msg_ins.gyro_p = imu_handler->gyro_data.x;
 
+        debug_yaw_int += msg_ins.gyro_y*0.001f*Numeric::RadToDegree;
+
+        EularAngleToQuaternion(msg_ins.yaw, msg_ins.pitch, msg_ins.roll, msg_ins.quaternion);
 
         om_publish(ins_topic, &msg_ins, sizeof(msg_ins), true, false);
 
@@ -149,18 +160,14 @@ ULONG temp_time;
 [[noreturn]] void IMUTempThreadFun(ULONG initial_input) {
     UNUSED(initial_input);
 
-    imu_handler->TempPid = PID(650.0f, 0.06f, 10.0f, 900.0f, 300.0f,  PID_POSITION | PID_Integral_Limit | PID_Changing_Integral_Rate | PID_Derivative_On_Measurement);
+    imu_handler->TempPid = PID(650.0f, 0.08f, 10.0f, 900.0f, 300.0f,  PID_POSITION | PID_Integral_Limit | PID_Changing_Integral_Rate | PID_Derivative_On_Measurement);
     imu_handler->TempPid.ScalarA = 3.5f;
     imu_handler->TempPid.ScalarB = 0.08f;
-
-    imu_handler->TempFdbFilter.SetTau(0.1f);       // 设置滤波时间常数
-    imu_handler->TempFdbFilter.SetUpdatePeriod(1); // 设置更新周期
 
     imu_handler->TargetTemp = 45.0f;                              //< 设置目标温度，一般为40度以上
     PWM_Start(&HEATING_RESISTANCE_TIM, TIM_CHANNEL_1); //< 启动加热电阻PWM
 
     float tmp_last = imu_handler->acc_data.temperature;
-    tx_thread_sleep(1000);
     imu_handler->ReadAccTemperature(&imu_handler->acc_data.temperature);
     if (tmp_last == imu_handler->acc_data.temperature) {
         //error in temp
