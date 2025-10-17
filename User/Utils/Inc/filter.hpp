@@ -5,83 +5,23 @@
 #ifndef RM26_FILTER_HPP
 #define RM26_FILTER_HPP
 
-#include <stdint.h>
-#include <math.h>
-#include "arm_math.h"
 #include "math.hpp"
+#include <vector>
 
 namespace Filter
 {
-    class FirstOrderFilter
-    {
-    private:
-        float Input;        // 设置滤波器的输入值
-        float OutPut;       // 设置滤波器的输出值
-        float Tau;          // 设置滤波器的时间常数
-        float UpdatePeriod; // 设置滤波器的更新周期，单位为秒，但是设置时以毫秒为单位
-
-    public:
-        /**
-         * @brief 构造函数，简单复制初始化，避免出现未知错误
-         */
-        FirstOrderFilter();
-
-        /**
-     * @brief 设置滤波器的输入值
+    /**
+     * @brief 一阶卡尔曼滤波器
+     * @note 简单的卡尔曼滤波实现，仅作用于一阶简单系统
      */
-        void SetInput(float in);
-
-        /*
-         * @brief 设置滤波器的时间常数
-         */
-        void SetTau(float tau);
-
-        /**
-         * @brief 设置滤波器的输出值
-         */
-        void SetResult(float out);
-
-        /**
-         * @brief 设置滤波器的更新周期
-         */
-        void SetUpdatePeriod(float t);
-
-        /**
-         * @brief 获取滤波器的输出值
-         */
-        float GetResult();
-
-        /**
-         * @brief 获取滤波器的输入值
-         */
-        float GetTau();
-
-        /**
-         * @brief 获取滤波器的更新周期
-         */
-        float GetUpdatePeriod();
-
-        /**
-         * @brief 初始化滤波器
-         */
-        void Init();
-
-        /**
-         * @brief 更新滤波器
-         */
-        void Update();
-
-        void Clear();
-    };
-
     class KalmanFilter
     {
-        float LastP; // 上次估算协方差 初始化值为0.02		--e(ESTk-1)  上次协方差
-        float NowP; // 当前估算协方差 初始化值为0		--预测e(ESTk)	当前估算协方差
-        float result;   // 卡尔曼滤波器输出 初始化值为0
-        float Kg;    // 卡尔曼增益 初始化值为0				--Kk
-        float Q;     // 过程噪声协方差 初始化值为0.001
-        float R;     // 观测噪声协方差 初始化值为0.543		--e(MEAk)  测量误差
+        float LastP;    // 上次估算协方差		--e(ESTk-1)     上次协方差
+        float NowP;     // 当前估算协方差		--预测e(ESTk)	当前估算协方差
+        float result;   // 卡尔曼滤波器输出
+        float Kg;       // 卡尔曼增益		    --Kk
+        float Q;        // 过程噪声协方差
+        float R;        // 观测噪声协方差		--e(MEAk)       测量误差
     public:
         /**
          * @brief 构造函数，简单复制初始化，避免出现未知错误
@@ -119,32 +59,94 @@ namespace Filter
         float Update(float input);
     };
 
-    class LowPassFilter_333Hz
-    {
-    private:
-        float Output;
-        float buff[8] = {0};
-        float coeff[5] = {
-            //b0  b1    b2    a1                                           a2
-            1.0f, 2.0f, 1.0f, -0.617669743139197424675046477204887196422f, -0.239839843702840921357832826288358774036f
-        };  //滤波器系数，MATLAB生成去掉a0,a1a2取反
-        float gain = 0.464377396710509593447113729780539870262f;//x阶IIR滤波器，gain需要乘以（x/2）次方
-        arm_biquad_casd_df1_inst_f32 S;
+    constexpr float FILTER_DEFAULT_SAMPLING_FREQUENCY = 1000.0f;
 
+    /**
+     * @brief 滤波器类型
+     *
+     */
+    enum Filter_Mode
+    {
+        LOWPASS = 0,
+        HIGHPASS,
+        BANDPASS,
+        BANDSTOP,
+    };
+
+    /**
+     * @brief Reusable, Frequency滤波器算法
+     * @author yssickjgd (1345578933@qq.com)
+     * @note modified
+     * @copyright Copyright (c) 2023
+     */
+    class FIRFilter
+    {
     public:
 
-        LowPassFilter_333Hz(){
-            arm_biquad_cascade_df1_init_f32(&S, 1, coeff, buff);
-        }
+        uint32_t order = 50;
+        uint8_t signal_flag = 0;
 
-        float calculate(float _input)
-        {
-            float temp;
-            arm_biquad_cascade_df1_f32(&S, &_input, &temp, 1);
-            temp *= gain;
-            Output = temp;
-            return Output;
-        }
+        float constrain_low;
+        float constrain_high;
+        Filter_Mode filter_mode;
+        float freq_low;
+        float freq_high;
+        float fs = FILTER_DEFAULT_SAMPLING_FREQUENCY;
+
+        std::vector<float> system_function;
+        std::vector<float> input_signal;
+
+        /**
+         * @brief 构造函数：初始化滤波器参数并计算系数
+         *
+         * @param _order 滤波器阶数
+         * @param _constrain_low 最小值（0表示不限制）
+         * @param _constrain_high 最大值（0表示不限制）
+         * @param _mode 滤波器类型
+         * @param _freq_low 低频（非高通有效）
+         * @param _freq_high 高频（非低通有效）
+         */
+        explicit FIRFilter(
+            uint32_t _order = 50,
+            float _constrain_low = 0.0f,
+            float _constrain_high = 0.0f,
+            Filter_Mode _mode = LOWPASS,
+            float _freq_low = 0.0f,
+            float _freq_high = FILTER_DEFAULT_SAMPLING_FREQUENCY / 2.0f);
+
+        void SetNow(float _now);
+        [[nodiscard]] float Update() const;
+    };
+
+    /**
+     * @brief 可重用 IIR 滤波器类
+     * @note IIR滤波器参数难以通过单片机计算，目前仅支持已使用频率、阶数、类型
+     * @note IIR滤波器参数可以通过Matlab计算
+     */
+    class IIRFilter
+    {
+    public:
+        /**
+         * @brief 构造函数：初始化滤波器参数并计算系数
+         *
+         * @param _order 滤波器阶数
+         * @param _mode 滤波器模式
+         * @param _freq_low 低频（非高通有效）
+         * @param _freq_high 高频（非低通有效）
+         * @note 请修改构造函数以引入现在不存在的阶数、模式
+         */
+        explicit IIRFilter(
+            uint32_t _order = 2,
+            Filter_Mode _mode = LOWPASS,
+            int _freq_low = 1,
+            int _freq_high = 500);
+
+        /**
+         * @brief 通过 SOS(Second-Order Section)二阶级联方法实现 IIR
+         * @param _input
+         * @return output
+         */
+        [[nodiscard]] float Update(float _input) const;
 
         void reset(){
             for (auto& i : buff){
@@ -152,15 +154,16 @@ namespace Filter
             }
         }
 
-        float getOutput(){
-            return Output;
-        }
+    private:
+        float gain;
+        std::vector<float> coeff;
+        std::vector<double> b;
+        uint32_t num_stage;
+        float Output;
+        float buff[8] = {0};    //缓存，长度理应是4，但是大了不会出问题
+        arm_biquad_casd_df1_inst_f32 section;
 
     };
 
-
-
-
 }
-
 #endif //RM26_FILTER_HPP

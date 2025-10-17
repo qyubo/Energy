@@ -2,8 +2,8 @@
 // Created by cosmosmount on 2025/9/2.
 //
 
-#ifndef RM26_H7_BMI088_HPP
-#define RM26_H7_BMI088_HPP
+#ifndef BMI088_HPP
+#define BMI088_HPP
 
 #include "IMU.hpp"
 #include "pid.hpp"
@@ -225,10 +225,16 @@ class cBMI088: public cIMU
         float Gyro_offset[3]; // 陀螺仪零飘
         float Acc_coef = IMU_ACCEL_3G_SEN;       // 加速度计灵敏度，标定完后要乘以9.805/gNorm
         float gNorm = 9.805f;          // 重力加速度模长
-        LowPassFilter_333Hz SensorFilter[6];
-
+        IIRFilter sensor_filter[6] = {
+            IIRFilter(2,LOWPASS,333),
+            IIRFilter(2,LOWPASS,333),
+            IIRFilter(2,LOWPASS,333),
+            IIRFilter(2,LOWPASS,333),
+            IIRFilter(2,LOWPASS,333),
+            IIRFilter(2,LOWPASS,333)
+        };
     };
 
 }
 
-#endif //RM26_H7_BMI088_HPP
+#endif //BMI088_HPP

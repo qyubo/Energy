@@ -20,20 +20,20 @@ namespace AHRS {
 
     void EularAngleToQuaternion(float Yaw, float Pitch, float Roll, float *q)
     {
-        float cosPitch, cosYaw, cosRoll, sinPitch, sinYaw, sinRoll;
         Yaw /= 57.295779513f;
         Pitch /= 57.295779513f;
         Roll /= 57.295779513f;
-        cosPitch = arm_cos_f32(Pitch / 2);
-        cosYaw = arm_cos_f32(Yaw / 2);
-        cosRoll = arm_cos_f32(Roll / 2);
-        sinPitch = arm_sin_f32(Pitch / 2);
-        sinYaw = arm_sin_f32(Yaw / 2);
-        sinRoll = arm_sin_f32(Roll / 2);
-        q[0] = cosPitch * cosRoll * cosYaw + sinPitch * sinRoll * sinYaw;
-        q[1] = sinPitch * cosRoll * cosYaw - cosPitch * sinRoll * sinYaw;
-        q[2] = sinPitch * cosRoll * sinYaw + cosPitch * sinRoll * cosYaw;
-        q[3] = cosPitch * cosRoll * sinYaw - sinPitch * sinRoll * cosYaw;
+        const float cosPitch = arm_cos_f32(Pitch / 2);
+        const float cosYaw = arm_cos_f32(Yaw / 2);
+        const float cosRoll = arm_cos_f32(Roll / 2);
+        const float sinPitch = arm_sin_f32(Pitch / 2);
+        const float sinYaw = arm_sin_f32(Yaw / 2);
+        const float sinRoll = arm_sin_f32(Roll / 2);
+
+        q[0] = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
+        q[1] = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
+        q[2] = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
+        q[3] = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw;
     }
 
     void EarthFrameToBodyFrame(const float *vecEF, float *vecBF, float *q)
