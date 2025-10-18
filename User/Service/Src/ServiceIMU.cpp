@@ -116,11 +116,11 @@ float debug_yaw_int = 0.0f;
                 imu_handler->gyro_data.z -= (QEKF_INS.Yaw-yaw_corr);
             }
 
-            if (fabs(imu_handler->acc_data.x) <= 0.15f && fabs(imu_handler->acc_data.y) <= 0.15f &&
-                fabs(imu_handler->gyro_data.x) <= 0.015f && fabs(imu_handler->gyro_data.y) <= 0.015f && fabs(imu_handler->gyro_data.z) <= 0.015f)
-            {
-                imu_handler->gyro_data.z = 0;
-            }
+            // if (fabs(imu_handler->acc_data.x) <= 0.15f && fabs(imu_handler->acc_data.y) <= 0.15f &&
+            //     fabs(imu_handler->gyro_data.x) <= 0.015f && fabs(imu_handler->gyro_data.y) <= 0.015f && fabs(imu_handler->gyro_data.z) <= 0.015f)
+            // {
+            //     imu_handler->gyro_data.z = 0;
+            // }
 
             IMU_QuaternionEKF_Update(imu_handler->gyro_data.x, imu_handler->gyro_data.y, imu_handler->gyro_data.z,
                 imu_handler->acc_data.x, imu_handler->acc_data.y, imu_handler->acc_data.z,
@@ -139,7 +139,7 @@ float debug_yaw_int = 0.0f;
         msg_ins.gyro_r = imu_handler->gyro_data.y;
         msg_ins.gyro_p = imu_handler->gyro_data.x;
 
-        debug_yaw_int += msg_ins.gyro_y*0.001f*Numeric::RadToDegree;
+        debug_yaw_int += imu_handler->gyro_data.z*0.001f;
 
         EularAngleToQuaternion(msg_ins.yaw, msg_ins.pitch, msg_ins.roll, msg_ins.quaternion);
 

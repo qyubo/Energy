@@ -324,9 +324,9 @@ namespace BMI088
         gyro[1] = ((int16_t)buf[3] << 8) + (int16_t)buf[2];
         gyro[2] = ((int16_t)buf[5] << 8) + (int16_t)buf[4];
         // 注意这里就不要又除法又乘法的了，直接乘以一个常数，根据配置，单位是16.384，所以直接乘以1/16.384 * DEG2SEC即可
-        data->x = sensor_filter[3].Update((float)gyro[0] * IMU_GYRO_2000_SEN);
-        data->y = sensor_filter[4].Update((float)gyro[1] * IMU_GYRO_2000_SEN);
-        data->z = sensor_filter[5].Update((float)gyro[2] * IMU_GYRO_2000_SEN);
+        data->x = sensor_filter[3].Update((float)gyro[0] * IMU_GYRO_1000_SEN);
+        data->y = sensor_filter[4].Update((float)gyro[1] * IMU_GYRO_1000_SEN);
+        data->z = sensor_filter[5].Update((float)gyro[2] * IMU_GYRO_1000_SEN);
         // data->x = (float)gyro[0] * IMU_GYRO_2000_SEN;
         // data->y = (float)gyro[1] * IMU_GYRO_2000_SEN;
         // data->z = (float)gyro[2] * IMU_GYRO_2000_SEN;

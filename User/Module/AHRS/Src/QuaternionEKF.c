@@ -94,8 +94,10 @@ void IMU_QuaternionEKF_Init(float *init_quaternion, float process_noise1, float 
  * @param[in]       accel x y z in m/s²
  * @param[in]       update period in s
  */
+float debug_dt = 0.0f;
 void IMU_QuaternionEKF_Update(float gx, float gy, float gz, float ax, float ay, float az, float dt)
 {
+    debug_dt = dt;
     // 0.5(Ohm-Ohm^bias)*deltaT,用于更新工作点处的状态转移F矩阵
     static float halfgxdt, halfgydt, halfgzdt;
     static float accelInvNorm;
