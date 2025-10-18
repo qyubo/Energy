@@ -12,11 +12,11 @@ TX_SEMAPHORE RemoterThreadSem;
 // extern uint8_t SBUS_rx_buf[2][SBUS_RX_BUF_NUM];
 
 // 数组在 D3 RAM
-uint8_t data_rx[DR16_DATA_SIZE];
+uint8_t dr16_rx[DR16_DATA_SIZE];
 
 inline dr16_data_t& Dr16_Data()
 {
-    return *reinterpret_cast<dr16_data_t*>(data_rx);
+    return *reinterpret_cast<dr16_data_t*>(dr16_rx);
 }
 
 [[noreturn]] void RemoterThreadFun(ULONG initial_input) {
@@ -26,7 +26,7 @@ inline dr16_data_t& Dr16_Data()
     om_topic_t *remoter_topic = om_config_topic(nullptr, "ca", "remoter", sizeof(msg_remoter_t));
     msg_remoter_t msg_remoter{};
     // HAL_UART_Abort(&huart3);
-    // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, data_rx, DR16_DATA_SIZE);
+    // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, dr16_rx, DR16_DATA_SIZE);
     for (;;) {
         msg_remoter.offline = false;
         while (tx_semaphore_get(&RemoterThreadSem, 100) != TX_SUCCESS) {
@@ -35,7 +35,7 @@ inline dr16_data_t& Dr16_Data()
             msg_remoter.offline = true;
             // HAL_UART_Abort(&huart3);
             tx_thread_sleep(3);
-            // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, data_rx, DR16_DATA_SIZE);
+            // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, dr16_rx, DR16_DATA_SIZE);
         }
         // 开关
         msg_remoter.ctrl_sw  = static_cast<CTRL_STATE>(Dr16_Data().s2);
@@ -73,7 +73,7 @@ inline dr16_data_t& Dr16_Data()
         msg_remoter.last_ctrl_sw = msg_remoter.ctrl_sw;
         msg_remoter.last_shoot_sw = msg_remoter.shoot_sw;
         memcpy(&msg_remoter.last_key, &msg_remoter.key, sizeof(msg_remoter.key));
-        // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, data_rx, DR16_DATA_SIZE);
+        // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, dr16_rx, DR16_DATA_SIZE);
         tx_thread_sleep(1);
     }
 }

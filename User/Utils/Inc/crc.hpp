@@ -6,6 +6,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief CRC16 Verify function
  * @param[in] pchMessage : Data to Verify,
@@ -54,5 +58,9 @@ void Append_CRC8_Check_Sum(uint8_t *pchMessage, uint16_t dwLength);
  * @return : CRC8 checksum
  */
 uint8_t Get_CRC8_Check_Sum(const uint8_t *pchMessage, uint16_t dwLength, uint8_t ucCRC8);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // RM_SERIAL_DRIVER__CRC_HPP_

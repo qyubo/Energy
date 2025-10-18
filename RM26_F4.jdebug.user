@@ -2,27 +2,29 @@
 GraphedExpression="(debug_ins).yaw", Color=#a00909
 GraphedExpression="(debug_ins).gyro_y", Color=#09a01b
 GraphedExpression="debug_yaw_int", Color=#09a087
+OpenDocument="tx_port.h", FilePath="D:/RM26/RM26_F4/Middlewares/ST/threadx/ports/cortex_m4/gnu/inc/tx_port.h", Line=550
 OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/RM26/RM26_F4/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1295
 OpenDocument="ServiceIMU.cpp", FilePath="D:/RM26/RM26_F4/User/Service/Src/ServiceIMU.cpp", Line=21
 OpenDocument="TaskGimbal.cpp", FilePath="D:/RM26/RM26_F4/User/Task/Src/TaskGimbal.cpp", Line=6
 OpenDocument="main.c", FilePath="D:/RM26/RM26_F4/Core/Src/main.c", Line=62
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=2, w=786, h=321, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=795, h=480, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=1, w=786, h=270, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=2, w=1034, h=324, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=795, h=453, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=1, w=1034, h=282, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Memory 1", DockArea=BOTTOM, x=0, y=0, w=936, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x2880
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=795, h=305, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Functions", DockArea=LEFT, x=0, y=2, w=795, h=220, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=795, h=311, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=2, w=795, h=241, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=882, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=786, h=414, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="484;0", PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="538;-77", CodeGraphLegendShown=0, CodeGraphLegendPosition="480;0"
+OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=1034, h=399, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="732;0", PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="538;-79", CodeGraphLegendShown=0, CodeGraphLegendPosition="556;0"
 OpenWindow="Console", DockArea=BOTTOM, x=2, y=0, w=521, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Memory 2", DockArea=BOTTOM, x=3, y=0, w=218, h=318, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x0
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[1554;100;100;100;455]
 TableHeader="Source Files", SortCol="Path", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[344;100;100;100;1049]
-TableHeader="Data Sampling Table", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (debug_ins).yaw";" (debug_ins).gyro_y";" debug_yaw_int"], ColWidths=[100;100;100;100;100]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (debug_ins).yaw";" (debug_ins).gyro_y";" debug_yaw_int"], ColWidths=[100;100;100;100;100]
 TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[203;100;100;100;100;101;119;137;137]
 TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
-TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;105;555]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[246;92;1112]
 TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[187;212;100;296]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;340]
 WatchedExpression="debug_ins", RefreshRate=5, Window=Watched Data 1

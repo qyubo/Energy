@@ -26,7 +26,7 @@ enum GearBox
  */
 class DJIMotor
 {
-private:
+public:
     float P_MIN; ///< 位置最小值
     float P_MAX; ///< 位置最大值
 
@@ -36,7 +36,6 @@ private:
     float T_MIN; ///< 扭矩最小值
     float T_MAX; ///< 扭矩最大值
 
-public:
     /**
      * @brief 定义电机测量数据的结构体。
      * @param last_ecd 上次电机编码器的读数。

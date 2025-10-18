@@ -2,8 +2,12 @@
 // Created by cosmosmount on 2025/9/14.
 //
 
-#ifndef RM26_H7_MAGICMSG_HPP
-#define RM26_H7_MAGICMSG_HPP
+#ifndef MAGICMSG_HPP
+#define MAGICMSG_HPP
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef enum {
     Relax = 2,
@@ -120,4 +124,53 @@ struct pid_tuning_t {
     float kd;
 };
 
-#endif //RM26_H7_MAGICMSG_HPP
+struct msg_visionrx_t
+{
+    uint8_t header;       // 发送数据包的头
+    uint8_t tracking : 1; // 跟踪的颜色
+    uint8_t fire : 1;     // 是否开火
+    uint8_t id : 4;       // 识别的id
+    uint8_t reserved : 2; // 保留位
+
+    float pitch;
+    float pitch_vel;
+    float pitch_acc;
+    float yaw;
+    float yaw_vel;
+    float yaw_acc;
+
+    float project_x;
+    float project_y;
+
+    uint16_t checksum; // 校验和
+}__attribute__((packed));
+
+struct msg_visiontx_t
+{
+    uint8_t header;           // 发送数据包的头
+    uint8_t detect_color : 1; // 检测到的颜色
+    bool reset_tracker : 1;   // 是否重置追踪
+    uint8_t set_target : 4;   // 设置目标
+    uint8_t reserved : 2;     // 保留位
+    float q1;                 // 四元数
+    float q2;
+    float q3;
+    float q4;
+    uint16_t checksum; // 校验和
+} __attribute__((packed));
+
+struct motor_debug_t
+{
+    float spd_set;
+    float spd_fdb;
+    float pos_set;
+    float pos_fdb;
+    float cur_set;
+    float cur_fdb;
+};
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif //MAGICMSG_HPP
