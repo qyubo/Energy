@@ -54,58 +54,11 @@ void ServiceMotors::SetModeAndPidParam()
     UNUSED(initial_input);
     ULONG time;
 
-    //注册电机
-    ServiceMotors::Instance()->MotorRegister();
-
     om_suber_t *gimbal_suber = om_subscribe(om_find_topic("gimbalctrl", UINT32_MAX));
     msg_gimbal_ctrl_t gimbal_ctrl{};
-    ServiceMotors::Instance()->SetModeAndPidParam();
-
-    // KalmanFilter test_spd_filer;
-    // test_spd_filer.SetQ(0.030f);
-    // test_spd_filer.SetR(1.200f);
-
-    float test_spd;
-
-    motor_pos_pid.kp = 10.0f;
-    motor_pos_pid.ki = 0.0f;
-    motor_pos_pid.kd = 0.0f;
-
-    motor_spd_pid.kp = 300.0f;
-    motor_spd_pid.ki = 0.01f;
-    motor_spd_pid.kd = 1.0f;
-    float yaw_init = 0.0f;
 
     for (;;) {
         om_suber_export(gimbal_suber, &gimbal_ctrl, false);
-        if (gimbal_ctrl.pitch_mode == SPD)
-        {
-            ServiceMotors::Instance()->PitchMotor.currentSet = static_cast<int16_t>(-gimbal_ctrl.pitch_speed*1000-5000);
-            if (ServiceMotors::Instance()->PitchMotor.motorFeedback.positionFdb < ServiceMotors::Instance()->PitchMotor.P_MIN
-                || ServiceMotors::Instance()->PitchMotor.motorFeedback.positionFdb > ServiceMotors::Instance()->PitchMotor.P_MAX)
-                ServiceMotors::Instance()->PitchMotor.currentSet = static_cast<int16_t>(-5000);
-        }
-        else
-        {
-            ServiceMotors::Instance()->PitchMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.pitch_torque*50-5000);
-        }
-        if (gimbal_ctrl.yaw_mode == SPD)
-        {
-            ServiceMotors::Instance()->YawMotor.currentSet = static_cast<int16_t>(-gimbal_ctrl.yaw_speed*1000);
-        }
-        else
-        {
-            ServiceMotors::Instance()->YawMotor.currentSet = static_cast<int16_t>(gimbal_ctrl.yaw_torque*50);
-        }
-
-        // motor_debug.pos_set = ServiceMotors::Instance()->PitchMotor.motorFeedback.positionFdb;
-        motor_debug.pos_fdb = ServiceMotors::Instance()->PitchMotor.motorFeedback.positionFdb;
-        motor_debug.cur_set = ServiceMotors::Instance()->PitchMotor.currentSet;
-        motor_debug.cur_fdb = ServiceMotors::Instance()->PitchMotor.motorFeedback.currentFdb;
-
-        //发送控制指令给电机
-        DJIMotorhandler->sendControlData();
-
         tx_thread_sleep(1);
     }
 }

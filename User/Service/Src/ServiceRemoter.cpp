@@ -27,7 +27,7 @@ inline vt03_data_t& Vt03_Data()
 
     /* Remoter Topic */
     om_topic_t *remoter_topic = om_config_topic(nullptr, "ca", "remoter", sizeof(msg_remoter_t));
-    msg_remoter_t msg_remoter{};
+    msg_remoter_t msg_remoter{}
     for (;;) {
         msg_remoter.offline = false;
         while (tx_semaphore_get(&RemoterThreadSem, 100) != TX_SUCCESS) {

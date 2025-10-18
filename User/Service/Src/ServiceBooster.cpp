@@ -104,7 +104,7 @@ void ServiceBooster()
 
     tx_thread_create(&IMUThread, TX_NAME("IMUThread"),
         IMUThreadFun, 0x1234, IMUThreadStack, sizeof(IMUThreadStack),
-        3, 3, TX_NO_TIME_SLICE, TX_AUTO_START);
+        2, 2, TX_NO_TIME_SLICE, TX_AUTO_START);
 
     tx_thread_create(&IMUTempThread, TX_NAME("IMUTempThread"),
         IMUTempThreadFun, 0x1234, IMUTempThreadStack, sizeof(IMUTempThreadStack),

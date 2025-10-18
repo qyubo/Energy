@@ -10,6 +10,10 @@ extern "C" {
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief CRC16 Verify function
  * @param[in] pchMessage : Data to Verify,
