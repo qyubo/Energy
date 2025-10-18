@@ -4,6 +4,10 @@
 #ifndef RM_SERIAL_DRIVER_CRC_HPP
 #define RM_SERIAL_DRIVER_CRC_HPP
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #ifdef __cplusplus

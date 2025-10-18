@@ -37,9 +37,9 @@ typedef struct acc_data_t
  */
 typedef struct gyro_data_t
 {
-    float x;  // x轴
-    float y; // y轴
-    float z;   // z轴
+    float x;
+    float y;
+    float z;
 } gyro_data_t;
 
 /**

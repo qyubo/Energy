@@ -124,6 +124,22 @@ struct pid_tuning_t {
     float kd;
 };
 
+struct motor_debug_t
+{
+    float spd_set;
+    float spd_fdb;
+    float pos_set;
+    float pos_fdb;
+    float cur_set;
+    float cur_fdb;
+};
+
+struct msg_chassis_t
+{
+    bool spinning;
+    float vw;
+};
+
 struct msg_visionrx_t
 {
     uint8_t header;       // 发送数据包的头
@@ -158,16 +174,6 @@ struct msg_visiontx_t
     float q4;
     uint16_t checksum; // 校验和
 } __attribute__((packed));
-
-struct motor_debug_t
-{
-    float spd_set;
-    float spd_fdb;
-    float pos_set;
-    float pos_fdb;
-    float cur_set;
-    float cur_fdb;
-};
 
 #ifdef __cplusplus
 }

@@ -27,15 +27,6 @@ enum GearBox
 class DJIMotor
 {
 public:
-    float P_MIN; ///< 位置最小值
-    float P_MAX; ///< 位置最大值
-
-    float V_MIN; ///< 速度最小值
-    float V_MAX; ///< 速度最大值
-
-    float T_MIN; ///< 扭矩最小值
-    float T_MAX; ///< 扭矩最大值
-
     /**
      * @brief 定义电机测量数据的结构体。
      * @param last_ecd 上次电机编码器的读数。
@@ -120,11 +111,20 @@ public:
     uint16_t canId;                   ///< 电机的CAN通信ID
     CAN_HandleTypeDef *hcan;          ///< 指向电机使用的CAN接口的指针
 
-    PID speedPid = PID(0.1f, 0.0f, 0.0f, 25000.0f, 3.0f, PID_POSITION);    ///< 速度环PID控制器
-    PID positionPid = PID(0.1f, 0.0f, 0.0f, 25000.0f, 3.0f, PID_POSITION); ///< 位置环PID控制器
+    PID speedPid = PID(0.1f, 0.0f, 0.0f, 25000.0f, 100.0f, PID_POSITION);    ///< 速度环PID控制器
+    PID positionPid = PID(0.1f, 0.0f, 0.0f, 500.0f, 10.0f, PID_POSITION); ///< 位置环PID控制器
 
     float speedSet;    ///< 设定的目标速度
     float positionSet; ///< 设定的目标位置，范围[-Π, Π]
+
+    float P_MIN; ///< 位置最小值
+    float P_MAX; ///< 位置最大值
+
+    float V_MIN; ///< 速度最小值
+    float V_MAX; ///< 速度最大值
+
+    float T_MIN; ///< 扭矩最小值
+    float T_MAX; ///< 扭矩最大值
 
     int16_t currentSet;  ///< 设定的电流输出
     uint16_t maxCurrent; ///< 最大电流限制

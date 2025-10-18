@@ -8,15 +8,18 @@ TX_THREAD RemoterThread;
 uint8_t RemoterThreadStack[2048] = {0};
 TX_SEMAPHORE RemoterThreadSem;
 
-// extern DMA_HandleTypeDef hdma_usart3_rx;
-// extern uint8_t SBUS_rx_buf[2][SBUS_RX_BUF_NUM];
-
 // 数组在 D3 RAM
 uint8_t dr16_rx[DR16_DATA_SIZE];
+uint8_t vt03_rx[VT03_DATA_SIZE];
 
 inline dr16_data_t& Dr16_Data()
 {
     return *reinterpret_cast<dr16_data_t*>(dr16_rx);
+}
+
+inline vt03_data_t& Vt03_Data()
+{
+    return *reinterpret_cast<vt03_data_t*>(vt03_rx);
 }
 
 [[noreturn]] void RemoterThreadFun(ULONG initial_input) {
@@ -24,18 +27,14 @@ inline dr16_data_t& Dr16_Data()
 
     /* Remoter Topic */
     om_topic_t *remoter_topic = om_config_topic(nullptr, "ca", "remoter", sizeof(msg_remoter_t));
-    msg_remoter_t msg_remoter{};
-    // HAL_UART_Abort(&huart3);
-    // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, dr16_rx, DR16_DATA_SIZE);
+    msg_remoter_t msg_remoter{}
     for (;;) {
         msg_remoter.offline = false;
         while (tx_semaphore_get(&RemoterThreadSem, 100) != TX_SUCCESS) {
             // 超时/掉线逻辑
             // 比如可以清零，或者标记掉线
             msg_remoter.offline = true;
-            // HAL_UART_Abort(&huart3);
             tx_thread_sleep(3);
-            // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, dr16_rx, DR16_DATA_SIZE);
         }
         // 开关
         msg_remoter.ctrl_sw  = static_cast<CTRL_STATE>(Dr16_Data().s2);
@@ -54,7 +53,7 @@ inline dr16_data_t& Dr16_Data()
             msg_remoter.ctrl_sw = CTRL_STATE::S2N;
         }
 
-        // 摇杆 11 位 -> float [-1,1]
+        // 摇杆 -> float [-1,1]
         msg_remoter.right_x  = (static_cast<float>(Dr16_Data().ch_0) - RC_CH_VALUE_OFFSET) / RC_CH_OFFSET_MAX;
         msg_remoter.right_y  = (static_cast<float>(Dr16_Data().ch_1) - RC_CH_VALUE_OFFSET) / RC_CH_OFFSET_MAX;
         msg_remoter.left_x = (static_cast<float>(Dr16_Data().ch_2) - RC_CH_VALUE_OFFSET) / RC_CH_OFFSET_MAX;
@@ -73,7 +72,7 @@ inline dr16_data_t& Dr16_Data()
         msg_remoter.last_ctrl_sw = msg_remoter.ctrl_sw;
         msg_remoter.last_shoot_sw = msg_remoter.shoot_sw;
         memcpy(&msg_remoter.last_key, &msg_remoter.key, sizeof(msg_remoter.key));
-        // HAL_UARTEx_ReceiveToIdle_DMA(&huart3, dr16_rx, DR16_DATA_SIZE);
+
         tx_thread_sleep(1);
     }
 }
