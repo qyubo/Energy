@@ -26,7 +26,6 @@
 #include "main.h"
 #include "app_usbx_device.h"
 
-// user headers
 #include "om.h"
 #include "crc.hpp"
 #include "magicmsgs.hpp"
@@ -74,8 +73,6 @@ uint32_t UserTxBufPtrIn;
 
 /* Increment this pointer or roll it back to
 start address when data are sent over USB */
-uint32_t UserTxBufPtrOut;
-UX_SLAVE_CLASS_CDC_ACM  *cdc_acm;
 UX_SLAVE_CLASS_CDC_ACM_LINE_CODING_PARAMETER CDC_VCP_LineCoding =
 {
   115200, /* baud rate */
@@ -111,7 +108,7 @@ void CDC_Init_FS(void *cdc_acm)
   /* Check Status */
   if (ux_status != UX_SUCCESS)
   {
-    while(1){}
+    while (1) {};
   }
 
   /* USER CODE END 3 */
@@ -124,7 +121,7 @@ void CDC_Init_FS(void *cdc_acm)
 void CDC_DeInit_FS(void *cdc_acm)
 {
   /* USER CODE BEGIN 4 */
-  // HAL_UART_DeInit(&huart3);
+  UNUSED(cdc_acm);
   /* USER CODE END 4 */
 }
 
@@ -163,7 +160,7 @@ VOID ux_app_parameters_change(VOID *cdc_acm)
       /* Check Status */
       if (ux_status != UX_SUCCESS)
       {
-        while(1){}
+        while (1) {};
       }
 
       /* Check if baudrate < 9600) then set it to 9600 */
@@ -184,7 +181,7 @@ VOID ux_app_parameters_change(VOID *cdc_acm)
       /* Check Status */
       if (ux_status != UX_SUCCESS)
       {
-        while(1){}
+        while (1) {};
       }
       break;
     }
@@ -196,8 +193,6 @@ VOID ux_app_parameters_change(VOID *cdc_acm)
   }
 }
 
-uint32_t new_data_ = 0;
-uint32_t debug_length = 0;
 struct msg_visionrx_t debug_rx_vision;
 struct msg_visiontx_t debug_tx_vision;
 /**
@@ -217,7 +212,6 @@ void usbx_cdc_acm_read_thread_entry(ULONG arg)
   /* Get device */
   device = &_ux_system_slave->ux_system_slave_device;
 
-  om_init();
   struct msg_visionrx_t msg_visionrx;
   om_topic_t *visionrx_topic = om_config_topic(NULL, "ca", "visionrx", sizeof(msg_visionrx));
 
@@ -246,25 +240,15 @@ void usbx_cdc_acm_read_thread_entry(ULONG arg)
         /* Read the received data in blocking mode */
         ux_device_class_cdc_acm_read(cdc_acm, (UCHAR *)UserRxBufferFS, sizeof(msg_visionrx),
                                      &actual_length);
-        new_data_ = actual_length;
-        if (actual_length >= sizeof(msg_visionrx)) {
+        if (actual_length >= sizeof(msg_visionrx))
+        {
           memcpy(&msg_visionrx, UserRxBufferFS, sizeof(msg_visionrx));
           memcpy(&debug_rx_vision, &msg_visionrx, sizeof(msg_visionrx));
         }
-        // tx_thread_sleep(1);
-        // if (actual_length != 0)
-        // {
-        //   /* Wait until the requested flag TX_NEW_TRANSMITTED_DATA is received */
-        //   if (tx_event_flags_get(&EventFlag, TX_NEW_TRANSMITTED_DATA, TX_OR_CLEAR,
-        //                          &senddataflag, TX_WAIT_FOREVER) != TX_SUCCESS)
-        //   {
-        //     while(1){}
-        //   }
-        // }
       }
     }
     om_publish(visionrx_topic, &msg_visionrx, sizeof(msg_visionrx), true, false);
-    tx_thread_sleep(1);
+    tx_thread_sleep(2);
   }
 }
 
@@ -290,18 +274,16 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
 
   while (1)
   {
-    // /* Wait until the requested flag RX_NEW_RECEIVED_DATA is received */
-    // if (tx_event_flags_get(&EventFlag, RX_NEW_RECEIVED_DATA, TX_OR_CLEAR,
-    //                        &receivedataflag, TX_WAIT_FOREVER) != TX_SUCCESS)
-    // {
-    //   while(1){}
-    // }
-    //
-    // /* Get the device */
+    /* Get the device */
     device = &_ux_system_slave->ux_system_slave_device;
 
     /* Get the data interface */
     data_interface = device->ux_slave_device_first_interface->ux_slave_interface_next_interface;
+
+    /* Get the cdc Instance */
+    cdc_acm = data_interface->ux_slave_interface_class_instance;
+
+    cdc_acm -> ux_slave_class_cdc_acm_transmission_status = UX_FALSE;
 
     om_suber_export(ins_suber, &ins, false);
     msg_visiontx.header = 0x5A;
@@ -312,72 +294,14 @@ void usbx_cdc_acm_write_thread_entry(ULONG arg)
     msg_visiontx.q2 = ins.quaternion[1];
     msg_visiontx.q3 = ins.quaternion[2];
     msg_visiontx.q4 = ins.quaternion[3];
-    Append_CRC16_Check_Sum((uint8_t *)&msg_visiontx, 20);
+    msg_visiontx.gyro_yaw = ins.gyro_y;
+    msg_visiontx.gyro_pitch = ins.gyro_p;
+    Append_CRC16_Check_Sum((uint8_t *)&msg_visiontx, sizeof(msg_visiontx));
     memcpy(&debug_tx_vision, &msg_visiontx, sizeof(msg_visiontx));
 
-    // /* Compares two memory blocks ux_slave_class_name and _ux_system_slave_class_cdc_acm_name */
-    ux_status = ux_utility_memory_compare(data_interface->ux_slave_interface_class->ux_slave_class_name,
-                                          _ux_system_slave_class_cdc_acm_name,
-                                          ux_utility_string_length_get(_ux_system_slave_class_cdc_acm_name));
-    if (ux_status == UX_SUCCESS)
-    {
-      cdc_acm =  data_interface->ux_slave_interface_class_instance;
+    ux_device_class_cdc_acm_write(cdc_acm, (UCHAR *)&msg_visiontx, sizeof(msg_visiontx), &actual_length);
 
-      /* Set transmission_status to UX_FALSE for the first time */
-      cdc_acm -> ux_slave_class_cdc_acm_transmission_status = UX_FALSE;
-      if (new_data_) {
-        // ux_device_class_cdc_acm_write(cdc_acm, UserRxBufferFS , new_data_ , &actual_length);
-        debug_length = new_data_;
-        new_data_ = 0;
-        tx_thread_sleep(10);
-      }
-      else
-      {
-        debug_length = 0;
-        uint8_t test_data_ = 0xA5;
-        // ux_device_class_cdc_acm_write(cdc_acm, UserRxBufferFS , test_data_ , &actual_length);
-        ux_device_class_cdc_acm_write(cdc_acm, (UCHAR *)&msg_visiontx, sizeof(msg_visiontx), &actual_length);
-        debug_length = actual_length;
-      }
-    }
-
-    tx_thread_sleep(1);
-
-    /* Check if there is a new data to send */
-    // if (UserTxBufPtrOut != UserTxBufPtrIn)
-    // {
-    //   /* Check buffer overflow and Rollback */
-    //   if (UserTxBufPtrOut > UserTxBufPtrIn)
-    //   {
-    //     buffsize = APP_RX_DATA_SIZE - UserTxBufPtrOut;
-    //   }
-    //   else
-    //   {
-    //     /* Calculate data size */
-    //     buffsize = UserTxBufPtrIn - UserTxBufPtrOut;
-    //   }
-    //
-    //   /* Copy UserTxBufPtrOut in buffptr */
-    //   buffptr = UserTxBufPtrOut;
-    //
-    //   /* Send data over the class cdc_acm_write */
-    //   ux_status = ux_device_class_cdc_acm_write(cdc_acm,
-    //                                             (UCHAR *)(&UserTxBufferFS[buffptr]),
-    //                                             buffsize, &actual_length);
-    //
-    //   /* Check if dataset is correctly transmitted */
-    //   if (ux_status == UX_SUCCESS)
-    //   {
-    //     /* Increment the UserTxBufPtrOut pointer */
-    //     UserTxBufPtrOut += buffsize;
-    //
-    //     /* Rollback UserTxBufPtrOut if it equal to APP_TX_DATA_SIZE */
-    //     if (UserTxBufPtrOut == APP_TX_DATA_SIZE)
-    //     {
-    //       UserTxBufPtrOut = 0;
-    //     }
-    //   }
-    // }
+    tx_thread_sleep(5);
   }
 }
 /* USER CODE END 0 */

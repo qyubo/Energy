@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "main.h"
+#include "usb_otg.h"
 #include "ux_system.h"
 #include "ux_utility.h"
 #include "ux_device_stack.h"
@@ -106,7 +106,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Check memory allocation */
   if (UX_SUCCESS != tx_status)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Initialize USBX Memory */
@@ -136,7 +136,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Check the Stack initialize status */
   if (ret != UX_SUCCESS)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Initialize the cdc class parameters for the device. */
@@ -157,7 +157,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Check the device stack class status */
   if (ret != UX_SUCCESS)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Allocate the stack for main_usbx_app_thread_entry. */
@@ -167,7 +167,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Check memory allocation */
   if (UX_SUCCESS != tx_status)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Create the usbx_app_thread_entry main thread. */
@@ -178,7 +178,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Check usbx_app_thread_entry creation */
   if (UX_SUCCESS != tx_status)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Allocate the stack for usbx_cdc_acm_read_thread_entry. */
@@ -188,19 +188,19 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Check memory allocation */
   if (UX_SUCCESS != tx_status)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Create the usbx_cdc_acm_thread_entry thread. */
   tx_status = tx_thread_create(&ux_cdc_read_thread, "cdc_acm_read_usbx_app_thread_entry",
                                usbx_cdc_acm_read_thread_entry, 1,
-                               pointer, USBX_APP_STACK_SIZE, 5, 5, TX_NO_TIME_SLICE,
+                               pointer, USBX_APP_STACK_SIZE, 20, 20, TX_NO_TIME_SLICE,
                                TX_AUTO_START);
 
   /* Check usbx_cdc_acm_read_thread_entry creation */
   if (UX_SUCCESS != tx_status)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Allocate the stack for usbx_cdc_acm_write_thread_entry. */
@@ -210,7 +210,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Check memory allocation */
   if (UX_SUCCESS != tx_status)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Create the usbx_cdc_acm_thread_entry thread. */
@@ -224,7 +224,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   /* Check usbx_cdc_acm_write_thread_entry creation */
   if (UX_SUCCESS != tx_status)
   {
-    while (1){}
+    Error_Handler();
   }
 
   /* Create the event flags group. */
