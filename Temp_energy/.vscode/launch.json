@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ST-Link Debug (Cortex-Debug)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd", 
+            "cwd": "${workspaceFolder}",
+            
+            // ⚠️ 再次确认 build/Debug 下到底是 temp 还是 master
+            "executable": "${workspaceFolder}/build/Debug/WS2812_temp.elf",
+            
+            "configFiles": [
+                "interface/stlink.cfg", // 自动识别 V2/V2-1
+                "target/stm32f1x.cfg"   // 你的 F103 芯片
+            ],
+            
+            "device": "STM32F103C8",
+            "runToEntryPoint": "main",
+            "svdFile": "${workspaceFolder}/STM32F103.svd" // 如果你有SVD文件的话，没有就把这行删了
+        }
+    ]
+}
