@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/project/Temp_energy/build/Debug/cmake_install.cmake",
+		"D:/project/Temp_energy/build/Debug/cmake/stm32cubemx/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

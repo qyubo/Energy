@@ -1,0 +1,188 @@
+[
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\main.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\main.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\main.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\main.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\gpio.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\gpio.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\gpio.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\gpio.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\can.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\can.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\can.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\can.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\dma.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\dma.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\dma.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\dma.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\tim.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\tim.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\tim.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\tim.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\stm32f1xx_it.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\stm32f1xx_it.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\stm32f1xx_it.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\stm32f1xx_it.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\stm32f1xx_hal_msp.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\stm32f1xx_hal_msp.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\stm32f1xx_hal_msp.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\stm32f1xx_hal_msp.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\sysmem.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\sysmem.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\sysmem.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\sysmem.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\Core\\Src\\syscalls.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\syscalls.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\syscalls.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\Core\\Src\\syscalls.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -x assembler-with-cpp -MMD -MP -g -o CMakeFiles\\WS2812_temp.dir\\startup_stm32f103xb.s.obj -c D:\\project\\Temp_energy\\startup_stm32f103xb.s",
+  "file": "D:\\project\\Temp_energy\\startup_stm32f103xb.s",
+  "output": "CMakeFiles\\WS2812_temp.dir\\startup_stm32f103xb.s.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\User\\Entity\\Flag_State.c.obj -c D:\\project\\Temp_energy\\User\\Entity\\Flag_State.c",
+  "file": "D:\\project\\Temp_energy\\User\\Entity\\Flag_State.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\User\\Entity\\Flag_State.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\WS2812_temp.dir\\User\\Entity\\WS2812.c.obj -c D:\\project\\Temp_energy\\User\\Entity\\WS2812.c",
+  "file": "D:\\project\\Temp_energy\\User\\Entity\\WS2812.c",
+  "output": "CMakeFiles\\WS2812_temp.dir\\User\\Entity\\WS2812.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-g++.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -fno-rtti -fno-exceptions -fno-threadsafe-statics -O0 -g3 -o CMakeFiles\\WS2812_temp.dir\\User\\Entity\\can_portocal_second.cpp.obj -c D:\\project\\Temp_energy\\User\\Entity\\can_portocal_second.cpp",
+  "file": "D:\\project\\Temp_energy\\User\\Entity\\can_portocal_second.cpp",
+  "output": "CMakeFiles\\WS2812_temp.dir\\User\\Entity\\can_portocal_second.cpp.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-g++.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -fno-rtti -fno-exceptions -fno-threadsafe-statics -O0 -g3 -o CMakeFiles\\WS2812_temp.dir\\User\\bsp\\bsp.cpp.obj -c D:\\project\\Temp_energy\\User\\bsp\\bsp.cpp",
+  "file": "D:\\project\\Temp_energy\\User\\bsp\\bsp.cpp",
+  "output": "CMakeFiles\\WS2812_temp.dir\\User\\bsp\\bsp.cpp.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-g++.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -fno-rtti -fno-exceptions -fno-threadsafe-statics -O0 -g3 -o CMakeFiles\\WS2812_temp.dir\\User\\can\\bsp_can.cpp.obj -c D:\\project\\Temp_energy\\User\\can\\bsp_can.cpp",
+  "file": "D:\\project\\Temp_energy\\User\\can\\bsp_can.cpp",
+  "output": "CMakeFiles\\WS2812_temp.dir\\User\\can\\bsp_can.cpp.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-g++.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/User/bsp -ID:/project/Temp_energy/User/can -ID:/project/Temp_energy/User/Entity -ID:/project/Temp_energy/User/dwt -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -fno-rtti -fno-exceptions -fno-threadsafe-statics -O0 -g3 -o CMakeFiles\\WS2812_temp.dir\\User\\dwt\\bsp_dwt.cpp.obj -c D:\\project\\Temp_energy\\User\\dwt\\bsp_dwt.cpp",
+  "file": "D:\\project\\Temp_energy\\User\\dwt\\bsp_dwt.cpp",
+  "output": "CMakeFiles\\WS2812_temp.dir\\User\\dwt\\bsp_dwt.cpp.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Core\\Src\\system_stm32f1xx.c.obj -c D:\\project\\Temp_energy\\Core\\Src\\system_stm32f1xx.c",
+  "file": "D:\\project\\Temp_energy\\Core\\Src\\system_stm32f1xx.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Core\\Src\\system_stm32f1xx.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_gpio_ex.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_gpio_ex.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_gpio_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_gpio_ex.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_can.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_can.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_can.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_can.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_rcc.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_rcc.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_rcc.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_rcc.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_rcc_ex.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_rcc_ex.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_rcc_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_rcc_ex.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_gpio.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_gpio.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_gpio.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_gpio.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_dma.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_dma.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_dma.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_dma.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_cortex.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_cortex.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_cortex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_cortex.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_pwr.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_pwr.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_pwr.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_pwr.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_flash.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_flash.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_flash.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_flash.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_flash_ex.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_flash_ex.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_flash_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_flash_ex.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_exti.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_exti.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_exti.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_exti.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_tim.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_tim.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_tim.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_tim.c.obj"
+},
+{
+  "directory": "D:/project/Temp_energy/build/Debug",
+  "command": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F103xB -DUSE_HAL_DRIVER -ID:/project/Temp_energy/cmake/stm32cubemx/../../Core/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F1xx/Include -ID:/project/Temp_energy/cmake/stm32cubemx/../../Drivers/CMSIS/Include  -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_tim_ex.c.obj -c D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_tim_ex.c",
+  "file": "D:\\project\\Temp_energy\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_tim_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F1xx_HAL_Driver\\Src\\stm32f1xx_hal_tim_ex.c.obj"
+}
+]
