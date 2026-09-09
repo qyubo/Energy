@@ -1,0 +1,44 @@
+// {
+//     "cmake.cmakePath": "cube-cmake",
+//     "cmake.configureArgs": [
+//         "-DCMAKE_COMMAND=cube-cmake"
+//     ],
+//     "cmake.preferredGenerators": [
+//         "Ninja"
+//     ],
+//     "stm32cube-ide-clangd.path": "cube",
+//     "stm32cube-ide-clangd.arguments": [
+//         "starm-clangd",
+//         "--query-driver=${env:CUBE_BUNDLE_PATH}/gnu-tools-for-stm32/14.3.1+st.2/bin/arm-none-eabi-gcc*",
+//         "--query-driver=${env:CUBE_BUNDLE_PATH}/gnu-tools-for-stm32/14.3.1+st.2/bin/arm-none-eabi-g++*"
+//     ]
+// }
+{
+    "cmake.cmakePath": "cube-cmake",
+    "cmake.generator": "Ninja",
+    "cmake.configureSettings": {
+        "CMAKE_MAKE_PROGRAM": "C:/ST/STM32CubeCLT_1.19.0/Ninja/bin/ninja.exe"
+    },
+    "cmake.environment": {
+        "PATH": "C:/ST/STM32CubeCLT_1.19.0/Ninja/bin;C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin;${env:PATH}"
+    },
+    "cmake.preferredGenerators": [
+        "Ninja"
+    ],
+    // "cortex-debug.armToolchainPath": "C:/Users/NJR05/AppData/Local/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin",
+    // "cortex-debug.openocdPath": "D:/OpenOCD/OpenOCD/bin/openocd.exe",
+
+    "cortex-debug.gdbPath.windows": "D:\\OpenOCD\\OpenOCD\\arm-none-eabi-gdb.exe",
+    "cortex-debug.JLinkGDBServerPath": "D:\\SEGGER\\JLink_V722b\\JLinkGDBServerCL.exe",
+    "cortex-debug.gdbPath": "D:\\OpenOCD\\OpenOCD\\arm-none-eabi-gdb.exe",
+
+    "stm32cube-ide-clangd.path": "cube",
+    "stm32cube-ide-clangd.arguments": [
+        "starm-clangd",
+        "--query-driver=C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe",
+        "--query-driver=C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/arm-none-eabi-g++.exe"
+    ],
+    "cmake.configureArgs": [
+        "-DCMAKE_COMMAND=cube-cmake"
+    ]
+}

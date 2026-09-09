@@ -1,0 +1,12 @@
+#ifndef TASKENERGY
+#define TASKENERGY
+
+
+enum EnergyMode
+{
+    ENERGY_MODE_STOP = 0,
+    ENERGY_MODE_SMALL = 1,
+    ENERGY_MODE_BIG = 2,
+    ENERGY_MODE_SMALL_TEST = 3,
+    ENERGY_MODE_BIG_TEST = 4
+};

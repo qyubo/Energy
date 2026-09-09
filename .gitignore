@@ -1,0 +1,6 @@
+# Local build outputs and caches
+**/build/
+**/.cache/
+**/.idea/
+**/mx.scratch/
+*.jdebug.user
