@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07110f">
+  <meta name="description" content="PnX Energy 能量机关蓝牙控制台">
+  <title>PnX Energy · 能量机关控制台</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./overrides.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">P<span>×</span>N</span><div><strong>PnX Energy</strong><small>能量机关控制台</small></div></div>
+      <div id="connection" class="connection" role="status">未连接</div>
+    </header>
+
+    <div id="source-label" class="demo-banner" hidden>当前是演示模式，不会控制真实灯板</div>
+    <div id="warning" class="warning" role="alert" hidden></div>
+
+    <main>
+      <section id="screen-home" class="screen">
+        <div class="hero">
+          <div class="eyebrow">CONTROL CONSOLE / 01</div>
+          <h1>选择测试模式</h1>
+          <p>网页直接通过蓝牙连接 HC‑42D，命令经主板和 CAN 到达灯板。只有收到主板确认，界面才会进入下一步。</p>
+          <div class="actions">
+            <button id="connect" class="button primary" type="button">连接蓝牙设备 <span aria-hidden="true">↗</span></button>
+            <button id="disconnect" class="button outline" type="button" hidden>断开蓝牙</button>
+            <button id="demo" class="button subtle" type="button">无硬件演示</button>
+          </div>
+        </div>
+        <div class="section-label"><span>测试流程</span><span>MODE SELECT</span></div>
+        <div class="mode-grid">
+          <button id="mode-small" class="mode-card" type="button" disabled>
+            <span class="mode-index">01 / SMALL ENERGY</span>
+            <span class="mode-glyph" aria-hidden="true">◉</span>
+            <strong>小符测试</strong>
+            <span class="mode-description">击中后流水灯全红、灯板一环；五组完成后全红一环闪烁十次。</span>
+            <span class="mode-footer">进入测试 <span aria-hidden="true">→</span></span>
+          </button>
+          <button id="mode-large" class="mode-card" type="button" disabled>
+            <span class="mode-index">02 / LARGE ENERGY</span>
+            <span class="mode-glyph" aria-hidden="true">◎</span>
+            <strong>大符测试</strong>
+            <span class="mode-description">两靶击中一块，单靶击中或未中都继续；五格及最后一击后全红八环闪烁。</span>
+            <span class="mode-footer">进入测试 <span aria-hidden="true">→</span></span>
+          </button>
+        </div>
+        <p class="footnote">电脑请用 Chrome / Edge，安卓请用 Chrome；页面需经 HTTPS 或本机 localhost 打开。iPhone 普通浏览器暂不支持此蓝牙方案。</p>
+      </section>
+
+      <section id="screen-connecting" class="screen centered" hidden>
+        <div class="loading-ring" aria-hidden="true"></div>
+        <div class="eyebrow">CONNECTING</div>
+        <h1>正在确认主板</h1>
+        <p>选择 HC‑42D 后，网页会等待主板返回 HELLO 确认。</p>
+      </section>
+
+      <section id="screen-test" class="screen" hidden>
+        <div class="section-head"><div><div class="eyebrow">LIVE TEST / ROUND <span id="round-number">1</span></div><h1 id="mode-title">小符测试</h1></div><button id="exit" class="button quiet-danger" type="button">退出测试</button></div>
+        <div id="progress" class="progress" aria-label="五次击中进度"></div>
+        <div class="target-card"><div class="target-arc" aria-hidden="true"></div><div class="eyebrow">ACTIVE TARGET</div><div id="target-number" class="target-number">—</div><div class="target-unit">号靶面</div><p id="target-caption">等待主板</p></div>
+        <div class="judge-grid"><button id="hit" class="judge hit" type="button" disabled><span aria-hidden="true">✓</span> 击中</button><button id="miss" class="judge miss" type="button" disabled><span aria-hidden="true">×</span> 未击中</button></div>
+        <p id="test-hint" class="hint">测试时请留意实物灯效。</p>
+      </section>
+
+      <section id="screen-complete" class="screen centered" hidden>
+        <div class="complete-mark" aria-hidden="true">✓</div>
+        <div class="eyebrow">TEST COMPLETE</div>
+        <h1 id="complete-title">测试完成</h1>
+        <p id="complete-desc">主板报告十次闪烁完成。</p>
+        <div class="summary"><div><span>模式</span><strong id="complete-mode">小符测试</strong></div><div><span>轮次</span><strong id="complete-round">1</strong></div><div><span>闪烁</span><strong><span id="complete-flashes">10</span> / 10</strong></div></div>
+        <button id="restart" class="button primary wide" type="button">重新测试</button>
+      </section>
+    </main>
+
+    <footer class="footer"><span>PnX / ENERGY SYSTEM</span><span>BLE → UART → CAN</span></footer>
+  </div>
+  <div id="notice" class="notice" role="status" aria-live="polite"></div>
+</body>
+</html>

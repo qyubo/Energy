@@ -1,0 +1,47 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build-debug",
+            "type": "process",
+            "command": "D:/Embedded/CMake/bin/cmake.exe",
+            "args": [
+                "--build",
+                "--preset",
+                "Debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PATH": "D:/Embedded/Ninja/bin;D:/Embedded/GNU_Arm_Embedded_Toolchain/bin;${env:PATH}"
+                }
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "flash-openocd",
+            "type": "process",
+            "command": "D:/Embedded/OpenOCD/bin/openocd.exe",
+            "args": [
+                "-s",
+                "D:/Embedded/OpenOCD/share/openocd/scripts",
+                "-f",
+                "interface/jlink.cfg",
+                "-c",
+                "transport select swd",
+                "-c",
+                "adapter speed 100",
+                "-f",
+                "target/stm32g4x.cfg",
+                "-c",
+                "program build/Debug/Slave_energy_G474.elf verify reset exit"
+            ],
+            "dependsOn": "build-debug",
+            "dependsOrder": "sequence",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

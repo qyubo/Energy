@@ -1,0 +1,5 @@
+{
+  "name": "pnx-energy", "version": "1.0.0", "private": true,
+  "scripts": { "test": "node --test", "check": "node tools/check.js", "build:web": "node tools/build-web.js", "serve:web": "node tools/serve-web.js" },
+  "engines": { "node": ">=18" }
+}

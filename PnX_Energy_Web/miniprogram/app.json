@@ -1,0 +1,11 @@
+{
+  "pages": ["pages/home/index"],
+  "window": {
+    "navigationBarTitleText": "PnX_Energy",
+    "navigationBarBackgroundColor": "#101a2e",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f3f5fa"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

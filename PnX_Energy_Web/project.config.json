@@ -1,0 +1,8 @@
+{
+  "description": "PnX_Energy BLE control",
+  "miniprogramRoot": "miniprogram/",
+  "projectname": "PnX_Energy",
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "setting": { "es6": true, "enhance": true, "postcss": true, "minified": true }
+}

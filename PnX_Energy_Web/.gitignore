@@ -1,0 +1,5 @@
+node_modules/
+project.private.config.json
+*.log
+__pycache__/
+

@@ -1,0 +1,75 @@
+<view class="page">
+  <view class="topbar">
+    <view>
+      <view class="brand">PnX Energy</view>
+      <view class="subtitle">能量机关控制台</view>
+    </view>
+    <view class="connection {{connectionClass}}"><view class="dot"></view>{{statusText}}</view>
+  </view>
+
+  <view wx:if="{{source === 'demo'}}" class="demo-banner">界面演示模式 · 不会控制真实灯板</view>
+
+  <view wx:if="{{screen === 'home'}}" class="content home">
+    <view class="hero-card">
+      <view class="eyebrow">CONTROL CONSOLE</view>
+      <view class="hero-title">请选择测试模式</view>
+      <view class="hero-desc">连接并确认主板后，模式按钮才会解锁。所有操作均等待主板回执再更新界面。</view>
+      <view class="connect-row">
+        <button wx:if="{{!connected}}" class="button primary" bindtap="openDevices">连接蓝牙</button>
+        <button wx:else class="button danger-ghost" disabled="{{busy}}" bindtap="disconnectBluetooth">断开蓝牙</button>
+        <button wx:if="{{!connected}}" class="button ghost" bindtap="startDemo">无硬件演示</button>
+      </view>
+    </view>
+
+    <view class="mode-grid">
+      <button class="mode-card small" data-mode="SMALL" disabled="{{!canChooseMode}}" bindtap="chooseMode">
+        <view class="mode-index">01</view><view class="mode-title">小符测试</view>
+        <view class="mode-desc">击中后：流水灯全红 + 灯板一环</view><view class="mode-action">开始测试 →</view>
+      </button>
+      <button class="mode-card large" data-mode="LARGE" disabled="{{!canChooseLarge}}" bindtap="chooseMode">
+        <view class="mode-index">02</view><view class="mode-title">大符测试</view>
+        <view class="mode-desc">两靶必击一块，单靶可击可不击；五格后最后一击闪烁</view><view class="mode-action">开始测试 →</view>
+      </button>
+    </view>
+    <view wx:if="{{error}}" class="error-box">{{error}}</view>
+  </view>
+
+  <view wx:elif="{{screen === 'devices'}}" class="content">
+    <view class="section-head"><view><view class="eyebrow">BLE DEVICES</view><view class="section-title">选择 HC-42</view></view><button class="text-button" bindtap="closeDevices">取消</button></view>
+    <view class="device-tip">请先给 HC-42 和主板供电，并确保模块未连接其他手机。</view>
+    <scroll-view scroll-y class="device-list">
+      <button wx:for="{{devices}}" wx:key="deviceId" class="device" data-id="{{item.deviceId}}" bindtap="selectDevice" disabled="{{busy}}">
+        <view><view class="device-name">{{item.name}}</view><view class="device-id">{{item.deviceId}}</view></view>
+        <view class="rssi">{{item.RSSI}} dBm</view>
+      </button>
+      <view wx:if="{{!devices.length}}" class="empty">{{scanning ? '正在搜索附近 BLE 设备…' : '没有发现设备'}}</view>
+    </scroll-view>
+    <button class="button ghost full" bindtap="refreshDevices" disabled="{{busy}}">重新搜索</button>
+    <view wx:if="{{error}}" class="error-box">{{error}}</view>
+  </view>
+
+  <view wx:elif="{{screen === 'test'}}" class="content test">
+    <view class="test-head"><view><view class="eyebrow">ROUND {{state.round}}</view><view class="section-title">{{modeName}}</view></view><button class="text-button danger" bindtap="exitTest" disabled="{{busy}}">退出测试</button></view>
+    <view class="progress">
+      <view wx:for="{{progress}}" wx:key="index" class="step {{item.done ? 'done' : ''}}"><view class="step-dot">{{item.done ? '✓' : item.index}}</view><view class="step-label">第{{item.index}}{{progressUnit}}</view></view>
+    </view>
+    <view class="target-card">
+      <view class="pulse"></view><view class="target-label">ACTIVE TARGET</view>
+      <view class="target-number">{{targetNumber}}</view><view class="target-unit">号靶面</view>
+      <view class="target-text">{{targetText}}</view>
+    </view>
+    <view class="judge-grid">
+      <button class="judge hit" data-result="HIT" bindtap="judge" disabled="{{!canOperate}}"><view class="judge-symbol">✓</view><view>击中</view></button>
+      <button class="judge miss" data-result="MISS" bindtap="judge" disabled="{{!canOperate}}"><view class="judge-symbol">×</view><view>未击中</view></button>
+    </view>
+    <view wx:if="{{error}}" class="error-box">{{error}}</view>
+  </view>
+
+  <view wx:elif="{{screen === 'complete'}}" class="content complete">
+    <view class="complete-ring"><view class="complete-check">✓</view></view>
+    <view class="eyebrow">TEST COMPLETE</view><view class="complete-title">{{completeTitle}}</view>
+    <view class="complete-desc">主板已执行全红、{{state.mode === 'LARGE' ? '八环' : '一环'}}与 10 次闪烁流程。</view>
+    <view class="summary"><view><text>模式</text><strong>{{modeName}}</strong></view><view><text>完成轮次</text><strong>{{state.round}}</strong></view><view><text>闪烁次数</text><strong>{{state.flashes}}</strong></view></view>
+    <button class="button primary full" bindtap="restart" disabled="{{busy}}">重新测试</button>
+  </view>
+</view>
