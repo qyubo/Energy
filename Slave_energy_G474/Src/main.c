@@ -22,12 +22,14 @@
 #include "dma.h"
 #include "fdcan.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "ws2812_spi.h"
+#include "ws2812_spi2.h"
 #include "target.h"
 #include "board_can.h"
 /* USER CODE END Includes */
@@ -104,12 +106,23 @@ int main(void)
   MX_FDCAN3_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   WS2812_Init();
+  Perimeter_Init();
 
+  //test
+  // Perimeter_Clear();
+  // Perimeter_Fill(100, 0, 0);
+  // Perimeter_Show();
   if (BoardCan_Init() == 0) {
     Error_Handler();
   }
+  // test
+  // WS2812_Clear();
+  // for (uint16_t i = 0; i < 5; i++) {
+  //     Perimeter_SetPixel(i, 50, 0, 0);
+  // }
 
 
 //   HAL_StatusTypeDef rs232_status = HAL_UART_Transmit(
@@ -124,15 +137,17 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    // WS2812_Show();
+      // Perimeter_Show();
     BoardCan_Task();
     Arrow_Task();
   }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-}
-  /* USER CODE END 3 */
 
+  /* USER CODE END 3 */
+}
 
 /**
   * @brief System Clock Configuration

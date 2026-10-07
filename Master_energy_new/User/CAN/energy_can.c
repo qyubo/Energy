@@ -30,14 +30,14 @@ uint8_t EnergyCan_SendCommand(uint8_t node_id, EnergyCommand_t command) {
     uint32_t tx_mailbox = 0;
     uint8_t tx_data[1] = {0};
     if (node_id == ENERGY_CAN_BROADCAST_NODE) {
-        if ((command != ENERGY_CMD_OFF) && (command != ENERGY_CMD_FINISH) &&
+        if ((command != ENERGY_CMD_OFF) && (command != ENERGY_CMD_SMALL_FINISH) &&
             (command != ENERGY_CMD_BIG_FINISH)) {
             return 0;
         }
     } else if ((node_id < ENERGY_CAN_NODE_MIN) || (node_id > ENERGY_CAN_NODE_MAX)) {
         return 0;
     }
-    if ((command < ENERGY_CMD_OFF) || (command > ENERGY_CMD_FINAL_TARGET) ||
+    if ((command < ENERGY_CMD_OFF) || (command > ENERGY_CMD_BIG_FINISH) ||
         (command == ENERGY_CMD_PROGRESS)) {
         return 0;
     }

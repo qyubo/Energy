@@ -63,8 +63,9 @@ static uint8_t Energy_RandomNodeExcept(uint8_t excluded) {
 /* Queue one frame per pass; retry when all CAN TX mailboxes are busy. */
 static uint8_t Energy_BigSendNode(uint8_t node) {
     if (big_phase == BIG_FINAL) {
-        if (node == current_target)
-            return EnergyCan_SendCommand(node, ENERGY_CMD_FINAL_TARGET);
+        if (node == current_target) {
+            return EnergyCan_SendCommand(node, ENERGY_CMD_TARGET_ARROW);
+        }
         return EnergyCan_SendProgress(node, 5U);
     }
     if ((node == current_target) ||
@@ -170,7 +171,7 @@ void Energy_Task(void) {
                 }
             }
             if (completed_mask == ENERGY_ALL_DONE_MASK) {
-                Energy_FlashTask(ENERGY_CMD_FINISH);
+                Energy_FlashTask(ENERGY_CMD_SMALL_FINISH);
                 break;
             }
             if ((current_target == 0) && (result_pending == 0) && (reset_pending == 0U) && (completed_mask != ENERGY_ALL_DONE_MASK)) {

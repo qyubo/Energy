@@ -1,14 +1,10 @@
 #include "ws2812_spi.h"
 #include "spi.h"
 #include <string.h>
+#include "ws2812_protocol.h"
+#include "ws2812_spi2.h"
 
-// 0码1000：高0.333 μs，低1.000 μs
-// 1码1110：高1.000 μs，低0.333 μs
-#define WS2812_CODE_0 0x08 // 0b00001000 0.333μs
-#define WS2812_CODE_1 0x0E // 0b00001110 1.000μs
-#define WS2812_BYTES_PER_LED 12 // G: 8(WS2812)*4=32bits(SPI)=4B total:4*3=12B
-#define WS2812_RESET_BYTES 128
-#define WS2812_TX_BUFFER_SIZE (WS2812_LED_COUNT * WS2812_BYTES_PER_LED + WS2812_RESET_BYTES)
+#define WS2812_TX_BUFFER_SIZE (WS2812_LED_COUNT * WS2812_BYTES_PER_PIXEL + WS2812_RESET_BYTES)
 #define ARROW_ROWS 5
 #define ARROW_COLS 33
 #define ARROW_PATTERN_PERIOD 4  // 箭头重复周期
@@ -205,10 +201,16 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi) {  // DMA每向SPI1传送1�
     if (hspi->Instance == SPI1) {  // (*hspi).Instance
         dma_busy = 0;
     }
+    else if (hspi->Instance == SPI2) {
+        Perimeter_TxCompleteCallback();
+    }
 }
 // DMA传输错误回调
 void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi) {
     if (hspi->Instance == SPI1) {
         dma_busy = 0;
+    }
+    else if (hspi->Instance == SPI2) {
+        Perimeter_TxErrorCallback();
     }
 }

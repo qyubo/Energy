@@ -45,9 +45,14 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
+    Src/tim.c
+    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c
+    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c
     User/ws2812_spi.c
+    User/ws2812_spi2.c
     User/target.c
     User/board_can.c
+    User/hit_adc.c
 )
 
 # Add include paths

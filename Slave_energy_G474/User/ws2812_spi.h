@@ -3,7 +3,7 @@
 
 #include <stdint.h>  
 
-#define WS2812_LED_COUNT 165  // 5*33
+#define WS2812_LED_COUNT 165  // 5*33 165
 
 void WS2812_Init(void);  
 void WS2812_SetPixel(uint16_t index, uint8_t red, uint8_t green, uint8_t blue);

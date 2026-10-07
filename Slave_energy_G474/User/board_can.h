@@ -12,9 +12,8 @@ typedef enum {
     BOARD_CMD_TARGET_ARROW,  // Arrow&Target on
     BOARD_CMD_SMALL_HIT,  // AllRed, Ring1
     BOARD_CMD_PROGRESS,  // Byte 1: progress level 1..5; target black
-    BOARD_CMD_FINISH,  // Small-rune finish: AllRed, Ring1
+    BOARD_CMD_SMALL_FINISH,  // Small-rune finish: AllRed, Ring1
     BOARD_CMD_BIG_FINISH,  // Big-rune finish: AllRed, Ring8
-    BOARD_CMD_FINAL_TARGET,  // Big-rune level 5: AllRed, target still hittable
 } BoardCommand_t;
 
 uint8_t BoardCan_Init(void);

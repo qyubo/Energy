@@ -1,6 +1,7 @@
 #include "board_can.h"
 #include "fdcan.h"
 #include "ws2812_spi.h"
+#include "ws2812_spi2.h"
 #include "target.h"
 #include "main.h"
 
@@ -64,7 +65,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
         return;
     }  // 只接收本从板专用ID或全体广播ID
     if ((rx_header.DataLength < FDCAN_DLC_BYTES_1) ||
-        (rx_data[0] > BOARD_CMD_FINAL_TARGET)) {
+        (rx_data[0] > BOARD_CMD_BIG_FINISH)) {
         return;
     }
     if (rx_data[0] == BOARD_CMD_PROGRESS) {
@@ -87,39 +88,42 @@ void BoardCan_Task(void) {
     if ((command == board_can_applied_command) &&
         ((command != BOARD_CMD_PROGRESS) || (progress == board_can_applied_progress))) {
         return;
-    }  // 防止收到相同箭头命令从头开始不连贯
-    if (WS2812_IsBusy() != 0) {
+    }  // 防止收到相同箭头命令从头开始不连贯)
+    //
+    if ((WS2812_IsBusy() != 0) || (Perimeter_IsBusy() != 0) ) {
         board_can_command_pending = 1;
         return;
     }
     switch (command) {
         case BOARD_CMD_OFF:
             Arrow_ShowOff();
+            Perimeter_ShowOff();
             Target_Show(TARGET_BLACK);
             break;
         case BOARD_CMD_TARGET_ARROW:
             Arrow_StartFlow(50, 0, 0);
+            Perimeter_ShowOff();
             Target_Show(TARGET_TARGET);
             break;
         case BOARD_CMD_SMALL_HIT:
             Arrow_ShowAllRed();
+            Perimeter_ShowAllRed();
             Target_Show(TARGET_RING_1);
             break;
         case BOARD_CMD_PROGRESS:
             Arrow_ShowProgress(progress);
+            Perimeter_ShowProgress(progress);
             Target_Show(TARGET_BLACK);
             break;
-        case BOARD_CMD_FINISH:
+        case BOARD_CMD_SMALL_FINISH:
             Arrow_ShowAllRed();
+            Perimeter_ShowAllRed();
             Target_Show(TARGET_RING_1);
             break;
         case BOARD_CMD_BIG_FINISH:
             Arrow_ShowAllRed();
+            Perimeter_ShowAllRed();
             Target_Show(TARGET_RING_8);
-            break;
-        case BOARD_CMD_FINAL_TARGET:
-            Arrow_ShowAllRed();
-            Target_Show(TARGET_TARGET);
             break;
         default:
             break;

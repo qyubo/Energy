@@ -70,7 +70,7 @@ static void test_big(void) {
         assert(s.progress == level + 1U && s.other_target != 0U);
     }
     assert(s.progress == 5U && s.other_target == 0U && s.target != 0U);
-    assert(last_command[s.target] == ENERGY_CMD_FINAL_TARGET);
+    assert(last_command[s.target] == ENERGY_CMD_TARGET_ARROW);
     for (uint8_t i = 1U; i <= 5U; i++) {
         if (i != s.target) assert(last_command[i] == ENERGY_CMD_PROGRESS && last_level[i] == 5U);
     }
@@ -103,7 +103,7 @@ static void test_small(void) {
     settle();
     for (uint8_t i = 0U; i < 5U; i++) result(ENERGY_RESULT_HIT);
     assert(Energy_GetState().phase == 2U && Energy_GetState().mask == 31U);
-    for (uint8_t i = 1U; i <= 5U; i++) assert(last_command[i] == ENERGY_CMD_FINISH);
+    for (uint8_t i = 1U; i <= 5U; i++) assert(last_command[i] == ENERGY_CMD_SMALL_FINISH);
 }
 
 static void test_big_waits_for_input(void) {
