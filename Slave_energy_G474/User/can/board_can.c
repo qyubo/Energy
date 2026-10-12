@@ -10,7 +10,7 @@ static volatile uint8_t board_can_received_progress = 0U;
 static volatile uint8_t board_can_command_pending = 0;  // 是否有新命令待处理
 static BoardCommand_t board_can_applied_command = 0xFF;
 static uint8_t board_can_applied_progress = 0U;
-static uint8_t board_can_node_id = 0U;
+static uint8_t board_can_id = 0U;
 
 static uint8_t BoardCan_ReadNodeId(void) {
     uint8_t id = 0U;
@@ -21,8 +21,8 @@ static uint8_t BoardCan_ReadNodeId(void) {
 }
 
 uint8_t BoardCan_Init(void) {
-    board_can_node_id = BoardCan_ReadNodeId();
-    if ((board_can_node_id < BOARD_CAN_NODE_MIN) || (board_can_node_id > BOARD_CAN_NODE_MAX)) {
+    board_can_id = BoardCan_ReadNodeId();
+    if ((board_can_id < BOARD_CAN_NODE_MIN) || (board_can_id > BOARD_CAN_NODE_MAX)) {
         return 0U;
     }
     FDCAN_FilterTypeDef filter = {0};
@@ -30,7 +30,7 @@ uint8_t BoardCan_Init(void) {
     filter.FilterIndex = 0;
     filter.FilterType = FDCAN_FILTER_DUAL;
     filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-    filter.FilterID1 = BOARD_CAN_BROADCAST_ID + board_can_node_id;
+    filter.FilterID1 = BOARD_CAN_BROADCAST_ID + board_can_id;
     filter.FilterID2 = BOARD_CAN_BROADCAST_ID;
     if (HAL_FDCAN_ConfigFilter(&hfdcan3, &filter) != HAL_OK) {
         return 0;
@@ -60,7 +60,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
         return;
     }
     if ((rx_header.IdType != FDCAN_STANDARD_ID) ||
-        ((rx_header.Identifier != BOARD_CAN_BROADCAST_ID + board_can_node_id) &&
+        ((rx_header.Identifier != BOARD_CAN_BROADCAST_ID + board_can_id) &&
          (rx_header.Identifier != BOARD_CAN_BROADCAST_ID))) {
         return;
     }  // 只接收本从板专用ID或全体广播ID
@@ -130,6 +130,25 @@ void BoardCan_Task(void) {
     }
     board_can_applied_command = command;
     if (command == BOARD_CMD_PROGRESS) board_can_applied_progress = progress;
+}
+
+uint8_t BoardCan_SendHit(uint8_t ring) {
+    if ((ring<1) || (ring > 10) || (board_can_id < BOARD_CAN_NODE_MIN) || (board_can_id > BOARD_CAN_NODE_MAX)) {
+        return 0;
+    }
+    FDCAN_TxHeaderTypeDef header = {0};
+    uint8_t data[2] = {BOARD_EVENT_HIT,ring};
+    header.Identifier = BOARD_CAN_REPLY_ID_BASE + board_can_id;
+    header.IdType = FDCAN_STANDARD_ID;
+    header.TxFrameType = FDCAN_DATA_FRAME;
+    header.DataLength = FDCAN_DLC_BYTES_2;
+
+    header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    header.BitRateSwitch = FDCAN_BRS_OFF;
+    header.FDFormat = FDCAN_CLASSIC_CAN;
+    header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+    header.MessageMarker = 0;
+    return HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan3, &header, data) == HAL_OK;
 }
 
 

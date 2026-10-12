@@ -6,6 +6,8 @@
 #define BOARD_CAN_BROADCAST_ID 0x300U
 #define BOARD_CAN_NODE_MIN 1U
 #define BOARD_CAN_NODE_MAX 5U
+#define BOARD_CAN_REPLY_ID_BASE 0x100
+#define BOARD_EVENT_HIT 0x01
 
 typedef enum {
     BOARD_CMD_OFF = 0,  // Arrow&Target off
@@ -20,6 +22,7 @@ uint8_t BoardCan_Init(void);
 
 void BoardCan_Task(void);
 
+uint8_t BoardCan_SendHit(uint8_t ring);
 
 
 #endif

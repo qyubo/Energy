@@ -48,17 +48,20 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Src/tim.c
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c
-    User/ws2812_spi.c
-    User/ws2812_spi2.c
-    User/target.c
-    User/board_can.c
-    User/hit_adc.c
+    User/light/ws2812_spi.c
+    User/light/ws2812_spi2.c
+    User/light/target.c
+    User/can/board_can.c
+    User/hit/hit_adc.c
+    User/hit/hit_detect.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
-    ${CMAKE_CURRENT_SOURCE_DIR}/User
+    ${CMAKE_CURRENT_SOURCE_DIR}/User/can
+    ${CMAKE_CURRENT_SOURCE_DIR}/User/light
+    ${CMAKE_CURRENT_SOURCE_DIR}/User/hit
 )
 
 # Add project symbols (macros)

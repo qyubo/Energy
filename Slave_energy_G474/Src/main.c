@@ -32,6 +32,8 @@
 #include "ws2812_spi2.h"
 #include "target.h"
 #include "board_can.h"
+#include "hit_adc.h"
+#include "hit_detect.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,7 +54,14 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+// 接收数据的副本，为了让检测期间的数据保持不变
+static uint16_t adc_block[FRAMES_PER_BLOCK][CHANNEL_COUNT];
+// 只用于验证读取是否持续成功，是临时调试计数
+static volatile uint32_t adc_received_blocks = 0;
+// 记录数据跳块发生次数，采集验证后可以删除
+static volatile uint32_t adc_gap_events = 0;
+// 已被主程序取走未放入can队列
+static uint8_t hit_to_send = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -118,6 +127,9 @@ int main(void)
   if (BoardCan_Init() == 0) {
     Error_Handler();
   }
+  if (HitADC_Init() == 0) {
+    Error_Handler();
+  }
   // test
   // WS2812_Clear();
   // for (uint16_t i = 0; i < 5; i++) {
@@ -139,6 +151,22 @@ int main(void)
   {
     // WS2812_Show();
       // Perimeter_Show();
+    uint8_t adc_result = HitADC_ReadBlock(adc_block);
+    if (adc_result != 0) {
+        adc_received_blocks++;
+        if (adc_result == 2) {
+            adc_gap_events++;
+        }
+        HitDetect_Process(adc_block, adc_result == 1);
+    }
+    if (hit_to_send == 0) {
+      HitDetect_GetResult(&hit_to_send);
+    }
+    if (hit_to_send != 0) {
+      if (BoardCan_SendHit(hit_to_send) != 0) {
+        hit_to_send = 0;
+      }
+    }
     BoardCan_Task();
     Arrow_Task();
   }
